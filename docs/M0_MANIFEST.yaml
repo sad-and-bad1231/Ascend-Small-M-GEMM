@@ -1,0 +1,67 @@
+# Draft M0 manifest: TO_VERIFY fields are NOT measured values.
+project: ascend-small-m-gemm
+date: "2026-10-14"
+owner: sad-and-bad1231
+status: DRAFT_NOT_HARDWARE_APPROVED
+source:
+  organization_repo: https://github.com/intellistream/ascend-small-m-gemm
+  current_main_sha: TO_VERIFY_AT_RUN
+  historical_pr14_head: 11aca1de03129d6f4f56d846864af20ab35eaee8
+  vllm_hust_sha: e4ce33646f2ef1781289e6dc651fad0d00177c55
+  vllm_ascend_hust_sha: 52f923884b9adaedfc2e764428207d0448227549
+  triton_ascend_hust_sha: ef6c292108651ca88aa8c5f59ecfc1849693a71f
+  adapter_patch_sha256: TO_VERIFY
+  runner_sha256: TO_VERIFY
+  git_dirty_patch_sha256: TO_VERIFY_OR_CLEAN
+  exact_run_command: TO_VERIFY
+environment:
+  container_image_digest: TO_VERIFY
+  cann_version: TO_VERIFY
+  torch_npu_version: TO_VERIFY
+  npu_driver: TO_VERIFY
+  device_model_and_allocation: TO_VERIFY
+  device_budget: TO_CONFIRM_WITH_ADVISOR
+  model_checkpoint_id_and_hash: TO_VERIFY
+  trace_sha256: TO_VERIFY
+workload:
+  model_family: Qwen3-32B
+  tensor_parallelism: 4
+  dtype: BF16
+  per_rank_qkv_weight_shape_nk: [2560, 5120]
+  m_component: [1, 2, 4, 8]
+  fallback_controls: ["M=16", "qkv+bias"]
+  consumer: split_qkv_rmsnorm_rope
+arms:
+  B0: official_ND_QKV_plus_existing_consumer
+  B1: QKV_local_NZ_single_resident_weight_plus_same_consumer
+  ABA_modes: [0, 1, 0]
+correctness:
+  component_reference: official_chain_and_fp32_reference
+  numerical_tolerances: TO_FREEZE_FROM_PINNED_TESTS
+  graph_replay: required
+  output_token_id_equality: required_for_service
+metrics:
+  primary_service: decode_only_TPOT_median_unprofiled
+  component: graph_replay_latency_and_consumer_attribution
+  guards: [TTFT, throughput, p95_latency, resident_HBM, peak_HBM]
+gates:
+  min_agreeing_windows: 2
+  max_consumer_regression_percent: 10
+  max_allreduce_per_launch_median_regression_percent: 5
+  min_service_TPOT_improvement_percent: 2
+  max_ABA_baseline_drift_percent: 2
+  M1_min_component_p95_improvement_percent: 5
+  M1_allocation_median_nonregression: true
+  M2_min_preregistered_TPOT_or_throughput_improvement_percent: 2
+sampling:
+  component_independent_allocations_min: 10
+  proposed_service_ABA_triplets_min: 5
+  historical_windows_request_counts: [8, 24]
+  random_seeds_and_order: TO_FREEZE
+stop:
+  inconclusive: invalid_provenance_or_oracle_or_unstable_hardware_or_missing_TP4
+  no_go: valid_repeated_evidence_excludes_useful_target_boundary
+  go_to_M1: valid_mechanistic_headroom_and_advisor_approval
+approval:
+  advisor_review_link: TO_FILL
+  approved_for_hardware: false
