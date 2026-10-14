@@ -30,6 +30,13 @@ RMSNorm 依赖每个 head 的 `sum_j y_j²`，`y_j` 又依赖完整 K 轴归约�
 
 M0 先定位 H1/H2/H3 的可测空间；不能凭旧两组总耗时推断任一成立。
 
+
+### M0-A 静态审计发现：历史派生判定的叙事残留（2026-10-14）
+
+[PR #14 matched window2 的 manifest](https://github.com/intellistream/ascend-small-m-gemm/blob/11aca1de03129d6f4f56d846864af20ab35eaee8/results/qkv_same_run_matched_20260827/window2/manifest.json) 明确给出：`split_qkv_us` A=765649.8 us，B=783534.2 us，即 +2.33585%；consumer <+10% 为 PASS；TPOT 31.893→31.478 ms（-1.30123%）对 ≥2% 为 FAIL。
+
+但同一 manifest 的 `mechanism.service_path_ruling` 仍称 `split consumer +16-26% >= +10% limit`，来自旧的 selector `qkv_path(..., context='service')` 静态 `reason`，**与本次 matched verdict 不一致**。这属于派生摘要的 stale narrative，不能当作本次 consumer 因果归因。新 M0 必须以原始 trace、窗口指标和显式判定公式为准；将“执行代码来源”“证据 custody”“实验判定”和“机制解释”分别记录。
+
 ## 2. 高价值相关工作（供学习，不宣称复现）
 
 | 论文 / 源码 | 信号 | 本课题必须回答的对比问题 |
