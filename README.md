@@ -8,6 +8,7 @@
 - [研究问题、论文及已有证据](docs/RESEARCH_STATE.md)
 - [M0 实验协议](docs/M0_PROTOCOL.md)
 - [M0 manifest 草案](docs/M0_MANIFEST.yaml)
+- [M0-B 单卡对照合同与 CPU-only 准备](docs/M0_B_CONTRACT_20261015.md)
 
 ## 目标与验收
 

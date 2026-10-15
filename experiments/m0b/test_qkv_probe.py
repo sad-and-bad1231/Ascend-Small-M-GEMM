@@ -1,0 +1,104 @@
+"""CPU-only preparation tests. No import of torch_npu or the production consumer."""
+import ast
+import json
+from pathlib import Path
+import subprocess
+import sys
+import unittest
+
+import torch
+import qkv_probe as probe
+
+
+class ContractTests(unittest.TestCase):
+    def test_policy(self):
+        for m in (1, 2, 4, 8):
+            self.assertEqual(probe.weight_format("B1", m), 29)
+            self.assertEqual(probe.weight_format("B0", m), 2)
+            self.assertEqual(probe.weight_format("B1", m, True), 2)
+        self.assertEqual(probe.weight_format("B1", 16), 2)
+        for m in (0, 3, 32):
+            with self.assertRaises(ValueError):
+                probe.weight_format("B1", m)
+        with self.assertRaises(ValueError):
+            probe.weight_format("B1", 1, shape=(5120, 2560))
+
+    def test_gate(self):
+        for value in (False, "true", None):
+            with self.assertRaises(RuntimeError):
+                probe.require_approval({"approval": {"approved_for_hardware": value}})
+        with self.assertRaises(RuntimeError):
+            probe.require_approval({"approval": {"approved_for_hardware": True, "advisor_review_link": "TO_FILL"}})
+
+    def test_plan_stdlib_only(self):
+        result = subprocess.run([sys.executable, "-S", str(Path(probe.__file__)), "--stage", "plan"],
+                                check=True, text=True, capture_output=True)
+        self.assertEqual(len(json.loads(result.stdout)["cells"]), 6)
+        tree = ast.parse(Path(probe.__file__).read_text())
+        imports = [n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom))]
+        self.assertFalse(any("torch" in ast.unparse(n) for n in imports))
+
+    def test_hardware_gate_before_runtime_import(self):
+        code = (
+            "import runpy, sys\n"
+            "def guard(event, args):\n"
+            "    if event == 'import' and args[0].startswith(('torch', 'vllm')):\n"
+            "        raise AssertionError('runtime import before approval')\n"
+            "sys.addaudithook(guard)\n"
+            f"ns = runpy.run_path({probe.__file__!r})\n"
+            "try:\n"
+            "    ns['hardware'](None, {'approval': {'approved_for_hardware': False}}, None)\n"
+            "except RuntimeError as exc:\n"
+            "    assert 'BLOCKED' in str(exc)\n"
+            "else:\n"
+            "    raise AssertionError('gate did not stop hardware path')\n"
+        )
+        subprocess.run([sys.executable, "-S", "-c", code], check=True, capture_output=True)
+
+    def test_oracle_identity_rope_and_v(self):
+        # Tiny hand-checkable geometry: q=2 heads, kv=1 head, dim=4.
+        qkv = torch.arange(1, 17, device="cpu").bfloat16()[None, :]
+        cache = torch.tensor([[1, 1, 0, 0], [0, 0, 1, 1]], device="cpu").bfloat16()
+        w = torch.ones(4, device="cpu").bfloat16()
+        q, k, v = probe.consumer_reference(qkv, cache, torch.tensor([0], device="cpu"), w, w,
+                                          head_dim=4, q_heads=2, kv_heads=1)
+        expected = qkv[:, :8].float().reshape(1, 2, 4)
+        expected = (expected * torch.rsqrt(expected.square().mean(-1, keepdim=True) + 1e-6)).reshape(1, 8)
+        probe.compare(q, expected, atol=0, rtol=0)
+        probe.compare(v, qkv[:, 12:].float(), atol=0, rtol=0)
+        qr, kr, _ = probe.consumer_reference(qkv, cache, torch.tensor([1], device="cpu"), w, w,
+                                            head_dim=4, q_heads=2, kv_heads=1)
+        a, b = q.reshape(1, 2, 4).chunk(2, -1)
+        probe.compare(qr, torch.cat((-b, a), -1).reshape(1, 8), atol=0, rtol=0)
+        a, b = k.chunk(2, -1)
+        probe.compare(kr, torch.cat((-b, a), -1), atol=0, rtol=0)
+
+    def test_oracle_zero_and_target_geometry(self):
+        qkv = torch.zeros(2, 2560, device="cpu", dtype=torch.bfloat16)
+        cache = torch.zeros(4096, 128, device="cpu", dtype=torch.bfloat16)
+        w = torch.ones(128, device="cpu", dtype=torch.bfloat16)
+        result = probe.consumer_reference(qkv, cache, torch.tensor([0, 4095], device="cpu"), w, w)
+        self.assertEqual([tuple(t.shape) for t in result], [(2, 2048), (2, 256), (2, 256)])
+        self.assertTrue(all(torch.equal(t, torch.zeros_like(t)) for t in result))
+
+    def test_reject_bad_outputs(self):
+        a = torch.ones(4, device="cpu")
+        for b in (a * float("nan"), a * float("inf"), a + 1, torch.ones(5, device="cpu")):
+            with self.assertRaises(AssertionError):
+                probe.compare(a, b)
+        with self.assertRaises(AssertionError):
+            probe.compare(a, a + 0.02, atol=1, rel_l2_limit=0.01)
+
+    def test_manifest_plan_agrees(self):
+        import yaml
+        manifest = yaml.safe_load((probe.ROOT / "docs/M0_MANIFEST.yaml").read_text())
+        self.assertFalse(manifest["approval"]["approved_for_hardware"])
+        component = manifest["component_preparation"]
+        self.assertEqual(component["matrix"], probe.plan()["cells"])
+        self.assertEqual(component["consumer"]["sha256"], probe.CONSUMER_SHA)
+        self.assertEqual(manifest["correctness"]["consumer_atol"], probe.ATOL)
+        self.assertEqual(manifest["correctness"]["consumer_rtol"], probe.RTOL)
+
+
+if __name__ == "__main__":
+    unittest.main()

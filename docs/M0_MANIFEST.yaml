@@ -1,9 +1,10 @@
-# M0-A host receipt only: TO_VERIFY fields are NOT measured values or approval.
+# M0-A receipts + M0-B proposed contract. NOT_RUN is not PASS or approval.
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: M0_A_HOST_CHECKS_PASS_CUSTODY_PARTIAL_M0_B_BLOCKED
+status: M0_B_CONTRACT_PREPARED_CPU_ONLY_PENDING_REVIEW
 source:
+  personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
   current_main_sha: cb095ea9dc335507ffdf7aedfb5d761fe6b5d88c
   personal_main_sha_at_audit: 633ea9943d34f534fae9b102244d17c00000e457
@@ -42,7 +43,7 @@ environment:
   device_model_and_allocation: "1 visible Ascend910B2; physical identifiers local only"
   preflight_npu_available: true
   preflight_only_not_device_correctness: true
-  device_budget: TO_CONFIRM_WITH_ADVISOR
+  device_budget: "PROPOSED 1x910B2, <=30min total, <=2GiB allocated HBM, <=1GiB local traces; NOT_APPROVED"
   model_checkpoint_id_and_hash: TO_VERIFY
   trace_sha256: TO_VERIFY
 host_audit:
@@ -83,7 +84,19 @@ arms:
   ABA_modes: [0, 1, 0]
 correctness:
   component_reference: official_chain_and_fp32_reference
-  numerical_tolerances: TO_FREEZE_FROM_PINNED_TESTS
+  numerical_tolerances: FROZEN_FOR_REVIEW_NOT_DEVICE_VALIDATED
+  consumer_atol: 0.05
+  consumer_rtol: 0.005
+  consumer_tolerance_source: identical_pinned_and_current_test_split_qkv_rmsnorm_rope
+  gemm_atol: 0.05
+  gemm_rtol: 0.01
+  gemm_rel_l2_max: 0.01
+  gemm_tolerance_source: "proposed elementwise guard plus historical TinyProjBench rel_L2<=1e-2; not a pinned GEMM allclose standard"
+  checks: [shape_dtype_contiguous_physical_ND, finite_all_elements, gemm_vs_CPU_FP32,
+           consumer_vs_CPU_FP32_on_own_QKV, chain_vs_FP32_GEMM_rounded_BF16_reference,
+           B1_vs_same_seed_B0_QKV_and_Q_K_V, V_exact_copy, five_identical_replays,
+           graph_reads_updated_X_and_positions, eager_graph_exact_equality]
+  fallback: exact_B0_B1_outputs_and_ND_weight
   graph_replay: required
   output_token_id_equality: required_for_service
 metrics:
@@ -103,11 +116,85 @@ sampling:
   component_independent_allocations_min: 10
   proposed_service_ABA_triplets_min: 5
   historical_windows_request_counts: [8, 24]
-  random_seeds_and_order: TO_FREEZE
+  random_seeds_and_order: "component seeds 0..9, fresh-process B0/B1/B0 per seed and shape; service order not frozen"
 stop:
   inconclusive: invalid_provenance_or_oracle_or_unstable_hardware_or_missing_TP4
   no_go: valid_repeated_evidence_excludes_useful_target_boundary
   go_to_M1: valid_mechanistic_headroom_and_advisor_approval
+component_preparation:
+  contract: docs/M0_B_CONTRACT_20261015.md
+  harness: experiments/m0b/qkv_probe.py
+  scope: synthetic_single_device_TP4_rank_shape_NOT_TP1_full_model_NOT_TP4_service
+  runtime_domain: current_vllm_0_23_BOTH_arms_same_environment_no_global_NZ
+  hardware_status: NOT_RUN_THIS_TURN_PROHIBITED
+  execution_readiness: CPU_TESTED_HARDWARE_PATH_UNVALIDATED
+  matrix:
+    - {m: 1, bias: false, B0_format: 2, B1_format: 29}
+    - {m: 2, bias: false, B0_format: 2, B1_format: 29}
+    - {m: 4, bias: false, B0_format: 2, B1_format: 29}
+    - {m: 8, bias: false, B0_format: 2, B1_format: 29}
+    - {m: 16, bias: false, B0_format: 2, B1_format: 2}
+    - {m: 1, bias: true, B0_format: 2, B1_format: 2}
+  geometry:
+    config_url: https://huggingface.co/Qwen/Qwen3-32B/raw/9216db5781bf21249d130ec9da846c4624c16137/config.json
+    config_sha256: 97e295b63283935788fac5e4f8860862a56d4089538cafc93f0431f2ebe483bb
+    model_weights_downloaded_or_loaded: false
+    config_is_not_historical_checkpoint_identity: true
+    full_model_q_heads: 64
+    full_model_kv_heads: 8
+    modeled_tp_rank_q_heads: 16
+    modeled_tp_rank_kv_heads: 2
+    head_dim: 128
+    q_hidden: 2048
+    kv_hidden: 256
+    rms_eps: 0.000001
+    rope: "full128 NeoX split-half; theta=1000000; BF16 cos-half then sin-half"
+    cache_shape: [4096, 128]
+    positions: "row_index * 257; replay mutation +1; synthetic decode positions, no workload trace"
+    input_distribution: "seeded CPU randn -> BF16; W scaled by 1/sqrt(5120); random Q/K norm weights"
+  consumer:
+    module: vllm_ascend.ops.triton.linearnorm.split_qkv_rmsnorm_rope
+    callable: split_qkv_rmsnorm_rope_impl
+    sha256: ca226aac8c5559904646765e3f358dcdd394c8d8af58f5102338676844312ae1
+    input: "BF16 contiguous physical ND [M,2560], strides=[2560,1]; NOT NZ activations"
+    outputs: "BF16 contiguous Q[M,2048], K/V[M,256]; per-call output allocations kept identical"
+    test_sha256: 801622c3040fc77c9500ec0233e408f69fe0b3415e6be10014ec9821eeee3c14
+  graph:
+    source_api: torch_npu.npu.graphs.NPUGraph_replay_and_graph_auto_dispatch_capture
+    source_sha256: eb11cac181087766e8489cf3a1da0c0fa150933b7e74454dba4a47db6114164e
+    capability: SOURCE_API_PRESENT_RUNTIME_NOT_RUN
+    shapes: separate_static_capture_each_M_no_padding
+    eager_fallback_for_timing: prohibited
+  conversion:
+    weight: one_load_time_ND_to_NZ_then_release_ND_no_second_resident_QKV_weight
+    transient_cast_overlap: allowed_and_recorded_NOT_zero_allocation
+    weight_logical_bytes: 26214400
+    producer_activation: must_be_ND_without_explicit_repair
+    implicit_runtime_conversion_cost: UNKNOWN_PENDING_PROFILER
+    no_copy_admission: requires_dispatch_conversion_and_memory_trace_review_NOT_source_inference
+  measurements:
+    smoke: "after approval only: M=1 seed0 B0/B1/B0 correctness, then M=16 and M=1+bias fallback"
+    formal: "M1/2/4/8; seeds0..9; fresh-process B0/B1/B0 each; sequential arms, never co-resident weights"
+    warmup_before_capture: 3
+    warmup_replays: 10
+    trials_per_allocation: 5
+    replays_per_trial: 100
+    statistics: "retain all trials; report per-allocation median, p5/p95 of allocation medians, paired ratios and ABA drift; trials are not independent allocations"
+    scopes: [chain_primary, gemm_diagnostic, consumer_diagnostic]
+    profiler: "separate processes, M=1 and M=8 seed0 only after oracle; 5 replays/arm; optional hardware counters only if available"
+    attribution: "dispatch ID, launch count, conversions, allocator, timeline; missing GM/MTE/UB/AIC/AIV counters=UNKNOWN"
+  stops:
+    - no_Issue20_approval_no_hardware
+    - occupied_device_or_source_runtime_drift_stop_before_allocating
+    - first_oracle_layout_or_graph_failure_stop_cell_no_timing_no_tolerance_relaxation
+    - hidden_hot_conversion_or_extra_resident_weight_invalidates_no_copy_B1
+    - ABA_baseline_median_drift_greater_than_or_equal_2_percent_invalid_no_selective_rerun
+    - "budget exceeded: stop; <10 independent allocations descriptive_only"
+    - no_TP4_no_service_or_M1_GO_claim
+  local_receipts: m0_receipts/m0b_preparation_20261015
+  cpu_tests_status: PASS_8_CPU_TESTS_NO_DEVICE_EXECUTION
+  cpu_tests_receipt: m0_receipts/m0b_preparation_20261015/cpu_tests_verified.local.txt
+  cpu_tests_receipt_sha256: 9ef2171be7c294a1a46a446f1251fb010f2693bec226c241418565d004995f01
 approval:
   advisor_review_link: TO_FILL
   approved_for_hardware: false

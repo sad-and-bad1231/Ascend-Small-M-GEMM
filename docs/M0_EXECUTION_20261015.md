@@ -1,8 +1,14 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-A HOST CHECKS PASS / CUSTODY PARTIAL / M0-B BLOCKED**.
+Status: **M0-A HOST CHECKS PASS / CUSTODY PARTIAL / M0-B CONTRACT PREPARED, HARDWARE BLOCKED**.
 Host audit recorded on 2026-10-15 (Asia/Shanghai). No new NPU correctness,
 timing, TP4 capture or profiler result is asserted; hardware approval remains false.
+
+M0-B preparation based on personal main `c2fdf300`: see the
+[single-card review contract](M0_B_CONTRACT_20261015.md) and manifest. The new
+isolated probe defaults to a CPU-only plan; runtime entry is approval-gated.
+No environment re-inventory or NPU execution in this preparation. The numbered
+M0-A execution order below is retained history, not an instruction to rerun it.
 
 ## Independently captured M0-A
 
