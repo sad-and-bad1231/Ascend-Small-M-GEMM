@@ -1,0 +1,15 @@
+# Local-only logs and potentially identifying execution receipts
+m0_receipts/
+*.local.txt
+*.local.json
+__pycache__/
+.pytest_cache/
+.env
+.env.*
+*.prof
+*.trace
+*.dump
+*.safetensors
+*.pt
+*.pth
+results/raw/
