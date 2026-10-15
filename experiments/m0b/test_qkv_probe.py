@@ -11,9 +11,29 @@ from unittest.mock import Mock
 import torch
 import qkv_probe as probe
 from trace_summary import trace_events
+from timing_summary import assess
 
 
 class ContractTests(unittest.TestCase):
+    def test_timing_gain_and_exact_drift_boundary(self):
+        trials = [[{"event_us": v, "wall_us": v} for _ in range(5)] for v in (100, 90, 100)]
+        summary = assess(trials)
+        self.assertEqual(summary["status"], "PILOT_DRIFT_SCREEN_PASS")
+        self.assertEqual(summary["metrics"]["event_us"]["raw_latency_reduction_percent"], 10)
+        trials[2] = [{"event_us": 102, "wall_us": 100} for _ in range(5)]
+        summary = assess(trials)
+        self.assertEqual(summary["status"], "INVALID_DRIFT")
+        self.assertEqual(summary["metrics"]["event_us"]["rollback_absolute_drift_percent"], 2)
+        self.assertIsNone(summary["metrics"]["event_us"]["drift_screened_point_estimate_percent"])
+
+    def test_wall_drift_also_invalidates_and_no_trial_filter(self):
+        trials = [[{"event_us": v, "wall_us": v} for _ in range(5)] for v in (100, 90, 100)]
+        trials[2] = [{"event_us": 100, "wall_us": 102} for _ in range(5)]
+        self.assertEqual(assess(trials)["status"], "INVALID_DRIFT")
+        trials[0].pop()
+        with self.assertRaises(ValueError):
+            assess(trials)
+
     def test_trace_array_and_object_envelopes(self):
         events = [{"name": "HostToDevice1", "ph": "f"}, {"name": "MODEL_EXECUTE", "ph": "X"}]
         self.assertEqual(trace_events(events), events)
@@ -79,6 +99,21 @@ class ContractTests(unittest.TestCase):
                 args.stage = "profile"
                 with self.assertRaises(RuntimeError):
                     probe.require_execution_permission(manifest, args)
+
+    def test_bounded_timing_permission(self):
+        import yaml
+        manifest = yaml.safe_load((probe.ROOT / "docs/M0_MANIFEST.yaml").read_text())
+        for m in (1, 8):
+            args = SimpleNamespace(mode="DIAGNOSTIC_ONLY", stage="timing", scope="chain",
+                                   m=m, seed=0, bias=False)
+            probe.require_execution_permission(manifest, args)
+            for key, value in (("m", 2), ("m", 16), ("seed", 1), ("bias", True),
+                               ("scope", "gemm"), ("scope", "consumer"), ("mode", "FORMAL")):
+                altered = SimpleNamespace(**{**vars(args), key: value})
+                with self.assertRaises(RuntimeError):
+                    probe.require_execution_permission(manifest, altered)
+        self.assertFalse(manifest["approval"]["approved_for_hardware"])
+        self.assertFalse(manifest["timing_pilot_permission"]["formal_approved"])
 
     def test_plan_stdlib_only(self):
         result = subprocess.run([sys.executable, "-S", str(Path(probe.__file__)), "--stage", "plan"],

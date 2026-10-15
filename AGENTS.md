@@ -10,6 +10,9 @@
   formal timing sweeps, multi-card serving or M1 work.
 - Short diagnostic profiling is allowed only for the owner's explicit manifest
   cells and replay cap; inspect each trace before expanding to the next arm/cell.
+- Non-formal timing requires its own explicit owner-authorized manifest scope.
+  Keep the one-triplet limit and all invalid data; never replace a drifting
+  triplet with a favorable rerun or mix profiler measurements into timing.
 - Preserve original failures before minimal harness repairs and reruns. Do not
   modify production kernels, golden vLLM/plugin checkouts or installed packages.
 - Owner-requested updates may be committed and pushed to this personal notebook

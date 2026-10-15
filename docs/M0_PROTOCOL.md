@@ -57,7 +57,12 @@
 Owner 明确授权后，可以在已分配的单卡上运行有界 `DIAGNOSTIC_ONLY` smoke，
 不要求导师审批链接。当前范围以 manifest 的 diagnostic_permission.cells 为准：
 seed0、M=1/8 的 B0/B1 正确性及每臂最多5次 replay 的短 profiler，
-以及 M=16 无 bias、M=1 有 GEMM bias 的正确性 fallback；不含非 profiler 计时。
+以及 M=16 无 bias、M=1 有 GEMM bias 的正确性 fallback。
+Owner 随后明确授权 M=1/8、seed0 各一组独立进程 B0/B1/B0 的 chain timing pilot：
+10 warmup、5 trial x100 replay，不并行启动 profiler，不扩展 seed/shape。
+Event 和 Wall median 的前后 baseline drift 任一 >=2% 都标记整组 INVALID，
+保留原数据且不重试替换；只有 correctness/Graph/source/resource 失败停止后续硬件。
+这不是 FORMAL approval，也不是正式统计检验或 M1/M2 GO。
 诊断仍须通过源码身份、设备空闲/归属、
 correctness、资源预算和失败即停止检查；失败记录不覆盖。诊断成功不等于正式准入。
 个人仓库可按 Owner 要求持续提交、push 脱敏记录；真实原始设备日志仍留本地。

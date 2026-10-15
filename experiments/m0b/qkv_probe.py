@@ -295,8 +295,11 @@ def hardware(args, manifest, out):
             raise RuntimeError("2GiB allocated device budget exceeded")
         torch.npu.reset_peak_memory_stats()
         timings = []
+        timing_observation = None
         profile_observation = None
         if args.stage == "timing":
+            weight_ptr = w.data_ptr()
+            allocated_before_timing = torch.npu.memory_allocated()
             for _ in range(10):
                 graph.replay()
             torch.npu.synchronize()
@@ -310,6 +313,24 @@ def hardware(args, manifest, out):
                 torch.npu.synchronize()
                 timings.append({"event_us": a.elapsed_time(b) * 1000 / 100,
                                 "wall_us": (time.perf_counter_ns() - wall) / 1000 / 100})
+                checkpoint("timing_trial_completed", trial=len(timings), **timings[-1])
+            timing_observation = {
+                "warmup_replays": 10, "trials": 5, "replays_per_trial": 100,
+                "weight_pointer_unchanged": w.data_ptr() == weight_ptr,
+                "weight_format_after": int(torch_npu.get_npu_format(w)),
+                "allocated_before": allocated_before_timing,
+                "allocated_after": torch.npu.memory_allocated(),
+                "peak_allocated": torch.npu.max_memory_allocated(),
+            }
+            if (not timing_observation["weight_pointer_unchanged"]
+                    or timing_observation["weight_format_after"] != fmt
+                    or timing_observation["peak_allocated"] > 2 * 1024**3):
+                raise RuntimeError("timing changed weight identity/format or exceeded allocation budget")
+            if args.scope == "chain":
+                correctness["post_timing"] = check(values)
+                for actual, expected in zip(values, snapshot):
+                    compare(actual, expected, atol=0, rtol=0)
+                checkpoint("post_timing_oracle_and_exact_pass", correctness=correctness["post_timing"])
         if args.stage == "profile":
             from torch_npu.profiler import _ExperimentalConfig, ProfilerLevel, AiCMetrics
             weight_ptr = w.data_ptr()
@@ -356,8 +377,10 @@ def hardware(args, manifest, out):
                              "dtype": str(t.dtype), "format": int(torch_npu.get_npu_format(t))}
                             for t in (x, w, *eager)],
                 "correctness": correctness, "trials": timings,
+                "timing_observation": timing_observation,
                 "profile_observation": profile_observation,
                 "median_us": statistics.median(t["event_us"] for t in timings) if timings else None,
+                "median_wall_us": statistics.median(t["wall_us"] for t in timings) if timings else None,
                 "dispatch_and_hot_conversion_audit": "REQUIRES_TRACE_REVIEW"}
 
 

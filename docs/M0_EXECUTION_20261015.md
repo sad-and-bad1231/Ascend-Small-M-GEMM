@@ -1,11 +1,16 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-B DIAGNOSTIC NZ DISPATCH CONFIRMED / FORMAL ADMISSION PENDING**.
+Status: **M0-B TIMING PILOT BOTH TRIPLETS INVALID / FORMAL ADMISSION PENDING**.
+Owner-authorized M1/M8 seed0 chain timing completed, one fresh-process B0/B1/B0
+triplet each. Full oracles passed, but Event rollback drift was 32.41% / 4.84%.
+No retries or accepted performance gain. See [all trials and boundaries](M0_B_TIMING_PILOT_20261015.md).
+Formal approval remains false; no M1/M2 GO follows from this diagnostic.
+
+Earlier dispatch checkpoint:
 M1/M8 seed0 short traces observe distinct ND/NZ GEMM native kernels and the same
 consumer, no standalone conversion task in five replays/arm, exact output pairs.
 M16/bias fallback pairs pass. See [dispatch evidence and limitations](M0_B_DISPATCH_20261015.md).
-No unprofiled timing or service performance benefit is asserted. Formal approval
-remains false; the minimal timing pilot is only a proposal.
+At that checkpoint unprofiled timing had not run; the pilot was only a proposal.
 
 Earlier smoke checkpoint:
 Owner-authorized M=1 seed0 B0/B1/B0 correctness and Graph Replay passed on the
@@ -69,7 +74,7 @@ M0-A execution order below is retained history, not an instruction to rerun it.
 3. Run `bash scripts/m0_host_checks.sh /absolute/path/to/PR14-checkout`. Save exit codes and logs locally. The tests are CPU/static only. **Do not report old tests as passing until actual new logs exist.**
 4. Compare the actual clean status of the installed `vllm` and `vllm_ascend` to the pinned historical forks, identify the real QKV->consumer graph path and available source/patch. Treat version drift as a new treatment domain, not as identical August-2026 replication.
 5. Populate [M0 manifest](M0_MANIFEST.yaml), especially installed CANN, container digest, source/patch hashes, exact oracle tolerance, budget, and reviewer approval.
-6. Submit the complete manifest to [Issue #20](https://github.com/intellistream/ascend-small-m-gemm/issues/20) for advisor approval **before** M0-B hardware timing. A partial record is NOT hardware approval.
+6. Submit the complete manifest to [Issue #20](https://github.com/intellistream/ascend-small-m-gemm/issues/20) for advisor approval **before formal** M0-B experiments. Explicit owner-authorized bounded diagnostics are separate and do not confer formal admission.
 
 ## Hardware gate
 
