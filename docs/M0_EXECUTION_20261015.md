@@ -1,14 +1,36 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-A HOST AUDIT PENDING**; no new NPU result or profiler result is asserted.
+Status: **M0-A HOST CHECKS PASS / CUSTODY PARTIAL / M0-B BLOCKED**.
+Host audit recorded on 2026-10-15 (Asia/Shanghai). No new NPU correctness,
+timing, TP4 capture or profiler result is asserted; hardware approval remains false.
 
-## User-reported preflight (not yet independently captured)
+## Independently captured M0-A
+
+- Personal main synchronized at `633ea9943d34f534fae9b102244d17c00000e457`;
+  upstream main/PR14 remote refs match the frozen SHAs below.
+- Actual environment: one visible Ascend910B2, driver26.0.rc1, CANN9.1.0;
+  Python3.12.13, torch2.10.0+cpu, torch-npu2.10.0.post4;
+  vLLM0.23.0+empty / Ascend0.23.0, source `0fc695f` / `5cb98ca`, clean.
+- `m0_preflight.sh` exit0; three `m0_host_checks.sh` CPU/self-tests exit0.
+  CANN/driver version files supplemented the script's legacy version.cfg probes.
+- Shared-object sparse PR14 checkout is clean and about412KiB; no large CSV
+  downloaded/materialized. Twelve indexed small inputs passed size/SHA checks;
+  six request windows re-aggregate identically. Sixteen CSVs remain unverified.
+- Old NZ patch checks against pinned files but fails on the current plugin.
+  Qwen3 attention forward AST and the 910B2 consumer kernel are unchanged;
+  fusion registration/loader paths differ. Runtime match/dispatch NOT_RUN.
+- See [acceptance and source drift](M0_A_ACCEPTANCE_20261015.md) for receipts,
+  the initial checkout bootstrap failure, unverified files and remaining gates.
+
+## Original user-reported preflight (retained historical checkpoint)
 
 - Python `3.12.13`; PyTorch `2.10.0+cpu`; `torch_npu 2.10.0.post4`.
 - `torch.npu.is_available()=True`; visible NPU count `1`.
 - Active vLLM checkout `0fc695fc6d1d82e9a5ac6835ac8e4e1c83703665` (v0.23.0 line).
 - Warning: `LD_PRELOAD` / FunctionLoader — warning only, not a diagnosed failure.
-- **Unknown:** actual `npu-smi` device model/driver, CANN version, container digest, `vllm_ascend` checkout and patch identity, model/trace identity.
+- **Unknown at initial drafting:** device/driver, CANN, container digest,
+  plugin checkout/patch identity, model/trace identity. The audit above resolves
+  device/software identity; container digest and target model/trace remain unknown.
 - Official Ascend compatibility table pairs `torch_npu 2.10.0.post4` with PyTorch `2.10.0` and CANN `9.1.0`; `+cpu` in PyTorch is intentional, not a mismatch. The table is *not* proof this container runs CANN 9.1.0: https://github.com/Ascend/pytorch/blob/master/COMPATIBILITY.en.md.
 
 ## Source and custody checkpoints

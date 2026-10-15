@@ -1,28 +1,74 @@
-# Draft M0 manifest: TO_VERIFY fields are NOT measured values.
+# M0-A host receipt only: TO_VERIFY fields are NOT measured values or approval.
 project: ascend-small-m-gemm
-date: "2026-10-14"
+date: "2026-10-15"
 owner: sad-and-bad1231
-status: DRAFT_NOT_HARDWARE_APPROVED
+status: M0_A_HOST_CHECKS_PASS_CUSTODY_PARTIAL_M0_B_BLOCKED
 source:
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
-  current_main_sha: TO_VERIFY_AT_RUN
+  current_main_sha: cb095ea9dc335507ffdf7aedfb5d761fe6b5d88c
+  personal_main_sha_at_audit: 633ea9943d34f534fae9b102244d17c00000e457
   historical_pr14_head: 11aca1de03129d6f4f56d846864af20ab35eaee8
   vllm_hust_sha: e4ce33646f2ef1781289e6dc651fad0d00177c55
   vllm_ascend_hust_sha: 52f923884b9adaedfc2e764428207d0448227549
   triton_ascend_hust_sha: ef6c292108651ca88aa8c5f59ecfc1849693a71f
-  adapter_patch_sha256: TO_VERIFY
-  runner_sha256: TO_VERIFY
-  git_dirty_patch_sha256: TO_VERIFY_OR_CLEAN
+  adapter_patch_sha256: b4b090b92da67942adbd93b133aaee2c37cedbacbd011c10b2614db08b4cdaf6
+  runner_sha256: 2ce11048e8549f91a370629c794bb08dd16412c49ceda6ec57cca55ac9973d81
+  artifact_hash_scope: checked_out_PR14_files_NOT_historical_executed_dirty_runner
+  git_dirty_patch_sha256: UNKNOWN_NOT_RECORDED_AT_HISTORICAL_CAPTURE
   exact_run_command: TO_VERIFY
+  installed_vllm_sha: 0fc695fc6d1d82e9a5ac6835ac8e4e1c83703665
+  installed_ascend_sha: 5cb98caaadeff42b5b62b996e34bb2aaa29d20fd
+  installed_vllm_root: /vllm-workspace/vllm
+  installed_ascend_root: /vllm-workspace/vllm-ascend
+  installed_source_dirty_state: CLEAN_BOTH_CHECKOUTS
+  upstream_main_dirty_state: CLEAN
+  pr14_sparse_dirty_state: CLEAN
+  personal_pre_edit_dirty_state: CLEAN
+  historical_nz_patch_check_pinned_files: PASS_CHECK_ONLY_NOT_APPLIED
+  historical_nz_patch_check_installed_plugin: FAIL_DOES_NOT_APPLY
 environment:
   container_image_digest: TO_VERIFY
-  cann_version: TO_VERIFY
-  torch_npu_version: TO_VERIFY
-  npu_driver: TO_VERIFY
-  device_model_and_allocation: TO_VERIFY
+  cann_version: "9.1.0"
+  cann_version_evidence: /usr/local/Ascend/cann-9.1.0/opp/version.info
+  torch_npu_version: "2.10.0.post4"
+  torch_version: "2.10.0+cpu"
+  python_version: "3.12.13"
+  vllm_version: "0.23.0+empty"
+  vllm_ascend_version: "0.23.0"
+  triton_version: "3.5.0"
+  triton_ascend_version: "3.2.2"
+  npu_driver: "26.0.rc1"
+  npu_driver_evidence: /usr/local/Ascend/driver/version.info
+  device_model_and_allocation: "1 visible Ascend910B2; physical identifiers local only"
+  preflight_npu_available: true
+  preflight_only_not_device_correctness: true
   device_budget: TO_CONFIRM_WITH_ADVISOR
   model_checkpoint_id_and_hash: TO_VERIFY
   trace_sha256: TO_VERIFY
+host_audit:
+  date_timezone: Asia/Shanghai
+  preflight_exit_code: 0
+  host_checks_exit_code: 0
+  attribution_cpu_cases_passed: 13
+  custody_cpu_cases_passed: 2
+  capture_self_test: PASS_CPU_ONLY
+  initial_bootstrap: "exit4 MISSING script before sparse index population; fixed checkout, rerun passed"
+  custody_index_sha256: 4c9e8cdffb4bf62b55f2d8142d3bb0784143aeaac43fc1d0c7f87c9a043a4e91
+  historical_manifest_sha256: 727e2d6aafd040ff68d12561480afb22c439b8da5870ccf882400e2caf143248
+  indexed_small_inputs_size_and_sha_passed: 12
+  request_windows_reaggregated_and_matched: 6
+  raw_csv_files_not_materialized_or_hashed: 16
+  raw_csv_bytes_not_materialized_or_hashed: 597659552
+  full_historical_custody: NOT_RUN_PARTIAL_INPUTS_ONLY
+  kernel_reaggregation: NOT_RUN
+  runtime_fusion_match_and_dispatch: NOT_RUN
+  npu_correctness_or_timing: NOT_RUN
+  tp4_capture: NOT_RUN_PROHIBITED_ON_SINGLE_DEVICE
+  preflight_local_dir: m0_receipts/preflight_20261015T002354Z
+  cpu_tests_local_dir: m0_receipts/host_audit_20261015T002410Z
+  source_audit_local_dir: m0_receipts/source_audit_20261015
+  preflight_checksum_file_sha256: 36d84ccd4491e8f76ccb0bf9d5199193cd0bdf0113cd65e48277936118156df2
+  cpu_tests_checksum_file_sha256: 84690dc37963a8854cff53c330d8e63dd09bbd99d831f28aef72b1b6f29350d8
 workload:
   model_family: Qwen3-32B
   tensor_parallelism: 4
