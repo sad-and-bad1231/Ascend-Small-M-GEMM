@@ -52,4 +52,10 @@
 
 所有 raw receipts 保存在**本地受控位置或显式选择的私有仓库**；本仓目前为 PUBLIC，只发布去标识的 manifest/schema 和结论摘要。
 
-第一份 M0 manifest 按 [M0_MANIFEST.yaml](M0_MANIFEST.yaml) 填写并提交给 [Issue #20](https://github.com/intellistream/ascend-small-m-gemm/issues/20) 审核；上游明确要求 **advisor review 是硬件实验准入条件**。目前实际设备与镜像 SHA 未填，M0 尚未获此准入。不要误写“已运行 NPU”。
+第一份 M0 manifest 按 [M0_MANIFEST.yaml](M0_MANIFEST.yaml) 填写并提交给 [Issue #20](https://github.com/intellistream/ascend-small-m-gemm/issues/20) 审核；**advisor review 是正式实验准入条件，不是每次本地诊断的设备使用许可**。正式准入尚未批准，不能伪造审批字段。
+
+Owner 明确授权后，可以在已分配的单卡上运行有界 `DIAGNOSTIC_ONLY` smoke，
+不要求导师审批链接。本轮范围为 M=1、seed=0、B0/B1/B0 的正确性与 Graph Replay，
+不含性能 Benchmark 或 profiler。诊断仍须通过源码身份、设备空闲/归属、
+correctness、资源预算和失败即停止检查；失败记录不覆盖。诊断成功不等于正式准入。
+个人仓库可按 Owner 要求持续提交、push 脱敏记录；真实原始设备日志仍留本地。

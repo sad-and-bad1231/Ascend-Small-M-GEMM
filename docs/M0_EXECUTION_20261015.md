@@ -1,12 +1,15 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-A HOST CHECKS PASS / CUSTODY PARTIAL / M0-B CONTRACT PREPARED, HARDWARE BLOCKED**.
-Host audit recorded on 2026-10-15 (Asia/Shanghai). No new NPU correctness,
-timing, TP4 capture or profiler result is asserted; hardware approval remains false.
+Status: **M0-B DIAGNOSTIC SMOKE PASS / FORMAL ADMISSION PENDING**.
+Owner-authorized M=1 seed0 B0/B1/B0 correctness and Graph Replay passed on the
+allocated 910B2. See [diagnostic evidence and preserved failures](M0_B_DIAGNOSTIC_20261015.md).
+No performance benchmark, TP4 capture or profiler ran; formal approval remains false.
+The M0-A and CPU-only preparation records below are historical checkpoints.
 
 M0-B preparation based on personal main `c2fdf300`: see the
 [single-card review contract](M0_B_CONTRACT_20261015.md) and manifest. The new
-isolated probe defaults to a CPU-only plan; runtime entry is approval-gated.
+isolated probe defaults to a CPU-only plan; FORMAL runtime entry is advisor-gated,
+while bounded DIAGNOSTIC_ONLY correctness smoke uses explicit owner authorization.
 No environment re-inventory or NPU execution in this preparation. The numbered
 M0-A execution order below is retained history, not an instruction to rerun it.
 

@@ -1,6 +1,10 @@
 # M0-B: Single-Card Contract for Review
 
 **PREPARATION ONLY / CPU TESTED / HARDWARE NOT RUN / NOT APPROVED.**
+The status above describes the original preparation checkpoint. Subsequent
+owner-authorized `DIAGNOSTIC_ONLY` smoke is separate from formal admission;
+see the diagnostic section in the manifest. Issue20 review gates **FORMAL**
+experiments, not each bounded local diagnostic. No approval is fabricated.
 Based on personal main `c2fdf300`. Reuse [M0-A audit](M0_A_ACCEPTANCE_20261015.md):
 one 910B2, vLLM `0fc695f`, Ascend plugin `5cb98ca`, current 0.23 stack.
 No environment re-inventory, package changes, production patches, TP4 runner,
@@ -137,10 +141,14 @@ python -m py_compile experiments/m0b/qkv_probe.py experiments/m0b/test_qkv_probe
 python -m unittest discover -s experiments/m0b -p 'test_*.py' -v
 ```
 
-Hardware commands are **templates, NOT executed this turn**. First obtain an
+The original FORMAL commands below are **templates, NOT executed in preparation**. First obtain an
 explicit advisor Issue20 approval comment and update the reviewed manifest
 `approval.approved_for_hardware` and its exact `advisor_review_link`.
-No command-line bypass is provided. Reuse the existing allocated device visibility;
+No FORMAL bypass is provided. Separately, `--mode DIAGNOSTIC_ONLY --stage correctness`
+allows the explicitly owner-authorized M=1 seed=0 no-bias chain cell without an
+advisor link; it rejects timing/profile stages, other shapes/seeds and scopes.
+Source identity, correctness, budget and fail-stop checks are unchanged.
+Reuse the existing allocated device visibility;
 do not hard-code yesterday's physical device ID. With an idle/owned device:
 
 ```bash

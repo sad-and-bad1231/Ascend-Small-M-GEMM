@@ -9,6 +9,7 @@
 - [M0 实验协议](docs/M0_PROTOCOL.md)
 - [M0 manifest 草案](docs/M0_MANIFEST.yaml)
 - [M0-B 单卡对照合同与 CPU-only 准备](docs/M0_B_CONTRACT_20261015.md)
+- [M0-B 单卡诊断结果与原始失败边界](docs/M0_B_DIAGNOSTIC_20261015.md)：M=1 seed0 正确性、Graph Replay PASS，未跑性能 Benchmark。
 
 ## 目标与验收
 

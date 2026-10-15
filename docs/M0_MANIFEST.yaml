@@ -2,7 +2,7 @@
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: M0_B_CONTRACT_PREPARED_CPU_ONLY_PENDING_REVIEW
+status: M0_B_DIAGNOSTIC_SMOKE_PASS_FORMAL_ADMISSION_PENDING
 source:
   personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
@@ -122,6 +122,7 @@ stop:
   no_go: valid_repeated_evidence_excludes_useful_target_boundary
   go_to_M1: valid_mechanistic_headroom_and_advisor_approval
 component_preparation:
+  evidence_checkpoint: original_CPU_only_preparation_79d451c_NOT_current_device_status
   contract: docs/M0_B_CONTRACT_20261015.md
   harness: experiments/m0b/qkv_probe.py
   scope: synthetic_single_device_TP4_rank_shape_NOT_TP1_full_model_NOT_TP4_service
@@ -184,7 +185,7 @@ component_preparation:
     profiler: "separate processes, M=1 and M=8 seed0 only after oracle; 5 replays/arm; optional hardware counters only if available"
     attribution: "dispatch ID, launch count, conversions, allocator, timeline; missing GM/MTE/UB/AIC/AIV counters=UNKNOWN"
   stops:
-    - no_Issue20_approval_no_hardware
+    - no_Issue20_approval_no_FORMAL_experiment
     - occupied_device_or_source_runtime_drift_stop_before_allocating
     - first_oracle_layout_or_graph_failure_stop_cell_no_timing_no_tolerance_relaxation
     - hidden_hot_conversion_or_extra_resident_weight_invalidates_no_copy_B1
@@ -195,6 +196,41 @@ component_preparation:
   cpu_tests_status: PASS_8_CPU_TESTS_NO_DEVICE_EXECUTION
   cpu_tests_receipt: m0_receipts/m0b_preparation_20261015/cpu_tests_verified.local.txt
   cpu_tests_receipt_sha256: 9ef2171be7c294a1a46a446f1251fb010f2693bec226c241418565d004995f01
+diagnostic_permission:
+  user_authorized: true
+  authority: explicit_user_instruction_2026_10_15_allocated_single_910B2
+  mode: DIAGNOSTIC_ONLY
+  scope: "M=1 seed=0 B0/B1/B0 no-bias chain correctness and Graph Replay; no timing or profiler"
+  timeout_seconds_per_process: 120
+  max_allocated_hbm_bytes: 2147483648
+  formal_admission_granted: false
+diagnostic_execution:
+  status: PASS_DIAGNOSTIC_ONLY_NOT_FORMAL_ADMISSION
+  report: docs/M0_B_DIAGNOSTIC_20261015.md
+  sanitized_results: results/m0b_diagnostic_20261015/summary.json
+  local_receipts: m0_receipts/m0b_diagnostic_20261015
+  local_receipt_index_sha256: e379fa2512a37b5d3ec25de9d5c4d5b2d8b7f95499254e12066273392c1ba5b7
+  executed_probe_sha256: 897e8fb7a9fbbc12db2064237b0e33880ba0d248833fb31c66d5b1355c566237
+  ordered_final_runs: [B0_attempt3, B1_attempt2, B0_rollback_attempt1]
+  final_exit_codes: [0, 0, 0]
+  observed_weight_formats: [2, 29, 2]
+  observed_QKV_output_formats: [2, 2, 2]
+  graph_eager_exact: true
+  fixed_buffer_replays_per_arm: 5
+  changed_X_and_positions_replay_oracle: PASS
+  B1_and_rollback_vs_B0_QKV_Q_K_V: EXACT_THIS_CELL
+  gemm_vs_CPU_FP32_rel_l2: 0.0016629478195682168
+  consumer_max_abs_including_changed_buffers: 0.023781299591064453
+  post_weight_release_allocated_bytes_all_arms: 27273728
+  max_weight_load_peak_allocated_bytes: 54536704
+  cpu_unit_mock_tests_passed: 10
+  earlier_failed_runs_preserved: [B0_attempt1, B1_attempt1]
+  earlier_bootstrap_only_pass_preserved: B0_attempt2
+  device_idle_before_after: true
+  formal_benchmark: NOT_RUN
+  profiler: NOT_RUN
+  dispatch_and_implicit_conversion_attribution: UNKNOWN
 approval:
+  scope: FORMAL_experiment_admission_NOT_owner_authorized_local_diagnostics
   advisor_review_link: TO_FILL
   approved_for_hardware: false

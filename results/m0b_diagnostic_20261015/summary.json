@@ -1,0 +1,81 @@
+{
+  "status": "DIAGNOSTIC_ONLY_PASS_NOT_FORMAL_ADMISSION",
+  "date_utc": "2026-10-15",
+  "base_commit": "79d451c831320f724a89da161ec2c0b7f936aa9f",
+  "executed_probe_sha256": "897e8fb7a9fbbc12db2064237b0e33880ba0d248833fb31c66d5b1355c566237",
+  "executed_dirty_patch_v3_sha256": "3138a862f89f768fd78e447426b43ea267bc11a179960c2d16a7f3dc042e7e9b",
+  "mode": "DIAGNOSTIC_ONLY",
+  "formal_approved": false,
+  "user_authorized": true,
+  "device": "single Ascend910B2; idle before and after",
+  "shape": {"m": 1, "n": 2560, "k": 5120, "dtype": "BF16", "seed": 0, "bias": false},
+  "process_config_both_arms": {"allow_internal_format": true, "global_weight_nz_mode_2": false},
+  "stage": "correctness",
+  "scope": "chain",
+  "runtime": {"torch": "2.10.0+cpu", "torch_npu": "2.10.0.post4", "vllm": "0.23.0+empty", "vllm_ascend": "0.23.0", "cann": "9.1.0", "driver": "26.0.rc1"},
+  "runs": [
+    {
+      "receipt": "B0_attempt3",
+      "arm": "B0",
+      "exit_code": 0,
+      "weight_format": 2,
+      "producer_output_format": 2,
+      "result_sha256": "fb7723b6bb78f79b4656d9443d2b14825bbebad0c6c56268c6d8b45891ef5288",
+      "outputs_file_sha256": "13d6b0026cd6219af9e2efefaa9dc5f089d75eb3e60829bbc59387de0a359dca",
+      "allocated_after_weight_release_bytes": 27273728,
+      "weight_load_peak_allocated_bytes": 27273728,
+      "final_allocated_bytes": 28349952,
+      "reserved_bytes": 54525952
+    },
+    {
+      "receipt": "B1_attempt2",
+      "arm": "B1",
+      "exit_code": 0,
+      "weight_format": 29,
+      "producer_output_format": 2,
+      "result_sha256": "3f5c8f82f9adf86ce52d9b7c248ce667d1539f3a63e9a73cb684541b5303c586",
+      "outputs_file_sha256": "2a97688eb293f1f76bf17e901136fac2bf21001b23177454b708c0dee2c2e868",
+      "allocated_after_weight_release_bytes": 27273728,
+      "weight_load_peak_allocated_bytes": 54536704,
+      "final_allocated_bytes": 28349952,
+      "reserved_bytes": 54525952,
+      "vs_B0_QKV_Q_K_V_max_abs": [0, 0, 0, 0]
+    },
+    {
+      "receipt": "B0_rollback_attempt1",
+      "arm": "B0_rollback",
+      "exit_code": 0,
+      "weight_format": 2,
+      "producer_output_format": 2,
+      "result_sha256": "971fa8b24ba8b33c4bfb0cc2d2b1f90b33f2a38b6b17055815dcb22509a07cd9",
+      "outputs_file_sha256": "13d6b0026cd6219af9e2efefaa9dc5f089d75eb3e60829bbc59387de0a359dca",
+      "allocated_after_weight_release_bytes": 27273728,
+      "weight_load_peak_allocated_bytes": 27273728,
+      "final_allocated_bytes": 28349952,
+      "reserved_bytes": 54525952,
+      "vs_B0_QKV_Q_K_V_max_abs": [0, 0, 0, 0]
+    }
+  ],
+  "correctness_all_final_runs": {
+    "gemm_vs_cpu_fp32_max_abs_original_input": 0.010640144348144531,
+    "gemm_vs_cpu_fp32_rel_l2_original_input": 0.0016629478195682168,
+    "consumer_vs_cpu_fp32_max_abs_including_updated_buffers": 0.023781299591064453,
+    "V_exact_copy": true,
+    "eager_graph_exact": true,
+    "five_fixed_buffer_replays_exact": true,
+    "updated_X_and_positions_oracle_pass": true,
+    "input_and_source_fingerprints_equal_between_arms": true
+  },
+  "preserved_earlier_runs": [
+    {"receipt": "B0_attempt1", "exit_code": 1, "failure": "missing Triton device-properties startup initialization", "failure_receipt_sha256": "50eb01200c6561680b2bd806aa752ba3ca993810b50db6c69a23da5d032ed66c"},
+    {"receipt": "B0_attempt2", "exit_code": 0, "scope": "bootstrap-only; before matched allow_internal_format setup, excluded from final triplet"},
+    {"receipt": "B1_attempt1", "exit_code": 1, "failure": "format29 guard failed with allow_internal_format=False warning; actual numeric format not recorded", "failure_receipt_sha256": "bc44d298cafda7703257926a91831a4217ace62c25565f14b7ec71d615c16c08"}
+  ],
+  "cpu_tests": {"passed": 10, "exit_code": 0, "receipt_sha256": "040019c5353e8066779055522540dfe45225c805a6aac84fc29a5a65958f221c"},
+  "timing_trials": [],
+  "profiling": "NOT_RUN",
+  "performance_drift": "NOT_MEASURED",
+  "hot_path_conversions_and_dispatch": "UNKNOWN_NOT_PROFILED",
+  "local_raw_root": "m0_receipts/m0b_diagnostic_20261015",
+  "local_receipt_index_sha256": "e379fa2512a37b5d3ec25de9d5c4d5b2d8b7f95499254e12066273392c1ba5b7"
+}

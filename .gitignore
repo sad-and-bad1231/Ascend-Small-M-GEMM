@@ -13,3 +13,5 @@ __pycache__/
 *.pt
 *.pth
 results/raw/
+# CANN may emit this compiler diagnostic in the launch working directory.
+fusion_result.json

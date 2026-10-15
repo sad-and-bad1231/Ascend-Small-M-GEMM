@@ -2,7 +2,8 @@
 """Isolated M0-B preparation. Default path is stdlib-only and never touches NPU.
 
 Reuses PR14's f_linear_nz policy and graph/event measurement method, not its
-TP4 runner or environment activation. Hardware paths are NOT validated yet.
+TP4 runner or environment activation. Formal admission is separate from bounded
+user-authorized diagnostics; neither mode disables safety or correctness checks.
 """
 
 import argparse
@@ -45,7 +46,7 @@ def plan():
                                   (16, False), (1, True)]],
         "order": "fresh processes B0/B1/B0, seed=0..9",
         "timing": {"warmups": 10, "trials": 5, "replays_per_trial": 100},
-        "hardware_gate": "Issue20 advisor approval + updated manifest; no CLI bypass",
+        "hardware_gate": "FORMAL requires Issue20 review; DIAGNOSTIC_ONLY permits the user-authorized bounded correctness cell",
     }
 
 
@@ -55,7 +56,19 @@ def require_approval(manifest):
     if approval.get("approved_for_hardware") is not True or not link.startswith(
         "https://github.com/intellistream/ascend-small-m-gemm/issues/20#issuecomment-"
     ):
-        raise RuntimeError("BLOCKED: reviewed Issue20 approval required before runtime import")
+        raise RuntimeError("BLOCKED: formal experiments require reviewed Issue20 approval before runtime import")
+
+
+def require_execution_permission(manifest, args):
+    if getattr(args, "mode", "FORMAL") == "DIAGNOSTIC_ONLY":
+        permission = manifest.get("diagnostic_permission", {})
+        if permission.get("user_authorized") is not True:
+            raise RuntimeError("BLOCKED: allocated-device diagnostic authorization required")
+        if (args.stage != "correctness" or args.scope != "chain" or args.m != 1
+                or args.seed != 0 or args.bias):
+            raise RuntimeError("BLOCKED: diagnostic scope is M=1 seed=0 no-bias chain correctness/replay only")
+        return
+    require_approval(manifest)
 
 
 def consumer_reference(qkv, cache, positions, qw, kw, head_dim=128, q_heads=16,
@@ -103,9 +116,24 @@ def digest_tensor(tensor):
     return hashlib.sha256(tensor.contiguous().view(torch.uint8).numpy().tobytes()).hexdigest()
 
 
+def initialize_isolated_runtime(npu, triton_utils):
+    # Match worker/model_runner startup without importing the TP service runner.
+    # This permits internal storage; it does NOT select global weight_nz_mode=2.
+    npu.config.allow_internal_format = True
+    triton_utils.init_device_properties_triton()
+
+
 def hardware(args, manifest, out):
-    # All approval checks precede torch_npu/plugin imports and device queries.
-    require_approval(manifest)
+    # Execution permission is not formal research approval. Both precede runtime.
+    require_execution_permission(manifest, args)
+
+    def checkpoint(stage, **fields):
+        entry = {"stage": stage, **fields}
+        with (out / "progress.local.jsonl").open("a") as handle:
+            handle.write(json.dumps(entry) + "\n")
+        print(json.dumps(entry), flush=True)
+
+    checkpoint("permission", mode=args.mode, formal_approval=manifest["approval"]["approved_for_hardware"])
     import torch
     import torch_npu
     import torch.nn.functional as F
@@ -127,6 +155,8 @@ def hardware(args, manifest, out):
     if hashlib.sha256(source.read_bytes()).hexdigest() != CONSUMER_SHA:
         raise RuntimeError("consumer changed")
     consumer = module.split_qkv_rmsnorm_rope_impl
+    initialize_isolated_runtime(torch.npu, importlib.import_module("vllm_ascend.ops.triton.triton_utils"))
+    checkpoint("source_and_consumer_verified", consumer_sha=CONSUMER_SHA)
     gen = torch.Generator(device="cpu").manual_seed(args.seed)
     x_cpu = torch.randn(args.m, 5120, generator=gen, device="cpu").bfloat16()
     w_cpu = (torch.randn(2560, 5120, generator=gen, device="cpu") / math.sqrt(5120)).bfloat16()
@@ -139,6 +169,7 @@ def hardware(args, manifest, out):
     cache_cpu = torch.cat((angles.cos(), angles.sin()), -1).bfloat16()
     shared = {"seed": args.seed, "m": args.m, "bias": args.bias,
               "sources": SOURCE_SHAS, "consumer_sha": CONSUMER_SHA,
+              "process_config": {"allow_internal_format": True},
               "runtime": {name: version(name) for name in
                           ("torch", "torch-npu", "vllm", "vllm-ascend", "triton", "triton-ascend")},
               "runtime_files": {name: hashlib.sha256(Path(name).read_bytes()).hexdigest() for name in
@@ -157,6 +188,7 @@ def hardware(args, manifest, out):
     if args.arm == "B1" and baseline is None:
         raise RuntimeError("B1 requires same-seed B0 receipt --baseline")
     fmt = weight_format(args.arm, args.m, args.bias)
+    checkpoint("inputs_and_baseline_verified", shared=shared, weight_format=fmt)
     x = torch_npu.npu_format_cast(x_cpu.to("npu:0"), 2)
     w = torch_npu.npu_format_cast(w_cpu.to("npu:0"), 2)
     before = torch.npu.memory_allocated()
@@ -171,6 +203,8 @@ def hardware(args, manifest, out):
     torch.npu.empty_cache()
     after = torch.npu.memory_allocated()
     load_peak = torch.npu.max_memory_allocated()
+    if load_peak > 2 * 1024**3:
+        raise RuntimeError("2GiB allocated device budget exceeded at weight load")
     if int(torch_npu.get_npu_format(w)) != fmt:
         raise RuntimeError("requested weight format unavailable")
     qw, kw, cache, positions = [t.to("npu:0") for t in (qw_cpu, kw_cpu, cache_cpu, positions_cpu)]
@@ -221,8 +255,10 @@ def hardware(args, manifest, out):
         del producer_probe
         eager = chain()
         correctness = {"eager": check(eager)}
+        checkpoint("eager_oracle_pass", correctness=correctness["eager"])
         graph, values = capture(chain)
         correctness["graph"] = check(values)
+        checkpoint("graph_oracle_pass", correctness=correctness["graph"])
         for actual, expected in zip(values, eager):
             compare(actual, expected, atol=0, rtol=0)
         snapshot = [t.cpu().clone() for t in values]
@@ -231,17 +267,20 @@ def hardware(args, manifest, out):
             torch.npu.synchronize()
             for actual, expected in zip(values, snapshot):
                 compare(actual, expected, atol=0, rtol=0)
+        checkpoint("five_replays_and_eager_exact_pass")
         if baseline:
             correctness["B0_pair"] = [compare(a, b, atol=0 if fmt == 2 else 0.05,
                                                rtol=0 if fmt == 2 else 0.01 if i == 0 else RTOL,
                                                rel_l2_limit=0.01 if i == 0 else None)
                                       for i, (a, b) in enumerate(zip(snapshot, baseline["outputs"]))]
+            checkpoint("B0_pair_pass", correctness=correctness["B0_pair"])
         # A static replay must read updated input/position buffers, not stale captures.
         x.copy_(x_cpu.mul(0.5).to("npu:0"))
         positions.copy_((positions_cpu + 1).to("npu:0"))
         graph.replay()
         torch.npu.synchronize()
         correctness["updated_buffers"] = check(values, x_cpu.mul(0.5), positions_cpu + 1)
+        checkpoint("updated_buffers_oracle_pass", correctness=correctness["updated_buffers"])
         x.copy_(x_cpu.to("npu:0"))
         positions.copy_(positions_cpu.to("npu:0"))
         graph.replay()
@@ -280,6 +319,7 @@ def hardware(args, manifest, out):
                 torch.npu.synchronize()
         torch.save({"shared": shared, "arm": args.arm, "outputs": snapshot}, out / "outputs.pt")
         return {"status": "DEVICE_CHECKS_PASS_NOT_DISPATCH_ADMISSION", "shared": shared,
+                "mode": args.mode, "formal_approval": manifest["approval"]["approved_for_hardware"],
                 "arm": args.arm, "scope": args.scope, "stage": args.stage, "weight_format": fmt,
                 "load_cast_wall_us": setup_us, "allocated_before_cast": before,
                 "allocated_after_release": after, "load_peak_allocated": load_peak,
@@ -296,6 +336,7 @@ def hardware(args, manifest, out):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--stage", choices=("plan", "correctness", "timing", "profile"), default="plan")
+    p.add_argument("--mode", choices=("FORMAL", "DIAGNOSTIC_ONLY"), default="FORMAL")
     p.add_argument("--arm", choices=("B0", "B1"), default="B0")
     p.add_argument("--m", type=int, choices=M_VALUES, default=1)
     p.add_argument("--bias", action="store_true")
@@ -309,7 +350,7 @@ def main():
         return
     import yaml
     manifest = yaml.safe_load((ROOT / "docs/M0_MANIFEST.yaml").read_text())
-    require_approval(manifest)
+    require_execution_permission(manifest, args)
     if args.bias and args.m != 1:
         p.error("only M=1 bias fallback is preregistered")
     if args.out is None or not args.out.resolve().is_relative_to(ROOT / "m0_receipts"):

@@ -5,12 +5,21 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+from types import SimpleNamespace
+from unittest.mock import Mock
 
 import torch
 import qkv_probe as probe
 
 
 class ContractTests(unittest.TestCase):
+    def test_isolated_runtime_initializes_worker_prerequisites(self):
+        npu = SimpleNamespace(config=SimpleNamespace(allow_internal_format=False))
+        utils = SimpleNamespace(init_device_properties_triton=Mock())
+        probe.initialize_isolated_runtime(npu, utils)
+        self.assertTrue(npu.config.allow_internal_format)
+        utils.init_device_properties_triton.assert_called_once_with()
+
     def test_policy(self):
         for m in (1, 2, 4, 8):
             self.assertEqual(probe.weight_format("B1", m), 29)
@@ -29,6 +38,22 @@ class ContractTests(unittest.TestCase):
                 probe.require_approval({"approval": {"approved_for_hardware": value}})
         with self.assertRaises(RuntimeError):
             probe.require_approval({"approval": {"approved_for_hardware": True, "advisor_review_link": "TO_FILL"}})
+
+    def test_diagnostic_permission_is_not_formal_approval(self):
+        manifest = {"diagnostic_permission": {"user_authorized": True},
+                    "approval": {"approved_for_hardware": False, "advisor_review_link": "TO_FILL"}}
+        args = SimpleNamespace(mode="DIAGNOSTIC_ONLY", stage="correctness", scope="chain",
+                               m=1, seed=0, bias=False)
+        probe.require_execution_permission(manifest, args)
+        self.assertFalse(manifest["approval"]["approved_for_hardware"])
+        for key, value in (("stage", "timing"), ("stage", "profile"), ("scope", "gemm"),
+                           ("m", 2), ("seed", 1), ("bias", True), ("mode", "FORMAL")):
+            altered = SimpleNamespace(**{**vars(args), key: value})
+            with self.assertRaises(RuntimeError):
+                probe.require_execution_permission(manifest, altered)
+        manifest["diagnostic_permission"]["user_authorized"] = False
+        with self.assertRaises(RuntimeError):
+            probe.require_execution_permission(manifest, args)
 
     def test_plan_stdlib_only(self):
         result = subprocess.run([sys.executable, "-S", str(Path(probe.__file__)), "--stage", "plan"],
