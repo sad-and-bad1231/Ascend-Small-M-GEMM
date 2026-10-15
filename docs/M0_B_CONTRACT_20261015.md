@@ -5,6 +5,8 @@ The status above describes the original preparation checkpoint. Subsequent
 owner-authorized `DIAGNOSTIC_ONLY` smoke is separate from formal admission;
 see the diagnostic section in the manifest. Issue20 review gates **FORMAL**
 experiments, not each bounded local diagnostic. No approval is fabricated.
+The later M1/M8 short-profile and fallback authorization/results are recorded in
+[the dispatch diagnostic](M0_B_DISPATCH_20261015.md); the original scope below is historical.
 Based on personal main `c2fdf300`. Reuse [M0-A audit](M0_A_ACCEPTANCE_20261015.md):
 one 910B2, vLLM `0fc695f`, Ascend plugin `5cb98ca`, current 0.23 stack.
 No environment re-inventory, package changes, production patches, TP4 runner,

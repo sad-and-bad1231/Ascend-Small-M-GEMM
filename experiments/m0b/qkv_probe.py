@@ -64,9 +64,10 @@ def require_execution_permission(manifest, args):
         permission = manifest.get("diagnostic_permission", {})
         if permission.get("user_authorized") is not True:
             raise RuntimeError("BLOCKED: allocated-device diagnostic authorization required")
-        if (args.stage != "correctness" or args.scope != "chain" or args.m != 1
-                or args.seed != 0 or args.bias):
-            raise RuntimeError("BLOCKED: diagnostic scope is M=1 seed=0 no-bias chain correctness/replay only")
+        allowed = any(args.m == cell["m"] and args.bias == cell["bias"]
+                      and args.stage in cell["stages"] for cell in permission.get("cells", []))
+        if args.scope != "chain" or args.seed != 0 or not allowed:
+            raise RuntimeError("BLOCKED: outside the authorized diagnostic cell/stage/seed")
         return
     require_approval(manifest)
 
@@ -294,6 +295,7 @@ def hardware(args, manifest, out):
             raise RuntimeError("2GiB allocated device budget exceeded")
         torch.npu.reset_peak_memory_stats()
         timings = []
+        profile_observation = None
         if args.stage == "timing":
             for _ in range(10):
                 graph.replay()
@@ -309,14 +311,39 @@ def hardware(args, manifest, out):
                 timings.append({"event_us": a.elapsed_time(b) * 1000 / 100,
                                 "wall_us": (time.perf_counter_ns() - wall) / 1000 / 100})
         if args.stage == "profile":
+            from torch_npu.profiler import _ExperimentalConfig, ProfilerLevel, AiCMetrics
+            weight_ptr = w.data_ptr()
+            allocated_before_profile = torch.npu.memory_allocated()
             with torch_npu.profiler.profile(
                 activities=[torch_npu.profiler.ProfilerActivity.CPU, torch_npu.profiler.ProfilerActivity.NPU],
                 on_trace_ready=torch_npu.profiler.tensorboard_trace_handler(str(out / "profiler")),
                 record_shapes=True, profile_memory=True,
+                experimental_config=_ExperimentalConfig(
+                    profiler_level=ProfilerLevel.Level1, aic_metrics=AiCMetrics.AiCoreNone,
+                    data_simplification=False, op_attr=True,
+                ),
             ):
-                for _ in range(5):
-                    graph.replay()
+                for i in range(5):
+                    with torch.profiler.record_function(f"M0B_GRAPH_REPLAY_{i}"):
+                        graph.replay()
                 torch.npu.synchronize()
+            profile_observation = {
+                "replays": 5, "weight_pointer_unchanged": w.data_ptr() == weight_ptr,
+                "weight_format_after": int(torch_npu.get_npu_format(w)),
+                "allocated_before": allocated_before_profile,
+                "allocated_after": torch.npu.memory_allocated(),
+                "peak_allocated": torch.npu.max_memory_allocated(),
+            }
+            checkpoint("profile_completed", observation=profile_observation)
+            if (not profile_observation["weight_pointer_unchanged"]
+                    or profile_observation["weight_format_after"] != fmt
+                    or profile_observation["peak_allocated"] > 2 * 1024**3):
+                raise RuntimeError("profile changed weight identity/format or exceeded allocation budget")
+            if args.scope == "chain":
+                correctness["post_profile"] = check(values)
+                for actual, expected in zip(values, snapshot):
+                    compare(actual, expected, atol=0, rtol=0)
+                checkpoint("post_profile_oracle_and_exact_pass", correctness=correctness["post_profile"])
         torch.save({"shared": shared, "arm": args.arm, "outputs": snapshot}, out / "outputs.pt")
         return {"status": "DEVICE_CHECKS_PASS_NOT_DISPATCH_ADMISSION", "shared": shared,
                 "mode": args.mode, "formal_approval": manifest["approval"]["approved_for_hardware"],
@@ -329,6 +356,7 @@ def hardware(args, manifest, out):
                              "dtype": str(t.dtype), "format": int(torch_npu.get_npu_format(t))}
                             for t in (x, w, *eager)],
                 "correctness": correctness, "trials": timings,
+                "profile_observation": profile_observation,
                 "median_us": statistics.median(t["event_us"] for t in timings) if timings else None,
                 "dispatch_and_hot_conversion_audit": "REQUIRES_TRACE_REVIEW"}
 

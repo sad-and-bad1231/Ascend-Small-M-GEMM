@@ -10,6 +10,7 @@
 - [M0 manifest 草案](docs/M0_MANIFEST.yaml)
 - [M0-B 单卡对照合同与 CPU-only 准备](docs/M0_B_CONTRACT_20261015.md)
 - [M0-B 单卡诊断结果与原始失败边界](docs/M0_B_DIAGNOSTIC_20261015.md)：M=1 seed0 正确性、Graph Replay PASS，未跑性能 Benchmark。
+- [M0-B 真实 dispatch / 转换归因](docs/M0_B_DISPATCH_20261015.md)：M=1/8 独立 NZ 路径已观测；短 trace 不是性能收益。
 
 ## 目标与验收
 

@@ -8,6 +8,8 @@
 - Honor the authorized shape, seed, stage, timeout and memory budget. Diagnostics
   retain source identity, correctness and fail-stop checks; they do not authorize
   formal timing sweeps, multi-card serving or M1 work.
+- Short diagnostic profiling is allowed only for the owner's explicit manifest
+  cells and replay cap; inspect each trace before expanding to the next arm/cell.
 - Preserve original failures before minimal harness repairs and reruns. Do not
   modify production kernels, golden vLLM/plugin checkouts or installed packages.
 - Owner-requested updates may be committed and pushed to this personal notebook

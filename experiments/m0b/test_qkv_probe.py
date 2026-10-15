@@ -10,9 +10,15 @@ from unittest.mock import Mock
 
 import torch
 import qkv_probe as probe
+from trace_summary import trace_events
 
 
 class ContractTests(unittest.TestCase):
+    def test_trace_array_and_object_envelopes(self):
+        events = [{"name": "HostToDevice1", "ph": "f"}, {"name": "MODEL_EXECUTE", "ph": "X"}]
+        self.assertEqual(trace_events(events), events)
+        self.assertEqual(trace_events({"traceEvents": events}), events)
+
     def test_isolated_runtime_initializes_worker_prerequisites(self):
         npu = SimpleNamespace(config=SimpleNamespace(allow_internal_format=False))
         utils = SimpleNamespace(init_device_properties_triton=Mock())
@@ -40,20 +46,39 @@ class ContractTests(unittest.TestCase):
             probe.require_approval({"approval": {"approved_for_hardware": True, "advisor_review_link": "TO_FILL"}})
 
     def test_diagnostic_permission_is_not_formal_approval(self):
-        manifest = {"diagnostic_permission": {"user_authorized": True},
+        manifest = {"diagnostic_permission": {"user_authorized": True, "cells": [
+                        {"m": 1, "bias": False, "stages": ["correctness", "profile"]},
+                        {"m": 8, "bias": False, "stages": ["correctness", "profile"]},
+                        {"m": 16, "bias": False, "stages": ["correctness"]},
+                        {"m": 1, "bias": True, "stages": ["correctness"]}]},
                     "approval": {"approved_for_hardware": False, "advisor_review_link": "TO_FILL"}}
         args = SimpleNamespace(mode="DIAGNOSTIC_ONLY", stage="correctness", scope="chain",
                                m=1, seed=0, bias=False)
         probe.require_execution_permission(manifest, args)
         self.assertFalse(manifest["approval"]["approved_for_hardware"])
-        for key, value in (("stage", "timing"), ("stage", "profile"), ("scope", "gemm"),
+        for key, value in (("stage", "timing"), ("scope", "gemm"),
                            ("m", 2), ("seed", 1), ("bias", True), ("mode", "FORMAL")):
             altered = SimpleNamespace(**{**vars(args), key: value})
+            if key == "bias":
+                altered.stage = "profile"
             with self.assertRaises(RuntimeError):
                 probe.require_execution_permission(manifest, altered)
         manifest["diagnostic_permission"]["user_authorized"] = False
         with self.assertRaises(RuntimeError):
             probe.require_execution_permission(manifest, args)
+
+    def test_diagnostic_profiles_and_fallback_cells(self):
+        import yaml
+        manifest = yaml.safe_load((probe.ROOT / "docs/M0_MANIFEST.yaml").read_text())
+        for m, bias, stage in ((1, False, "profile"), (8, False, "profile"),
+                               (16, False, "correctness"), (1, True, "correctness")):
+            args = SimpleNamespace(mode="DIAGNOSTIC_ONLY", stage=stage, scope="chain",
+                                   m=m, seed=0, bias=bias)
+            probe.require_execution_permission(manifest, args)
+            if m == 16 or bias:
+                args.stage = "profile"
+                with self.assertRaises(RuntimeError):
+                    probe.require_execution_permission(manifest, args)
 
     def test_plan_stdlib_only(self):
         result = subprocess.run([sys.executable, "-S", str(Path(probe.__file__)), "--stage", "plan"],

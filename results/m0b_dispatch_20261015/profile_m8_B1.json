@@ -1,0 +1,127 @@
+{
+  "receipt": "profile_m8_B1",
+  "arm": "B1",
+  "m": 8,
+  "mode": "DIAGNOSTIC_ONLY",
+  "formal_approved": false,
+  "executed_probe_sha256": "0132ddf60665b237c174883bcf42206c6ed10f59921cbc4c4d94fd3e2b4ec4e6",
+  "weight_format": 29,
+  "profile": {
+    "replays": 5,
+    "weight_pointer_unchanged": true,
+    "weight_format_after": 29,
+    "allocated_before": 28564992,
+    "allocated_after": 28564992,
+    "peak_allocated": 28564992
+  },
+  "kernels": [
+    {
+      "Name": "aclnnMatmulWeightNz_MatMulCommon_MatMulV2",
+      "Type": "MatMulV2",
+      "Input Shapes": "\"8,5120;320,160,16,16\"",
+      "Input Data Types": "DT_BF16;DT_BF16",
+      "Input Formats": "ND;FRACTAL_NZ",
+      "Output Formats": "ND",
+      "Accelerator Core": "AI_CORE",
+      "Block Num": "23",
+      "count": 5
+    },
+    {
+      "Name": "split_qkv_rmsnorm_rope_kernel",
+      "Type": "split_qkv_rmsnorm_rope_kernel",
+      "Input Shapes": "N/A",
+      "Input Data Types": "N/A",
+      "Input Formats": "N/A",
+      "Output Formats": "N/A",
+      "Accelerator Core": "AI_VECTOR_CORE",
+      "Block Num": "48",
+      "count": 5
+    }
+  ],
+  "native_tasks": [
+    {
+      "kernel": "N/A",
+      "type": "PROFILING_ENABLE",
+      "count": 1
+    },
+    {
+      "kernel": "N/A",
+      "type": "MODEL_EXECUTE",
+      "count": 5
+    },
+    {
+      "kernel": "MatMulV2_NDNZ_ND_FP16_FP16_false_true_all_229585",
+      "type": "AI_CORE",
+      "count": 5
+    },
+    {
+      "kernel": "N/A",
+      "type": "NOTIFY_WAIT",
+      "count": 5
+    },
+    {
+      "kernel": "split_qkv_rmsnorm_rope_kernel",
+      "type": "AI_VECTOR_CORE",
+      "count": 5
+    },
+    {
+      "kernel": "N/A",
+      "type": "NOTIFY_RECORD",
+      "count": 5
+    },
+    {
+      "kernel": "N/A",
+      "type": "PROFILING_DISABLE",
+      "count": 1
+    }
+  ],
+  "compute_launches": 10,
+  "graph_events": {
+    "M0B_GRAPH_REPLAY_0": 1,
+    "M0B_GRAPH_REPLAY_1": 1,
+    "M0B_GRAPH_REPLAY_2": 1,
+    "M0B_GRAPH_REPLAY_3": 1,
+    "M0B_GRAPH_REPLAY_4": 1,
+    "AscendCL@aclmdlRIExecuteAsync": 5,
+    "MODEL_EXECUTE": 5
+  },
+  "standalone_conversion_candidates": [],
+  "copy_or_conversion_duration_events": {},
+  "host_to_device_flow_markers_NOT_memcpy": 10,
+  "parser_limits": {
+    "acl_to_npu_flow_missing": true,
+    "op_attr_ignored_with_text_export": true,
+    "schedule_warning": true
+  },
+  "gemm_fp32_rel_l2": 0.0016434617573395371,
+  "B0_pair_errors": [
+    {
+      "max_abs": 0.0,
+      "max_rel": 0.0,
+      "rel_l2": 0.0
+    },
+    {
+      "max_abs": 0.0,
+      "max_rel": 0.0,
+      "rel_l2": 0.0
+    },
+    {
+      "max_abs": 0.0,
+      "max_rel": 0.0,
+      "rel_l2": 0.0
+    },
+    {
+      "max_abs": 0.0,
+      "max_rel": 0.0,
+      "rel_l2": 0.0
+    }
+  ],
+  "raw_sha256": {
+    "result.local.json": "0bb749b7d6fd2e2d6e4d92d9467653fc03d80be7a1ba9a234b0b7b7ef21ccc2c",
+    "kernel_details.csv": "c9db74973387585c8b626ff6fad88c190933680e87232a92f052620876fe635a",
+    "task_time.csv": "75e533a9cbe8224fabe158f9f09131b092c30a0e6a1dba66a5c41ca59d85f285",
+    "trace_view.json": "dd45340ac2d5e4f37758319eab2fda6e0b06aa480cce3fbecfc4de3a866ddab6"
+  },
+  "kernel_internal_layout_work": "UNKNOWN_NOT_A_DISASSEMBLY_OR_COUNTER_STUDY",
+  "timing_benefit": "NOT_MEASURED"
+}

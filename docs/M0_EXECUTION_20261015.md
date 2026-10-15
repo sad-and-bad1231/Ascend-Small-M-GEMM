@@ -1,9 +1,16 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-B DIAGNOSTIC SMOKE PASS / FORMAL ADMISSION PENDING**.
+Status: **M0-B DIAGNOSTIC NZ DISPATCH CONFIRMED / FORMAL ADMISSION PENDING**.
+M1/M8 seed0 short traces observe distinct ND/NZ GEMM native kernels and the same
+consumer, no standalone conversion task in five replays/arm, exact output pairs.
+M16/bias fallback pairs pass. See [dispatch evidence and limitations](M0_B_DISPATCH_20261015.md).
+No unprofiled timing or service performance benefit is asserted. Formal approval
+remains false; the minimal timing pilot is only a proposal.
+
+Earlier smoke checkpoint:
 Owner-authorized M=1 seed0 B0/B1/B0 correctness and Graph Replay passed on the
 allocated 910B2. See [diagnostic evidence and preserved failures](M0_B_DIAGNOSTIC_20261015.md).
-No performance benchmark, TP4 capture or profiler ran; formal approval remains false.
+No performance benchmark, TP4 capture or profiler ran in that earlier smoke.
 The M0-A and CPU-only preparation records below are historical checkpoints.
 
 M0-B preparation based on personal main `c2fdf300`: see the

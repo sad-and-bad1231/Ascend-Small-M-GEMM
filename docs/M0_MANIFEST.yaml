@@ -2,7 +2,7 @@
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: M0_B_DIAGNOSTIC_SMOKE_PASS_FORMAL_ADMISSION_PENDING
+status: M0_B_DIAGNOSTIC_NZ_DISPATCH_CONFIRMED_FORMAL_ADMISSION_PENDING
 source:
   personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
@@ -200,10 +200,20 @@ diagnostic_permission:
   user_authorized: true
   authority: explicit_user_instruction_2026_10_15_allocated_single_910B2
   mode: DIAGNOSTIC_ONLY
-  scope: "M=1 seed=0 B0/B1/B0 no-bias chain correctness and Graph Replay; no timing or profiler"
+  scope: "seed0 B0/B1: M=1/8 no-bias correctness and short profile; M=16 no-bias and M=1+bias correctness fallback; NO timing"
+  cells:
+    - {m: 1, bias: false, stages: [correctness, profile]}
+    - {m: 8, bias: false, stages: [correctness, profile]}
+    - {m: 16, bias: false, stages: [correctness]}
+    - {m: 1, bias: true, stages: [correctness]}
+  profile_replays_per_arm_max: 5
+  profile_level: Level1_no_AIC_metrics
+  max_total_local_trace_bytes: 1073741824
+  total_wall_budget_minutes: 30
   timeout_seconds_per_process: 120
   max_allocated_hbm_bytes: 2147483648
   formal_admission_granted: false
+  formal_approved: false
 diagnostic_execution:
   status: PASS_DIAGNOSTIC_ONLY_NOT_FORMAL_ADMISSION
   report: docs/M0_B_DIAGNOSTIC_20261015.md
@@ -230,6 +240,46 @@ diagnostic_execution:
   formal_benchmark: NOT_RUN
   profiler: NOT_RUN
   dispatch_and_implicit_conversion_attribution: UNKNOWN
+dispatch_diagnostic:
+  status: OBSERVED_DISTINCT_NZ_DISPATCH_AND_EQUIVALENCE_THIS_PANEL
+  base_commit: 5326ca9c35a2cbebdf5177dd4dcdf0f06195a2f2
+  report: docs/M0_B_DISPATCH_20261015.md
+  sanitized_results: results/m0b_dispatch_20261015
+  local_receipts: m0_receipts/m0b_dispatch_20261015
+  local_receipt_index_sha256: 7e40cc3fc2bda66c1010684a168bb60e89ea5db968479563766317d6728e2ca5
+  local_indexed_files: 546
+  local_receipts_bytes_at_checkpoint: 4173754
+  profile_probe_sha256: 0132ddf60665b237c174883bcf42206c6ed10f59921cbc4c4d94fd3e2b4ec4e6
+  fallback_probe_sha256: 01ad3d7e35345e5edcc7d765865d491f1754812f8cf371f1b19b00aeb5686969
+  matched_allocation: all_8_final_runs_resumed_allocation_prior_receipts_excluded
+  profile_cells: ["M1 B0", "M1 B1", "M8 B0", "M8 B1"]
+  final_hardware_exit_codes: [0, 0, 0, 0, 0, 0, 0, 0]
+  profiled_replays_per_arm: 5
+  per_arm_compute_launches: {gemm: 5, existing_consumer: 5}
+  per_arm_graph_events: {aclmdlRIExecuteAsync: 5, MODEL_EXECUTE: 5}
+  B0_native_kernel: MatMulV2_ND_ND_FP16_FP16_false_true_all_98513
+  B1_native_kernel: MatMulV2_NDNZ_ND_FP16_FP16_false_true_all_229585
+  B0_dispatch: aclnnMatmul_MatMulCommon_MatMulV2
+  B1_dispatch: aclnnMatmulWeightNz_MatMulCommon_MatMulV2
+  actual_input_dtype_both_arms: DT_BF16_NOT_inferred_from_FP16_in_symbol_name
+  observed_standalone_conversion_tasks: 0
+  kernel_internal_layout_cost: UNKNOWN
+  private_CANN_weight_cache: UNKNOWN_OUTSIDE_TORCH_ALLOCATOR
+  residence: OBSERVED_stable_weight_pointer_format_and_Torch_allocation_before_after_profile
+  inference: consistent_with_one_explicitly_resident_QKV_weight_NOT_proof_of_zero_internal_cost
+  fallback_M16_and_bias: PASS_physical_ND_B0_B1_exact_output_pairs
+  pair_output_QKV_Q_K_V_M1_M8: EXACT
+  trace_before_after_full_oracle: PASS
+  parser_limits: [missing_ACL_to_NPU_flow_links, op_attr_ignored_in_text_export, RECORD_stop_warning]
+  max_observed_weight_load_allocated_bytes: 54608384
+  local_trace_budget_bytes: 1073741824
+  cpu_tests_passed: 12
+  cpu_tests_receipt_sha256: 79993d954b571f7e055121b506bd83bec635236faa3f87c273d8c20ec5f9eaa5
+  profile_executed_dirty_patch_sha256: 025ca9c0658868cef243f6eec619482a4d981b52f841995b05285b4878bf145c
+  timing_readiness: READY_FOR_SEPARATELY_AUTHORIZED_BOUNDED_PILOT_ONLY
+  proposed_pilot: "M1 and M8, seed0, one fresh-process B0/B1/B0 triplet each, 10 warmups + 5x100 replays, no profiler; descriptive only; NOT_EXECUTED"
+  timing_permission_this_round: false
+  formal_approved: false
 approval:
   scope: FORMAL_experiment_admission_NOT_owner_authorized_local_diagnostics
   advisor_review_link: TO_FILL

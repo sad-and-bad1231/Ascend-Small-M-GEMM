@@ -1,0 +1,18 @@
+{
+  "mode": "DIAGNOSTIC_ONLY",
+  "formal_approved": false,
+  "stage": "correctness",
+  "executed_probe_sha256": "01ad3d7e35345e5edcc7d765865d491f1754812f8cf371f1b19b00aeb5686969",
+  "allocation_scope": "all four final fallback runs share the resumed allocation; pre-resume receipts excluded",
+  "runs": [
+    {"receipt": "fallback_m16_B0", "arm": "B0", "m": 16, "bias": false, "seed": 0, "exit_code": 0, "weight_format": 2, "result_sha256": "c5dda917407550e569aa8e56344b868891c1605f7ee4f751aa255665672c9fd3"},
+    {"receipt": "fallback_m16_B1", "arm": "B1", "m": 16, "bias": false, "seed": 0, "exit_code": 0, "weight_format": 2, "vs_B0_QKV_Q_K_V_max_abs": [0, 0, 0, 0], "result_sha256": "5dfe9f4605fb3e815bc42826c8a73957a384c39ada8c3990b2ff3db74118622c"},
+    {"receipt": "fallback_bias_B0", "arm": "B0", "m": 1, "bias": true, "seed": 0, "exit_code": 0, "weight_format": 2, "result_sha256": "f8c5f508b5801adadc82eb4306375fe51fcb912efff60e33720a308bc237d074"},
+    {"receipt": "fallback_bias_B1", "arm": "B1", "m": 1, "bias": true, "seed": 0, "exit_code": 0, "weight_format": 2, "vs_B0_QKV_Q_K_V_max_abs": [0, 0, 0, 0], "result_sha256": "a58b010c2e16024053293e0e8ed815e0ae2d4edd7ad7e0bd3f6985a10ec421c6"}
+  ],
+  "all_full_oracles": "PASS",
+  "five_fixed_replays_and_changed_buffers": "PASS",
+  "maximum_consumer_absolute_error": {"m16": 0.02971363067626953, "bias_m1": 0.024872779846191406},
+  "profile": "NOT_RUN",
+  "timing": "NOT_RUN"
+}
