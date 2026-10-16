@@ -1,6 +1,14 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-B TIMING PILOT BOTH TRIPLETS INVALID / FORMAL ADMISSION PENDING**.
+Status: **M0-B STABILITY BLOCKED: PHYSICAL ALLOCATION CHANGED / FORMAL ADMISSION PENDING**.
+B0-only stability scope was prepared and statically reviewed, but resume on
+2026-10-16 exposed a different physical card. One erroneously launched process
+was aborted (exit143), zero measurement windows, three fresh controls NOT_RUN.
+Identity validation now precedes framework import;18 CPU tests pass. See
+[stability review and preserved incident](M0_B_STABILITY_20261015.md).
+No new stability or optimization result is claimed; A/B/A remains blocked.
+
+Earlier timing checkpoint:
 Owner-authorized M1/M8 seed0 chain timing completed, one fresh-process B0/B1/B0
 triplet each. Full oracles passed, but Event rollback drift was 32.41% / 4.84%.
 No retries or accepted performance gain. See [all trials and boundaries](M0_B_TIMING_PILOT_20261015.md).

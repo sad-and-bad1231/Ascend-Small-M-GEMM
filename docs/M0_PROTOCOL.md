@@ -63,6 +63,11 @@ Owner 随后明确授权 M=1/8、seed0 各一组独立进程 B0/B1/B0 的 chain 
 Event 和 Wall median 的前后 baseline drift 任一 >=2% 都标记整组 INVALID，
 保留原数据且不重试替换；只有 correctness/Graph/source/resource 失败停止后续硬件。
 这不是 FORMAL approval，也不是正式统计检验或 M1/M2 GO。
+随后独立授权 B0-only 稳定性诊断：M=1、seed0，一个同 Graph 三窗口进程，
+另加三个单窗口新进程；每窗口仍10 warmup、5x100 replay，禁止 B1/Profiler。
+设备/Host 状态查询只能在窗口外；新增 Host enqueue/同步指标不替代 Event/Wall。
+恢复时物理 allocation 变更则停止，不得把新卡冒充原卡；需独立批次授权。
+本次因身份变化中止，零完成窗口；身份/占用检查已前移至框架 import 之前。
 诊断仍须通过源码身份、设备空闲/归属、
 correctness、资源预算和失败即停止检查；失败记录不覆盖。诊断成功不等于正式准入。
 个人仓库可按 Owner 要求持续提交、push 脱敏记录；真实原始设备日志仍留本地。

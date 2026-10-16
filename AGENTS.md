@@ -15,6 +15,9 @@
   triplet with a favorable rerun or mix profiler measurements into timing.
 - Preserve original failures before minimal harness repairs and reruns. Do not
   modify production kernels, golden vLLM/plugin checkouts or installed packages.
+- On resume, validate physical identity/mapping/occupancy before framework import,
+  not only before timing. A restarted container may expose a different card;
+  stop on a failed guard, retain evidence, and do not relabel the allocation.
 - Owner-requested updates may be committed and pushed to this personal notebook
   without another advisor gate. Never merge main or force-push automatically.
 - Publish only sanitized summaries and checksums. Keep raw device logs, tensors,

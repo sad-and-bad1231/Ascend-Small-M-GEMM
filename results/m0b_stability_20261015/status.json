@@ -1,0 +1,25 @@
+{
+  "base_commit": "14961fd3e04396d90fdf696b3c063f5a2fd6d2ab",
+  "status": "BLOCKED_PHYSICAL_ALLOCATION_CHANGED",
+  "formal_approved": false,
+  "mode": "DIAGNOSTIC_ONLY",
+  "scope": "B0_ND_M1_seed0_chain_stability",
+  "attempted_processes": 1,
+  "aborted_exit_code": 143,
+  "completed_windows": 0,
+  "completed_trials": 0,
+  "cross_process_controls_started": 0,
+  "physical_identity_same": false,
+  "cpu_tests_pre_fix": 17,
+  "cpu_tests_post_fix": 18,
+  "performance_root_cause": "UNKNOWN",
+  "ABA_readiness": "NOT_ESTABLISHED_BLOCKED",
+  "profiler": "NOT_RUN",
+  "raw_receipt_sha256": {
+    "same_process.console.local.txt": "63653d734d59313f41ecc3ccfa5111f361c54c99b1ceddc2a02f90c36cbd937d",
+    "same_process.exit.local.txt": "9d9b18720961e9b4689fd763b85e7b6f36160ccd3a8a1c9ddc5103bb0f66c396",
+    "same_process/progress.local.jsonl": "2f9ae30385b302aa81e6138a391bce2cde5652b35872a3a8237d8d6540306f56",
+    "cpu_tests_pre.local.txt": "263d5630cdd18b753a292e1bceba42059b1f39a0b5f02273a39732c6a04271ef",
+    "cpu_tests_post_guard_fix.local.txt": "09206cb2d5549961da2299b8d3d89c9a2a923e5b4d14d23eabc59487ccd6041c"
+  }
+}

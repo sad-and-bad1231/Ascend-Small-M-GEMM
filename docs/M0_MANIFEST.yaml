@@ -2,7 +2,7 @@
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: M0_B_TIMING_PILOT_BOTH_INVALID_DRIFT_FORMAL_ADMISSION_PENDING
+status: M0_B_STABILITY_BLOCKED_PHYSICAL_ALLOCATION_CHANGED_FORMAL_ADMISSION_PENDING
 source:
   personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
@@ -214,6 +214,34 @@ diagnostic_permission:
   max_allocated_hbm_bytes: 2147483648
   formal_admission_granted: false
   formal_approved: false
+stability_permission:
+  user_authorized: true
+  authority: explicit_user_instruction_based_on_14961fd3
+  mode: DIAGNOSTIC_ONLY
+  stage: stability
+  scope: chain
+  arm: B0_ND_ONLY
+  m: 1
+  seed: 0
+  bias: false
+  same_process: one_process_three_windows_same_graph
+  cross_process: three_fresh_processes_one_window_each
+  total_processes_max: 4
+  order: same_process_then_cross_process_1_2_3
+  per_window: {warmup_replays: 10, trials: 5, replays_per_trial: 100}
+  state_queries: outside_windows_only_before_warmup_and_after_last_trial
+  added_metrics: [host_enqueue, device_synchronize, start_record, end_record, event_query]
+  added_metric_units: microseconds_per_replay_batch_total_divided_by_100
+  variation: range_of_three_window_or_process_medians_divided_by_first_median_percent
+  endpoint_drift: abs(last_median-first_median)/first_median*100
+  stability_gate: either_Event_or_Wall_any_pair_absolute_drift_ge_2pct_blocks_ABA
+  historical_threshold_changed: false
+  stop_all: correctness_graph_source_resource_identity_or_occupancy_failure
+  retry_or_ABA: prohibited_this_round
+  profiler: NOT_AUTHORIZED_THIS_ROUND
+  timeout_seconds_per_process: 120
+  max_allocated_hbm_bytes: 2147483648
+  formal_approved: false
 timing_pilot_permission:
   user_authorized: true
   authority: explicit_user_instruction_20261015_based_on_71f310a
@@ -335,6 +363,31 @@ timing_pilot_execution:
   production_sources_modified: false
   statistical_significance: NOT_ESTABLISHED
   M1_M2_GO: NOT_GRANTED
+  formal_approved: false
+stability_execution:
+  status: BLOCKED_PHYSICAL_ALLOCATION_CHANGED_ZERO_WINDOWS
+  base_commit: 14961fd3e04396d90fdf696b3c063f5a2fd6d2ab
+  report: docs/M0_B_STABILITY_20261015.md
+  sanitized_results: results/m0b_stability_20261015/status.json
+  local_receipts: m0_receipts/m0b_stability_20261015
+  local_receipt_index_sha256: 46a26571bc0059c36ffd51b47f768bc5cb4afb258060d092a9bc499afb500f93
+  local_indexed_files: 21
+  local_receipts_bytes_at_checkpoint: 276872
+  attempted_processes: 1
+  aborted_exit_code: 143
+  completed_windows: 0
+  cross_process_controls_started: 0
+  same_physical_device_as_preparation: false
+  hardware_retry: NOT_RUN
+  source_guard_fixed_sha256: eb9e0887b30a9cad504b610c61a450b21700ba9553542bbb01ec427343648c68
+  state_helper_guard_fixed_sha256: fd34f64fc77b6ec0d0bc5f92a001c485badb57493f355e176ee722b2080477f8
+  guard_fix_hardware_validation: NOT_RUN
+  cpu_tests_before_fix: 17
+  cpu_tests_after_fix: 18
+  pre_framework_identity_gate_regression: PASS_CPU_SUBPROCESS
+  original_timing_drift_root_cause: UNKNOWN
+  AB_A_readiness: NOT_ESTABLISHED_BLOCKED
+  profiler: NOT_RUN
   formal_approved: false
 approval:
   scope: FORMAL_experiment_admission_NOT_owner_authorized_local_diagnostics

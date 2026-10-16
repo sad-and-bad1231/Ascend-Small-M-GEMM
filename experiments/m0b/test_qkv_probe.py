@@ -15,6 +15,64 @@ from timing_summary import assess
 
 
 class ContractTests(unittest.TestCase):
+    def test_stability_permission_narrow_and_separate(self):
+        import yaml
+        manifest = yaml.safe_load((probe.ROOT / "docs/M0_MANIFEST.yaml").read_text())
+        args = SimpleNamespace(mode="DIAGNOSTIC_ONLY", stage="stability", scope="chain",
+                               arm="B0", m=1, seed=0, bias=False, windows=3,
+                               physical_card=2, device_identity_sha="test")
+        probe.require_execution_permission(manifest, args)
+        args.windows = 1
+        probe.require_execution_permission(manifest, args)
+        for key, value in (("arm", "B1"), ("m", 8), ("seed", 1), ("bias", True),
+                           ("scope", "gemm"), ("windows", 2), ("mode", "FORMAL"),
+                           ("physical_card", None), ("device_identity_sha", None)):
+            with self.assertRaises(RuntimeError):
+                probe.require_execution_permission(manifest, SimpleNamespace(**{**vars(args), key: value}))
+        manifest["stability_permission"]["user_authorized"] = False
+        with self.assertRaises(RuntimeError):
+            probe.require_execution_permission(manifest, args)
+
+    def test_device_identity_and_unexpected_process_stop(self):
+        from stability_state import identity, validate
+        board = "NPU ID : 2\nChip ID : 0\nChip Name : 910B2\nVDie ID : opaque\nPCIe Bus Info : opaque"
+        fingerprint = identity(board)
+        state = {"identity_sha256": fingerprint, "queries": {
+            "board": {"exit_code": 0, "stdout": board},
+            "mapping": {"exit_code": 0, "stdout": "2 0 0 Ascend 910B2"},
+            "overview": {"exit_code": 0, "stdout": "OK Process id\nNo running processes found"}}}
+        validate(state, fingerprint)
+        with self.assertRaises(RuntimeError):
+            validate(state, "changed")
+        state["queries"]["overview"]["stdout"] = "OK Process id\n| 2 0 987654 python 100 987654 |"
+        with self.assertRaises(RuntimeError):
+            validate(state, fingerprint)
+
+    def test_stability_identity_gate_precedes_framework_import(self):
+        code = (
+            "import runpy, sys, tempfile, pathlib, types\n"
+            "def guard(event, args):\n"
+            "    if event == 'import' and args[0].startswith(('torch', 'vllm')):\n"
+            "        raise AssertionError('runtime import before identity gate')\n"
+            "sys.addaudithook(guard)\n"
+            "fake=types.ModuleType('stability_state')\n"
+            "fake.snapshot=lambda card: {'identity_sha256': 'changed'}\n"
+            "def reject(state, expected): raise RuntimeError('identity mismatch')\n"
+            "fake.validate=reject\n"
+            "sys.modules['stability_state']=fake\n"
+            f"ns=runpy.run_path({probe.__file__!r})\n"
+            "args=types.SimpleNamespace(mode='DIAGNOSTIC_ONLY',stage='stability',scope='chain',"
+            "arm='B0',m=1,seed=0,bias=False,windows=1,physical_card=2,device_identity_sha='expected')\n"
+            "manifest={'stability_permission': {'user_authorized': True},"
+            "'approval': {'approved_for_hardware': False}}\n"
+            "with tempfile.TemporaryDirectory() as tmp:\n"
+            "    try: ns['hardware'](args,manifest,pathlib.Path(tmp))\n"
+            "    except RuntimeError as exc: assert 'identity mismatch' in str(exc)\n"
+            "    else: raise AssertionError('identity gate did not stop')\n"
+            "    assert (pathlib.Path(tmp)/'pre_runtime_state.local.json').exists()\n"
+        )
+        subprocess.run([sys.executable, "-S", "-c", code], check=True, capture_output=True)
+
     def test_timing_gain_and_exact_drift_boundary(self):
         trials = [[{"event_us": v, "wall_us": v} for _ in range(5)] for v in (100, 90, 100)]
         summary = assess(trials)

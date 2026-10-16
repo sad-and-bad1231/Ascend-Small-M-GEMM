@@ -12,6 +12,7 @@
 - [M0-B 单卡诊断结果与原始失败边界](docs/M0_B_DIAGNOSTIC_20261015.md)：M=1 seed0 正确性、Graph Replay PASS，未跑性能 Benchmark。
 - [M0-B 真实 dispatch / 转换归因](docs/M0_B_DISPATCH_20261015.md)：M=1/8 独立 NZ 路径已观测；短 trace 不是性能收益。
 - [M0-B 非正式 timing pilot](docs/M0_B_TIMING_PILOT_20261015.md)：两组正确性通过，但 B0 rollback drift 超限，均为 INVALID；未建立有效收益。
+- [M0-B B0-only 稳定性审查](docs/M0_B_STABILITY_20261015.md)：静态审查完成；恢复后物理卡变更，零计时窗口，等待独立新批次授权。
 
 ## 目标与验收
 

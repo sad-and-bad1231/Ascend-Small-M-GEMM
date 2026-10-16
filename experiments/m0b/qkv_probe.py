@@ -60,6 +60,16 @@ def require_approval(manifest):
 
 
 def require_execution_permission(manifest, args):
+    if getattr(args, "stage", None) == "stability":
+        permission = manifest.get("stability_permission", {})
+        if (permission.get("user_authorized") is not True
+                or getattr(args, "mode", None) != "DIAGNOSTIC_ONLY"
+                or args.arm != "B0" or args.m != 1 or args.seed != 0 or args.bias
+                or args.scope != "chain" or getattr(args, "windows", 1) not in (1, 3)
+                or getattr(args, "physical_card", None) is None
+                or not getattr(args, "device_identity_sha", None)):
+            raise RuntimeError("BLOCKED: outside separately authorized B0 stability scope")
+        return
     if getattr(args, "mode", "FORMAL") == "DIAGNOSTIC_ONLY":
         permission = manifest.get("diagnostic_permission", {})
         if permission.get("user_authorized") is not True:
@@ -135,6 +145,12 @@ def hardware(args, manifest, out):
         print(json.dumps(entry), flush=True)
 
     checkpoint("permission", mode=args.mode, formal_approval=manifest["approval"]["approved_for_hardware"])
+    if args.stage == "stability":
+        from stability_state import snapshot as state_snapshot, validate as validate_state
+        preflight = state_snapshot(args.physical_card)
+        (out / "pre_runtime_state.local.json").write_text(json.dumps(preflight, indent=2))
+        validate_state(preflight, args.device_identity_sha)
+        checkpoint("physical_identity_and_occupancy_verified_before_runtime_import")
     import torch
     import torch_npu
     import torch.nn.functional as F
@@ -241,12 +257,18 @@ def hardware(args, manifest, out):
             fn()
         torch.npu.synchronize()
         graph = torch.npu.NPUGraph()
-        with torch.npu.graph(graph, capture_error_mode="thread_local", auto_dispatch_capture=True):
+        capture_context = torch.npu.graph(graph, capture_error_mode="thread_local", auto_dispatch_capture=True)
+        with capture_context:
             values = fn()
+        if args.stage == "stability":
+            stream_observation.update(capture_stream=int(capture_context.capture_stream.npu_stream),
+                                      replay_caller_stream=int(torch.npu.current_stream().npu_stream))
         graph.replay()
         torch.npu.synchronize()
         return graph, values
 
+    stream_observation = {}
+    stability_windows = []
     with torch.inference_mode():
         # Reject incompatible physical output before the stride-blind consumer.
         producer_probe = F.linear(x, w, bias)
@@ -297,6 +319,59 @@ def hardware(args, manifest, out):
         timings = []
         timing_observation = None
         profile_observation = None
+        if args.stage == "stability":
+            from stability_state import snapshot as state_snapshot, validate as validate_state
+            weight_ptr = w.data_ptr()
+            for window in range(1, args.windows + 1):
+                def save_state(phase):
+                    state = state_snapshot(args.physical_card)
+                    (out / f"window{window}_{phase}.local.json").write_text(json.dumps(state, indent=2))
+                    validate_state(state, args.device_identity_sha)
+
+                save_state("before")
+                for _ in range(10):
+                    graph.replay()
+                torch.npu.synchronize()
+                window_trials = []
+                for trial in range(1, 6):
+                    stream = int(torch.npu.current_stream().npu_stream)
+                    if stream != stream_observation["replay_caller_stream"]:
+                        raise RuntimeError("replay caller stream changed")
+                    a, b = torch.npu.Event(enable_timing=True), torch.npu.Event(enable_timing=True)
+                    wall = time.perf_counter_ns()
+                    a.record()
+                    enqueue_start = time.perf_counter_ns()
+                    for _ in range(100):
+                        graph.replay()
+                    enqueue_end = time.perf_counter_ns()
+                    b.record()
+                    sync_start = time.perf_counter_ns()
+                    torch.npu.synchronize()
+                    sync_end = time.perf_counter_ns()
+                    event_us = a.elapsed_time(b) * 1000 / 100
+                    wall_end = time.perf_counter_ns()
+                    row = {"event_us": event_us, "wall_us": (wall_end - wall) / 1000 / 100,
+                           "enqueue_us": (enqueue_end - enqueue_start) / 1000 / 100,
+                           "synchronize_us": (sync_end - sync_start) / 1000 / 100,
+                           "start_record_us": (enqueue_start - wall) / 1000 / 100,
+                           "end_record_us": (sync_start - enqueue_end) / 1000 / 100,
+                           "event_query_us": (wall_end - sync_end) / 1000 / 100}
+                    window_trials.append(row)
+                    checkpoint("stability_trial_completed", window=window, trial=trial, **row)
+                save_state("after")
+                oracle = check(values)
+                for actual, expected in zip(values, snapshot):
+                    compare(actual, expected, atol=0, rtol=0)
+                observation = {"weight_pointer_unchanged": w.data_ptr() == weight_ptr,
+                               "weight_format_after": int(torch_npu.get_npu_format(w)),
+                               "allocated": torch.npu.memory_allocated(),
+                               "peak_allocated": torch.npu.max_memory_allocated()}
+                if (not observation["weight_pointer_unchanged"] or observation["weight_format_after"] != 2
+                        or observation["peak_allocated"] > 2 * 1024**3):
+                    raise RuntimeError("stability identity/format/allocation budget failure")
+                stability_windows.append({"window": window, "trials": window_trials,
+                                          "post_window_oracle": oracle, "observation": observation})
+                checkpoint("stability_window_oracle_pass", window=window, observation=observation)
         if args.stage == "timing":
             weight_ptr = w.data_ptr()
             allocated_before_timing = torch.npu.memory_allocated()
@@ -377,6 +452,7 @@ def hardware(args, manifest, out):
                              "dtype": str(t.dtype), "format": int(torch_npu.get_npu_format(t))}
                             for t in (x, w, *eager)],
                 "correctness": correctness, "trials": timings,
+                "stability_windows": stability_windows, "stream_observation": stream_observation,
                 "timing_observation": timing_observation,
                 "profile_observation": profile_observation,
                 "median_us": statistics.median(t["event_us"] for t in timings) if timings else None,
@@ -386,7 +462,10 @@ def hardware(args, manifest, out):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--stage", choices=("plan", "correctness", "timing", "profile"), default="plan")
+    p.add_argument("--stage", choices=("plan", "correctness", "timing", "profile", "stability"), default="plan")
+    p.add_argument("--windows", type=int, choices=(1, 3), default=1)
+    p.add_argument("--physical-card", type=int)
+    p.add_argument("--device-identity-sha")
     p.add_argument("--mode", choices=("FORMAL", "DIAGNOSTIC_ONLY"), default="FORMAL")
     p.add_argument("--arm", choices=("B0", "B1"), default="B0")
     p.add_argument("--m", type=int, choices=M_VALUES, default=1)
