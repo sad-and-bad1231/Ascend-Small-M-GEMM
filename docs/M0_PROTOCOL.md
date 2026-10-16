@@ -68,6 +68,9 @@ Event 和 Wall median 的前后 baseline drift 任一 >=2% 都标记整组 INVAL
 设备/Host 状态查询只能在窗口外；新增 Host enqueue/同步指标不替代 Event/Wall。
 恢复时物理 allocation 变更则停止，不得把新卡冒充原卡；需独立批次授权。
 本次因身份变化中止，零完成窗口；身份/占用检查已前移至框架 import 之前。
+Owner 于2026-10-16 随后明确允许在新卡建立独立批次；该批次完成四进程六窗口，
+纯 B0 跨进程 Event/Wall 变化超过2%，继续阻塞 A/B/A。不能跨卡直接比较绝对时延，
+也不以冷 Event API 开销解释尚未归因的 Event baseline drift。
 诊断仍须通过源码身份、设备空闲/归属、
 correctness、资源预算和失败即停止检查；失败记录不覆盖。诊断成功不等于正式准入。
 个人仓库可按 Owner 要求持续提交、push 脱敏记录；真实原始设备日志仍留本地。

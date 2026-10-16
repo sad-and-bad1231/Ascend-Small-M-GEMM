@@ -12,9 +12,20 @@ import torch
 import qkv_probe as probe
 from trace_summary import trace_events
 from timing_summary import assess
+from stability_summary import variation
 
 
 class ContractTests(unittest.TestCase):
+    def test_stability_variation_all_pairs_and_boundary(self):
+        result = variation([100, 102, 100])
+        self.assertEqual(result["endpoint_drift_percent"], 0)
+        self.assertTrue(result["blocks_ABA"])
+        self.assertEqual(result["spread_over_first_percent"], 2)
+        self.assertFalse(variation([100, 101, 100.5])["blocks_ABA"])
+        for invalid in ([1, 2], [1, 0, 1], [1, float("nan"), 1]):
+            with self.assertRaises(ValueError):
+                variation(invalid)
+
     def test_stability_permission_narrow_and_separate(self):
         import yaml
         manifest = yaml.safe_load((probe.ROOT / "docs/M0_MANIFEST.yaml").read_text())

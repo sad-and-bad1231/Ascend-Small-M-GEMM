@@ -1,6 +1,15 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-B STABILITY BLOCKED: PHYSICAL ALLOCATION CHANGED / FORMAL ADMISSION PENDING**.
+Status: **M0-B B0 CROSS-PROCESS INSTABILITY REPRODUCED / A/B/A BLOCKED**.
+Owner subsequently authorized an independent batch on the newly allocated card.
+Four processes exit0, six windows/30 trials, full/exact oracles pass. Same-Graph
+Event spread0.47%; fresh-process spread14.77%, endpoint drift10.01%.
+Host enqueue spans do not rise commensurately; root cause UNKNOWN. Cold start
+Event-record/query paths account for most first-Wall excess, not Event drift.
+No B1, profiler, retry, formal approval or production edit.19 CPU tests pass.
+See [new batch and preserved prior incident](M0_B_STABILITY_20261015.md).
+
+Earlier allocation-change checkpoint:
 B0-only stability scope was prepared and statically reviewed, but resume on
 2026-10-16 exposed a different physical card. One erroneously launched process
 was aborted (exit143), zero measurement windows, three fresh controls NOT_RUN.
