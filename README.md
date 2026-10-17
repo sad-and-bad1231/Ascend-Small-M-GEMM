@@ -5,7 +5,8 @@
 - 上游课题：[intellistream/ascend-small-m-gemm](https://github.com/intellistream/ascend-small-m-gemm)
 - Owner：[@sad-and-bad1231](https://github.com/sad-and-bad1231)
 - 当前阶段：**M0 / evidence reproduction**。已有单卡诊断证据，尚无新融合原语或正式性能结论。
-- 当前决策：**暂停 Small-M/NZ 主路线**。最终 M=8 配对筛选两进程均 INVALID，不构成机制证伪；不追加稳定性实验，下一课题 Ascend MLP Materialization。
+- 原始筛选决策：**暂停 Small-M/NZ 主路线**。当时两进程均 INVALID，不构成机制证伪；后续 owner 授权重复，更新见下一条。
+- 后续重复更新：固定追加两轮后，第三轮两个有效进程收益12.43%/12.21%，通过单轮快速门槛；全三轮仍3/6 INVALID、另一有效结果2.60%，尚非稳定复现或正式 GO，M=1 未测。
 - [研究问题、论文及已有证据](docs/RESEARCH_STATE.md)
 - [M0 实验协议](docs/M0_PROTOCOL.md)
 - [M0 manifest 草案](docs/M0_MANIFEST.yaml)
@@ -16,6 +17,7 @@
 - [M0-B B0-only 稳定性诊断](docs/M0_B_STABILITY_20261015.md)：新卡独立批次已授权完成；同 Graph 变化0.47%，跨进程变化14.77%，A/B/A 仍阻塞，根因 UNKNOWN。
 - [M0-B 最小设备时间线归因](docs/M0_B_TIMELINE_20261017.md)：Consumer duration 与 Graph/Event 变化关联，handoff 仅0.02-0.04us；底层原因 UNKNOWN，无优化收益结论。
 - [最终 GO/NO-GO 快速筛选](docs/M0_B_FINAL_SCREEN_20261017.md)：B0/shadow/NZ 三 Graph 同进程交错，全部正确；控制未通过，停止本轮机制实验。
+- [固定两轮重复及全部六进程](docs/M0_B_SCREEN_REPEATS_20261017.md)：保留原失败，不挑轮次；出现通过的一整轮，但跨轮复现混合。
 
 ## 目标与验收
 

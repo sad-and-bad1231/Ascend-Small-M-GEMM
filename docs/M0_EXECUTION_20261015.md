@@ -1,6 +1,13 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **FINAL QUICK SCREEN INVALID / SMALL-M PAUSED / NEXT: MLP MATERIALIZATION**.
+Status: **M8 REPEAT PANEL PASSES QUICK GATE / OVERALL REPRODUCIBILITY MIXED**.
+Owner requested two more fixed rounds after228d971: four fresh M8 seed0 processes,
+unchanged code/controls, all oracles pass. Added results: INVALID(raw-2.400%),
+VALID2.599%, VALID12.425%, VALID12.206%. Round3 meets the original per-panel gate.
+Across all rounds3/6 INVALID; no stable12% claim, formal GO or failure replacement.
+M=1/integration were not run in repeat scope. See [all repeated results](M0_B_SCREEN_REPEATS_20261017.md).
+
+Original final-screen checkpoint retained:
 M=8 seed0 two-process paired screen completed: B0 ND, shadow ND and NZ all
 correct,120 Event/Wall rows retained. Process1 shadow Event difference>=2%;
 process2 Wall bracket drift2.196%. No accepted gain, M=1 gate not met.

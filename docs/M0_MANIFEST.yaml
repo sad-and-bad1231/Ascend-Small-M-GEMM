@@ -2,7 +2,7 @@
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: SMALL_M_PAUSED_FINAL_SCREEN_INVALID_MEASUREMENT_BLOCKED_NEXT_MLP_MATERIALIZATION
+status: M8_REPEAT_ROUND3_PASSES_QUICK_GATE_MIXED_REPRODUCIBILITY_M1_NOT_RUN
 source:
   personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
@@ -213,6 +213,26 @@ diagnostic_permission:
   timeout_seconds_per_process: 120
   max_allocated_hbm_bytes: 2147483648
   formal_admission_granted: false
+  formal_approved: false
+screen_repeat_permission:
+  user_authorized: true
+  authority: explicit_user_request_repeat_a_few_times_after_228d971
+  mode: DIAGNOSTIC_ONLY
+  base_commit: 228d9714c7c16bfa3917340c7c740baeb39934f0
+  added_rounds: 2
+  processes_per_round: 2
+  fixed_order: [round2_process1, round2_process2, round3_process1, round3_process2]
+  total_new_processes_max: 4
+  m: 8
+  seed: 0
+  protocol: identical_screen_permission_three_graph_palindromic_ABBA_no_threshold_change
+  original_round1: retain_both_INVALID_never_replace
+  rule: collect_all4_no_retry_or_best_round_selection
+  stop_all: correctness_source_identity_graph_or_resource_failure
+  invalid_control: retain_and_continue_fixed_panel
+  M1_integration_new_kernel_profiler: NOT_INCLUDED_IN_BOUNDED_REPEAT_PLAN
+  timeout_seconds_per_process: 120
+  max_allocated_hbm_bytes: 2147483648
   formal_approved: false
 screen_permission:
   user_authorized: true
@@ -573,6 +593,37 @@ final_screen_execution:
   new_topic_hardware: NOT_RUN
   retries_profiler_TP4_production_changes: NOT_RUN
   cpu_tests_passed: 23
+  formal_approved: false
+screen_repeat_execution:
+  status: ONE_OF_THREE_PANELS_PASSES_QUICK_GATE_REPRODUCIBILITY_MIXED
+  base_commit: 228d9714c7c16bfa3917340c7c740baeb39934f0
+  report: docs/M0_B_SCREEN_REPEATS_20261017.md
+  sanitized_results: results/m0b_screen_repeats_20261017
+  local_receipts: m0_receipts/m0b_screen_repeats_20261017
+  local_receipt_index_sha256: bfc23020574a54963feafd6ade9a1b42bafe097ad3ddc511cb738e82f70b6360
+  local_indexed_files: 44
+  local_receipts_bytes_at_checkpoint: 1093057
+  original_round_preserved: true
+  fixed_added_order: [round2_process1, round2_process2, round3_process1, round3_process2]
+  exit_codes: [0, 0, 0, 0]
+  added_control_statuses: [INVALID_CONTROL, VALID_SCREEN_ONLY, VALID_SCREEN_ONLY, VALID_SCREEN_ONLY]
+  added_raw_Event_gain_percent: [-2.400365041859195, 2.5988954052864255, 12.425202960875485, 12.205836913758931]
+  added_accepted_Event_gain_percent: [null, 2.5988954052864255, 12.425202960875485, 12.205836913758931]
+  rounds_meeting_original_single_panel_gate: [3]
+  all_rounds_process_counts: {total: 6, VALID: 3, INVALID: 3}
+  added_trials: 240
+  total_trials_including_original: 360
+  added_full_graphs: 12
+  full_and_paired_oracles: PASS
+  same_physical_source_runtime_inputs_as_original: VERIFIED
+  harness_and_threshold_changes: NONE
+  allocated_torch_bytes_each: 83258880
+  peak_allocated_torch_bytes_each: 110184960
+  cpu_tests_passed: 23
+  M1_integration_fusion_profiler: NOT_RUN_REPEAT_SCOPE_ONLY
+  interpretation: passing_panel_observed_NOT_stable12pct_or_formal_GO
+  next_bounded_step: M_equals_1_shape_screen_candidate_for_followup_NOT_executed
+  variation_root_cause: UNKNOWN
   formal_approved: false
 approval:
   scope: FORMAL_experiment_admission_NOT_owner_authorized_local_diagnostics

@@ -1,0 +1,84 @@
+{
+  "formal_approved": false,
+  "original_round_retained": true,
+  "harness_and_thresholds_unchanged": true,
+  "all_rounds": [
+    {
+      "round": 1,
+      "process": 1,
+      "status": "INVALID_CONTROL",
+      "accepted_Event_gain_percent": null,
+      "raw_Event_gain_percent": 1.3392393805073093,
+      "shadow_Event_max_abs_percent": 2.9916026421347053,
+      "B0_Event_bracket_max_percent": 0.7319528786812347,
+      "B0_Wall_bracket_max_percent": 12.87444454040135,
+      "B0_Event_temporal_percent": 0.03739928065011969,
+      "B0_Wall_temporal_percent": 0.37173851822528603
+    },
+    {
+      "round": 1,
+      "process": 2,
+      "status": "INVALID_CONTROL",
+      "accepted_Event_gain_percent": null,
+      "raw_Event_gain_percent": 7.825544023336752,
+      "shadow_Event_max_abs_percent": 1.9409223684680812,
+      "B0_Event_bracket_max_percent": 0.8712838208874942,
+      "B0_Wall_bracket_max_percent": 2.1958273595305955,
+      "B0_Event_temporal_percent": 0.06396814227196576,
+      "B0_Wall_temporal_percent": 0.07474814672829033
+    },
+    {
+      "round": 2,
+      "process": 1,
+      "status": "INVALID_CONTROL",
+      "accepted_Event_gain_percent": null,
+      "raw_Event_gain_percent": -2.400365041859195,
+      "shadow_Event_max_abs_percent": 0.7489256467044506,
+      "B0_Event_bracket_max_percent": 38.70954494890555,
+      "B0_Wall_bracket_max_percent": 37.54124512557606,
+      "B0_Event_temporal_percent": 0.01786540454847397,
+      "B0_Wall_temporal_percent": 0.2915834910469908
+    },
+    {
+      "round": 2,
+      "process": 2,
+      "status": "VALID_SCREEN_ONLY",
+      "accepted_Event_gain_percent": 2.5988954052864255,
+      "raw_Event_gain_percent": 2.5988954052864255,
+      "shadow_Event_max_abs_percent": 1.7775473762002953,
+      "B0_Event_bracket_max_percent": 0.6952593427896522,
+      "B0_Wall_bracket_max_percent": 1.4918015321885558,
+      "B0_Event_temporal_percent": 0.2530458853055006,
+      "B0_Wall_temporal_percent": 0.48524852648648126
+    },
+    {
+      "round": 3,
+      "process": 1,
+      "status": "VALID_SCREEN_ONLY",
+      "accepted_Event_gain_percent": 12.425202960875485,
+      "raw_Event_gain_percent": 12.425202960875485,
+      "shadow_Event_max_abs_percent": 1.6302215434075518,
+      "B0_Event_bracket_max_percent": 0.5912759462149345,
+      "B0_Wall_bracket_max_percent": 1.1684601193082838,
+      "B0_Event_temporal_percent": 0.16072102577407232,
+      "B0_Wall_temporal_percent": 0.286796668436336
+    },
+    {
+      "round": 3,
+      "process": 2,
+      "status": "VALID_SCREEN_ONLY",
+      "accepted_Event_gain_percent": 12.205836913758931,
+      "raw_Event_gain_percent": 12.205836913758931,
+      "shadow_Event_max_abs_percent": 0.8202924895424388,
+      "B0_Event_bracket_max_percent": 0.6242039225294495,
+      "B0_Wall_bracket_max_percent": 1.2205745725128232,
+      "B0_Event_temporal_percent": 0.299157748424408,
+      "B0_Wall_temporal_percent": 0.5987395816104196
+    }
+  ],
+  "rounds_meeting_single_panel_gate": [
+    3
+  ],
+  "M1": "NOT_RUN_REPEAT_SCOPE_ONLY",
+  "statistical_significance": "NOT_ESTABLISHED"
+}
