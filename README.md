@@ -13,6 +13,7 @@
 - [M0-B 真实 dispatch / 转换归因](docs/M0_B_DISPATCH_20261015.md)：M=1/8 独立 NZ 路径已观测；短 trace 不是性能收益。
 - [M0-B 非正式 timing pilot](docs/M0_B_TIMING_PILOT_20261015.md)：两组正确性通过，但 B0 rollback drift 超限，均为 INVALID；未建立有效收益。
 - [M0-B B0-only 稳定性诊断](docs/M0_B_STABILITY_20261015.md)：新卡独立批次已授权完成；同 Graph 变化0.47%，跨进程变化14.77%，A/B/A 仍阻塞，根因 UNKNOWN。
+- [M0-B 最小设备时间线归因](docs/M0_B_TIMELINE_20261017.md)：Consumer duration 与 Graph/Event 变化关联，handoff 仅0.02-0.04us；底层原因 UNKNOWN，无优化收益结论。
 
 ## 目标与验收
 

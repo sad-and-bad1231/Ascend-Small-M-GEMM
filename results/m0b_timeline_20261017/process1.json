@@ -1,0 +1,631 @@
+{
+  "tasks_in_start_order": [
+    {
+      "sequence_by_start": 0,
+      "kernel": "N/A",
+      "type": "PROFILING_ENABLE",
+      "stream_id": "48",
+      "task_id": "5",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 0.0,
+      "stop_us_relative": 0.0,
+      "duration_us": 0.0
+    },
+    {
+      "sequence_by_start": 1,
+      "kernel": "N/A",
+      "type": "MODEL_EXECUTE",
+      "stream_id": "47",
+      "task_id": "1123",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14493.8,
+      "stop_us_relative": 14496.82,
+      "duration_us": 3.02
+    },
+    {
+      "sequence_by_start": 2,
+      "kernel": "MatMulV2_ND_ND_FP16_FP16_false_true_all_98513",
+      "type": "AI_CORE",
+      "stream_id": "13",
+      "task_id": "0",
+      "model_id": "49",
+      "dispatch": "aclnnMatmul_MatMulCommon_MatMulV2",
+      "block_num": "23",
+      "input_formats": "ND;ND",
+      "input_dtypes": "DT_BF16;DT_BF16",
+      "start_us_relative": 14496.72,
+      "stop_us_relative": 14519.94,
+      "duration_us": 23.22
+    },
+    {
+      "sequence_by_start": 3,
+      "kernel": "N/A",
+      "type": "NOTIFY_WAIT",
+      "stream_id": "47",
+      "task_id": "1124",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14508.88,
+      "stop_us_relative": 14538.78,
+      "duration_us": 29.9
+    },
+    {
+      "sequence_by_start": 4,
+      "kernel": "split_qkv_rmsnorm_rope_kernel",
+      "type": "AI_VECTOR_CORE",
+      "stream_id": "13",
+      "task_id": "1",
+      "model_id": "4294967295",
+      "dispatch": "split_qkv_rmsnorm_rope_kernel",
+      "block_num": "48",
+      "input_formats": "N/A",
+      "input_dtypes": "N/A",
+      "start_us_relative": 14519.98,
+      "stop_us_relative": 14538.3,
+      "duration_us": 18.32
+    },
+    {
+      "sequence_by_start": 5,
+      "kernel": "N/A",
+      "type": "NOTIFY_RECORD",
+      "stream_id": "13",
+      "task_id": "2",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14538.32,
+      "stop_us_relative": 14538.34,
+      "duration_us": 0.02
+    },
+    {
+      "sequence_by_start": 6,
+      "kernel": "N/A",
+      "type": "MODEL_EXECUTE",
+      "stream_id": "47",
+      "task_id": "1125",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14866.0,
+      "stop_us_relative": 14869.02,
+      "duration_us": 3.02
+    },
+    {
+      "sequence_by_start": 7,
+      "kernel": "MatMulV2_ND_ND_FP16_FP16_false_true_all_98513",
+      "type": "AI_CORE",
+      "stream_id": "13",
+      "task_id": "0",
+      "model_id": "49",
+      "dispatch": "aclnnMatmul_MatMulCommon_MatMulV2",
+      "block_num": "23",
+      "input_formats": "ND;ND",
+      "input_dtypes": "DT_BF16;DT_BF16",
+      "start_us_relative": 14868.94,
+      "stop_us_relative": 14892.18,
+      "duration_us": 23.24
+    },
+    {
+      "sequence_by_start": 8,
+      "kernel": "N/A",
+      "type": "NOTIFY_WAIT",
+      "stream_id": "47",
+      "task_id": "1126",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14876.32,
+      "stop_us_relative": 14911.08,
+      "duration_us": 34.76
+    },
+    {
+      "sequence_by_start": 9,
+      "kernel": "split_qkv_rmsnorm_rope_kernel",
+      "type": "AI_VECTOR_CORE",
+      "stream_id": "13",
+      "task_id": "1",
+      "model_id": "4294967295",
+      "dispatch": "split_qkv_rmsnorm_rope_kernel",
+      "block_num": "48",
+      "input_formats": "N/A",
+      "input_dtypes": "N/A",
+      "start_us_relative": 14892.2,
+      "stop_us_relative": 14910.6,
+      "duration_us": 18.4
+    },
+    {
+      "sequence_by_start": 10,
+      "kernel": "N/A",
+      "type": "NOTIFY_RECORD",
+      "stream_id": "13",
+      "task_id": "2",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14910.62,
+      "stop_us_relative": 14910.64,
+      "duration_us": 0.02
+    },
+    {
+      "sequence_by_start": 11,
+      "kernel": "N/A",
+      "type": "MODEL_EXECUTE",
+      "stream_id": "47",
+      "task_id": "1127",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14970.78,
+      "stop_us_relative": 14973.98,
+      "duration_us": 3.2
+    },
+    {
+      "sequence_by_start": 12,
+      "kernel": "MatMulV2_ND_ND_FP16_FP16_false_true_all_98513",
+      "type": "AI_CORE",
+      "stream_id": "13",
+      "task_id": "0",
+      "model_id": "49",
+      "dispatch": "aclnnMatmul_MatMulCommon_MatMulV2",
+      "block_num": "23",
+      "input_formats": "ND;ND",
+      "input_dtypes": "DT_BF16;DT_BF16",
+      "start_us_relative": 14973.72,
+      "stop_us_relative": 14996.94,
+      "duration_us": 23.22
+    },
+    {
+      "sequence_by_start": 13,
+      "kernel": "N/A",
+      "type": "NOTIFY_WAIT",
+      "stream_id": "47",
+      "task_id": "1128",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 14980.24,
+      "stop_us_relative": 15015.8,
+      "duration_us": 35.56
+    },
+    {
+      "sequence_by_start": 14,
+      "kernel": "split_qkv_rmsnorm_rope_kernel",
+      "type": "AI_VECTOR_CORE",
+      "stream_id": "13",
+      "task_id": "1",
+      "model_id": "4294967295",
+      "dispatch": "split_qkv_rmsnorm_rope_kernel",
+      "block_num": "48",
+      "input_formats": "N/A",
+      "input_dtypes": "N/A",
+      "start_us_relative": 14996.98,
+      "stop_us_relative": 15015.3,
+      "duration_us": 18.32
+    },
+    {
+      "sequence_by_start": 15,
+      "kernel": "N/A",
+      "type": "NOTIFY_RECORD",
+      "stream_id": "13",
+      "task_id": "2",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 15015.32,
+      "stop_us_relative": 15015.34,
+      "duration_us": 0.02
+    },
+    {
+      "sequence_by_start": 16,
+      "kernel": "N/A",
+      "type": "MODEL_EXECUTE",
+      "stream_id": "47",
+      "task_id": "1129",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 15052.88,
+      "stop_us_relative": 15055.88,
+      "duration_us": 3.0
+    },
+    {
+      "sequence_by_start": 17,
+      "kernel": "MatMulV2_ND_ND_FP16_FP16_false_true_all_98513",
+      "type": "AI_CORE",
+      "stream_id": "13",
+      "task_id": "0",
+      "model_id": "49",
+      "dispatch": "aclnnMatmul_MatMulCommon_MatMulV2",
+      "block_num": "23",
+      "input_formats": "ND;ND",
+      "input_dtypes": "DT_BF16;DT_BF16",
+      "start_us_relative": 15055.8,
+      "stop_us_relative": 15079.08,
+      "duration_us": 23.28
+    },
+    {
+      "sequence_by_start": 18,
+      "kernel": "N/A",
+      "type": "NOTIFY_WAIT",
+      "stream_id": "47",
+      "task_id": "1130",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 15061.66,
+      "stop_us_relative": 15097.96,
+      "duration_us": 36.3
+    },
+    {
+      "sequence_by_start": 19,
+      "kernel": "split_qkv_rmsnorm_rope_kernel",
+      "type": "AI_VECTOR_CORE",
+      "stream_id": "13",
+      "task_id": "1",
+      "model_id": "4294967295",
+      "dispatch": "split_qkv_rmsnorm_rope_kernel",
+      "block_num": "48",
+      "input_formats": "N/A",
+      "input_dtypes": "N/A",
+      "start_us_relative": 15079.1,
+      "stop_us_relative": 15097.32,
+      "duration_us": 18.22
+    },
+    {
+      "sequence_by_start": 20,
+      "kernel": "N/A",
+      "type": "NOTIFY_RECORD",
+      "stream_id": "13",
+      "task_id": "2",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 15097.34,
+      "stop_us_relative": 15097.34,
+      "duration_us": 0.0
+    },
+    {
+      "sequence_by_start": 21,
+      "kernel": "N/A",
+      "type": "MODEL_EXECUTE",
+      "stream_id": "47",
+      "task_id": "1131",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 15137.22,
+      "stop_us_relative": 15140.24,
+      "duration_us": 3.02
+    },
+    {
+      "sequence_by_start": 22,
+      "kernel": "MatMulV2_ND_ND_FP16_FP16_false_true_all_98513",
+      "type": "AI_CORE",
+      "stream_id": "13",
+      "task_id": "0",
+      "model_id": "49",
+      "dispatch": "aclnnMatmul_MatMulCommon_MatMulV2",
+      "block_num": "23",
+      "input_formats": "ND;ND",
+      "input_dtypes": "DT_BF16;DT_BF16",
+      "start_us_relative": 15140.14,
+      "stop_us_relative": 15163.24,
+      "duration_us": 23.1
+    },
+    {
+      "sequence_by_start": 23,
+      "kernel": "N/A",
+      "type": "NOTIFY_WAIT",
+      "stream_id": "47",
+      "task_id": "1132",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 15146.04,
+      "stop_us_relative": 15182.18,
+      "duration_us": 36.14
+    },
+    {
+      "sequence_by_start": 24,
+      "kernel": "split_qkv_rmsnorm_rope_kernel",
+      "type": "AI_VECTOR_CORE",
+      "stream_id": "13",
+      "task_id": "1",
+      "model_id": "4294967295",
+      "dispatch": "split_qkv_rmsnorm_rope_kernel",
+      "block_num": "48",
+      "input_formats": "N/A",
+      "input_dtypes": "N/A",
+      "start_us_relative": 15163.26,
+      "stop_us_relative": 15181.68,
+      "duration_us": 18.42
+    },
+    {
+      "sequence_by_start": 25,
+      "kernel": "N/A",
+      "type": "NOTIFY_RECORD",
+      "stream_id": "13",
+      "task_id": "2",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 15181.7,
+      "stop_us_relative": 15181.72,
+      "duration_us": 0.02
+    },
+    {
+      "sequence_by_start": 26,
+      "kernel": "N/A",
+      "type": "PROFILING_DISABLE",
+      "stream_id": "48",
+      "task_id": "6",
+      "model_id": null,
+      "dispatch": null,
+      "block_num": null,
+      "input_formats": null,
+      "input_dtypes": null,
+      "start_us_relative": 20584.46,
+      "stop_us_relative": 20584.48,
+      "duration_us": 0.02
+    }
+  ],
+  "replays": [
+    {
+      "replay": 1,
+      "gemm_us": 23.22,
+      "consumer_us": 18.32,
+      "handoff_gap_us": 0.039999999999054126,
+      "graph_envelope_us": 44.98000000000138,
+      "prefix_to_gemm_us": 2.9200000000000728,
+      "completion_tail_us": 0.48000000000138243,
+      "model_execute_task_us": 3.02,
+      "notify_wait_task_us": 29.9,
+      "notify_record_task_us": 0.02,
+      "task_sequences": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "replay": 2,
+      "gemm_us": 23.24,
+      "consumer_us": 18.4,
+      "handoff_gap_us": 0.020000000000436557,
+      "graph_envelope_us": 45.07999999999993,
+      "prefix_to_gemm_us": 2.9400000000005093,
+      "completion_tail_us": 0.47999999999956344,
+      "model_execute_task_us": 3.02,
+      "notify_wait_task_us": 34.76,
+      "notify_record_task_us": 0.02,
+      "task_sequences": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "replay": 3,
+      "gemm_us": 23.22,
+      "consumer_us": 18.32,
+      "handoff_gap_us": 0.039999999999054126,
+      "graph_envelope_us": 45.01999999999862,
+      "prefix_to_gemm_us": 2.9399999999986903,
+      "completion_tail_us": 0.5,
+      "model_execute_task_us": 3.2,
+      "notify_wait_task_us": 35.56,
+      "notify_record_task_us": 0.02,
+      "task_sequences": [
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "replay": 4,
+      "gemm_us": 23.28,
+      "consumer_us": 18.22,
+      "handoff_gap_us": 0.020000000000436557,
+      "graph_envelope_us": 45.07999999999993,
+      "prefix_to_gemm_us": 2.9200000000000728,
+      "completion_tail_us": 0.6399999999994179,
+      "model_execute_task_us": 3.0,
+      "notify_wait_task_us": 36.3,
+      "notify_record_task_us": 0.0,
+      "task_sequences": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    {
+      "replay": 5,
+      "gemm_us": 23.1,
+      "consumer_us": 18.42,
+      "handoff_gap_us": 0.020000000000436557,
+      "graph_envelope_us": 44.960000000000946,
+      "prefix_to_gemm_us": 2.9200000000000728,
+      "completion_tail_us": 0.5,
+      "model_execute_task_us": 3.02,
+      "notify_wait_task_us": 36.14,
+      "notify_record_task_us": 0.02,
+      "task_sequences": [
+        21,
+        22,
+        23,
+        24,
+        25
+      ]
+    }
+  ],
+  "medians_us": {
+    "gemm_us": 23.22,
+    "consumer_us": 18.32,
+    "handoff_gap_us": 0.020000000000436557,
+    "graph_envelope_us": 45.01999999999862,
+    "prefix_to_gemm_us": 2.9200000000000728,
+    "completion_tail_us": 0.5,
+    "model_execute_task_us": 3.02,
+    "notify_wait_task_us": 35.56,
+    "notify_record_task_us": 0.02
+  },
+  "task_counts": {
+    "PROFILING_ENABLE": 1,
+    "MODEL_EXECUTE": 5,
+    "AI_CORE": 5,
+    "NOTIFY_WAIT": 5,
+    "AI_VECTOR_CORE": 5,
+    "NOTIFY_RECORD": 5,
+    "PROFILING_DISABLE": 1
+  },
+  "association": "DEVICE_ORDER_AND_KERNEL_TIMESTAMP_JOIN_NOT_ACL_FLOW_PROOF",
+  "graph_envelope_definition": "MODEL_EXECUTE start to last non-profiling device task stop before next model",
+  "cross_stream_task_durations_not_additive": true,
+  "run": "process1",
+  "formal_approved": false,
+  "phases": [
+    {
+      "phase": "before",
+      "trials": [
+        {
+          "event_us": 45.57819843292236,
+          "wall_us": 58.58319
+        },
+        {
+          "event_us": 45.64199924468994,
+          "wall_us": 47.0801
+        },
+        {
+          "event_us": 45.47220230102539,
+          "wall_us": 46.78
+        },
+        {
+          "event_us": 45.56379795074463,
+          "wall_us": 46.812
+        },
+        {
+          "event_us": 45.59700012207031,
+          "wall_us": 47.0958
+        }
+      ],
+      "observation": {
+        "warmup_replays": 10,
+        "trials": 5,
+        "replays_per_trial": 100,
+        "weight_pointer_unchanged": true,
+        "weight_format_after": 2,
+        "allocated_before": 28349952,
+        "allocated_after": 28349952,
+        "peak_allocated": 28349952
+      },
+      "medians_us": {
+        "event_us": 45.57819843292236,
+        "wall_us": 47.0801
+      },
+      "oracle_status": "PASS_FULL_AND_EXACT"
+    },
+    {
+      "phase": "after",
+      "trials": [
+        {
+          "event_us": 45.813398361206055,
+          "wall_us": 49.00214
+        },
+        {
+          "event_us": 45.67220211029053,
+          "wall_us": 47.12791
+        },
+        {
+          "event_us": 45.60739994049072,
+          "wall_us": 47.197610000000005
+        },
+        {
+          "event_us": 45.64839839935303,
+          "wall_us": 47.114200000000004
+        },
+        {
+          "event_us": 45.594000816345215,
+          "wall_us": 47.257799999999996
+        }
+      ],
+      "observation": {
+        "warmup_replays": 10,
+        "trials": 5,
+        "replays_per_trial": 100,
+        "weight_pointer_unchanged": true,
+        "weight_format_after": 2,
+        "allocated_before": 28349952,
+        "allocated_after": 28349952,
+        "peak_allocated": 28360704
+      },
+      "medians_us": {
+        "event_us": 45.64839839935303,
+        "wall_us": 47.197610000000005
+      },
+      "oracle_status": "PASS_FULL_AND_EXACT"
+    }
+  ],
+  "before_after_signed_drift_percent": {
+    "event_us": 0.15402093291154909,
+    "wall_us": 0.24959590145306165
+  },
+  "profiler_interference": "NOT_DETECTED_BY_2PCT_GATE_NOT_PROOF_OF_NO_EFFECT",
+  "executed_probe_sha256": "0d9df4abdb21838af152a47f99d16b93f2f35b95e827609846e75b8e37d8dacf",
+  "full_profile_oracle": "PASS",
+  "B0_pair_errors": null,
+  "graph_markers": {
+    "AscendCL@aclmdlRIExecuteAsync": 5,
+    "MODEL_EXECUTE": 5
+  },
+  "raw_sha256": {
+    "task_time.csv": "9adc471df2edcb16a4905327fd323a0ea8c0d385da7f09ea3f3262805d9afcbc",
+    "kernel_details.csv": "8addf2a9d8037faed2a12d73acad0f86497f1641efd299360fb66fb24589f396",
+    "trace_view.json": "103b064daff8103db24b7585bda22a2fbb61db54aa7c26728364d8180a5aea8b",
+    "result.local.json": "090d759db3b5f6c7916c9637c7f122a4ee2268220bfcedfab2833c32d3920f15"
+  }
+}

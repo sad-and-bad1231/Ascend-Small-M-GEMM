@@ -2,7 +2,7 @@
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: M0_B_B0_CROSS_PROCESS_INSTABILITY_REPRODUCED_ABA_BLOCKED_FORMAL_ADMISSION_PENDING
+status: M0_B_TIMELINE_CONSUMER_DURATION_ASSOCIATION_CAUSE_UNKNOWN_ABA_BLOCKED
 source:
   personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
@@ -213,6 +213,33 @@ diagnostic_permission:
   timeout_seconds_per_process: 120
   max_allocated_hbm_bytes: 2147483648
   formal_admission_granted: false
+  formal_approved: false
+timeline_permission:
+  user_authorized: true
+  authority: explicit_user_instruction_20261017_based_on_39d5b9f
+  mode: DIAGNOSTIC_ONLY
+  stage: timeline
+  arm: B0_ND_ONLY
+  m: 1
+  seed: 0
+  bias: false
+  scope: chain
+  process_order: [process1, process2, process3]
+  processes_max: 3
+  per_process: before_unprofiled_then_profile5_then_after_unprofiled_same_graph
+  unprofiled_each_phase: {warmup_replays: 10, trials: 5, replays_per_trial: 100}
+  profiler_replays: 5
+  profiler_level: Level1_no_AIC_metrics_existing_configuration
+  current_allocation_only: new_identity_frozen_no_cross_card_absolute_comparison
+  oracle: full_original_and_exact_before_profile_after_each_phase
+  interference_gate: either_Event_or_Wall_abs_after_minus_before_over_before_median_ge_2pct
+  historical_threshold_changed: false
+  interference_behavior: retain_flag_no_forced_causal_attribution_continue_fixed_B0_panel
+  stop_all: source_identity_oracle_graph_resource_occupancy_failure_or_unexpected_conversion
+  retry_B1_ABA_TP4_new_kernel: prohibited
+  timeout_seconds_per_process: 120
+  max_allocated_hbm_bytes: 2147483648
+  max_total_local_trace_bytes: 1073741824
   formal_approved: false
 stability_permission:
   user_authorized: true
@@ -437,6 +464,47 @@ stability_new_allocation_execution:
   production_source_modification: false
   previous_aborted_and_pilot_index_integrity: VERIFIED_UNCHANGED
   ABA_readiness: BLOCKED_VARIATION
+  formal_approved: false
+timeline_execution:
+  status: OBSERVED_CONSUMER_DURATION_VARIATION_SMALL_HANDOFF_CAUSE_UNKNOWN
+  base_commit: 39d5b9f20706509ad89ca92e0f617c0f88e8aaf9
+  report: docs/M0_B_TIMELINE_20261017.md
+  sanitized_results: results/m0b_timeline_20261017
+  local_receipts: m0_receipts/m0b_timeline_20261017
+  local_receipt_index_sha256: 47a080e8928f4bd04939c17105d71f239a1b5d6edb9fc70643247e0ffb257404
+  local_indexed_files: 408
+  local_receipts_bytes_at_checkpoint: 3340553
+  executed_probe_sha256: 0d9df4abdb21838af152a47f99d16b93f2f35b95e827609846e75b8e37d8dacf
+  reducer_sha256: f060cc92ffe456ac3eca15f803ff6d44b1f690260387c14e3464b384f6661198
+  process_order: [process1, process2, process3]
+  exit_codes: [0, 0, 0]
+  unprofiled_phases: 6
+  unprofiled_trials: 30
+  profiled_replays: 15
+  full_and_exact_oracles: PASS_ALL_PHASES_AND_PAIRS
+  source_runtime_input_and_physical_identity: MATCH_ALL_THREE
+  device_tasks_per_process: 27
+  compute_tasks_per_process: {gemm: 5, existing_consumer: 5}
+  observed_native_gemm: MatMulV2_ND_ND_FP16_FP16_false_true_all_98513
+  observed_gemm_dispatch: aclnnMatmul_MatMulCommon_MatMulV2
+  gemm_median_us: [23.22, 23.90, 24.12]
+  consumer_median_us: [18.32, 24.76, 14.80]
+  handoff_median_us: [0.02, 0.04, 0.02]
+  graph_device_envelope_median_us: [45.02, 52.22, 42.34]
+  before_after_Event_drift_percent: [0.15402093291154909, -0.12340616911708496, 0.18475689123638528]
+  before_after_Wall_drift_percent: [0.24959590145306165, 0.14505021671719331, 0.20649773508398064]
+  interference_ge_2pct: NOT_DETECTED_NOT_PROOF_OF_NO_PROFILER_PERTURBATION
+  notify_wait_cost_additive_with_compute: false
+  standalone_conversion_tasks: 0
+  association: OBSERVED_consumer_duration_and_graph_envelope_track_Event
+  underlying_consumer_variation_cause: UNKNOWN
+  exact_unprofiled_critical_path: UNKNOWN
+  parser_limits: [missing_ACL_to_NPU_flow, text_export_op_attr_ignored, RECORD_stop_warning]
+  max_allocated_torch_bytes: 28360704
+  cpu_tests_passed: 21
+  original_Event_Wall_measured_AST: VERIFIED_UNCHANGED_FROM_39d5b9f
+  retry_B1_ABA_TP4_new_kernel_environment_change: NOT_RUN
+  ABA_readiness: STILL_BLOCKED
   formal_approved: false
 approval:
   scope: FORMAL_experiment_admission_NOT_owner_authorized_local_diagnostics

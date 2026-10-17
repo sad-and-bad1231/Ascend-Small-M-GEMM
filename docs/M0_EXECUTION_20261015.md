@@ -1,6 +1,15 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-B B0 CROSS-PROCESS INSTABILITY REPRODUCED / A/B/A BLOCKED**.
+Status: **M0-B TIMELINE: CONSUMER DURATION ASSOCIATION / CAUSE UNKNOWN / A/B/A BLOCKED**.
+2026-10-17 current-card B0-only M=1 seed0 panel completed: three fresh processes,
+each unprofiled ->5 profiled replays ->unprofiled. All oracles pass;21 CPU tests.
+Consumer medians18.32/24.76/14.80us, GEMM23.22/23.90/24.12us, handoff0.02-0.04us.
+Device Graph envelopes track Event variation; before/after drift never reaches2%.
+Missing flow links and absent counters leave underlying cause and exact
+unprofiled attribution UNKNOWN. No B1, A/B/A or optimization benefit claim.
+See [device tasks and evidence boundary](M0_B_TIMELINE_20261017.md).
+
+Earlier stability checkpoint:
 Owner subsequently authorized an independent batch on the newly allocated card.
 Four processes exit0, six windows/30 trials, full/exact oracles pass. Same-Graph
 Event spread0.47%; fresh-process spread14.77%, endpoint drift10.01%.

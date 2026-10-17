@@ -16,6 +16,51 @@ from stability_summary import variation
 
 
 class ContractTests(unittest.TestCase):
+    def test_timeline_permission_is_separate_and_b0_only(self):
+        import yaml
+        manifest = yaml.safe_load((probe.ROOT / "docs/M0_MANIFEST.yaml").read_text())
+        args = SimpleNamespace(mode="DIAGNOSTIC_ONLY", stage="timeline", scope="chain",
+                               arm="B0", m=1, seed=0, bias=False, windows=1,
+                               physical_card=0, device_identity_sha="test")
+        probe.require_execution_permission(manifest, args)
+        for key, value in (("arm", "B1"), ("m", 8), ("seed", 1), ("bias", True),
+                           ("scope", "gemm"), ("windows", 3), ("mode", "FORMAL"),
+                           ("physical_card", None), ("device_identity_sha", None)):
+            with self.assertRaises(RuntimeError):
+                probe.require_execution_permission(manifest, SimpleNamespace(**{**vars(args), key: value}))
+        manifest["timeline_permission"]["user_authorized"] = False
+        with self.assertRaises(RuntimeError):
+            probe.require_execution_permission(manifest, args)
+
+    def test_timeline_decimal_precision_and_overlapping_control(self):
+        from decimal import Decimal
+        from timeline_summary import timeline
+        tasks, kernels = [], []
+        origin = Decimal("1792070466970154.335")
+        for i in range(5):
+            start = origin + i * 100
+            for kind, offset, duration, stream, tid in (
+                    ("MODEL_EXECUTE", "0", "3", "47", str(81 + 2*i)),
+                    ("AI_CORE", "2.94", "23.74", "13", "0"),
+                    ("NOTIFY_WAIT", "14", "26", "47", str(82 + 2*i)),
+                    ("AI_VECTOR_CORE", "26.72", "12.9", "13", "1"),
+                    ("NOTIFY_RECORD", "39.64", "0.02", "13", "2")):
+                name = "split_qkv_rmsnorm_rope_kernel" if kind == "AI_VECTOR_CORE" else "ND_GEMM" if kind == "AI_CORE" else "N/A"
+                ts = start + Decimal(offset)
+                tasks.append({"kernel_name": name, "kernel_type": kind, "stream_id": stream,
+                              "task_id": tid, "task_start(us)": str(ts),
+                              "task_stop(us)": str(ts + Decimal(duration)), "task_time(us)": duration})
+                if kind in ("AI_CORE", "AI_VECTOR_CORE"):
+                    kernels.append({"Start Time(us)": str(ts), "Stream ID": stream, "Task ID": tid,
+                                    "Model ID": "49", "Name": name, "Block Num": "23",
+                                    "Input Formats": "ND;ND", "Input Data Types": "DT_BF16;DT_BF16"})
+        result = timeline(tasks, kernels)
+        self.assertAlmostEqual(result["medians_us"]["handoff_gap_us"], 0.04)
+        self.assertEqual(result["medians_us"]["graph_envelope_us"], 40)
+        self.assertEqual(len(result["tasks_in_start_order"]), 25)
+        self.assertEqual(result["medians_us"]["notify_wait_task_us"], 26)
+        with self.assertRaises(ValueError):
+            timeline(tasks[:-5], kernels)
     def test_stability_variation_all_pairs_and_boundary(self):
         result = variation([100, 102, 100])
         self.assertEqual(result["endpoint_drift_percent"], 0)
@@ -74,7 +119,7 @@ class ContractTests(unittest.TestCase):
             f"ns=runpy.run_path({probe.__file__!r})\n"
             "args=types.SimpleNamespace(mode='DIAGNOSTIC_ONLY',stage='stability',scope='chain',"
             "arm='B0',m=1,seed=0,bias=False,windows=1,physical_card=2,device_identity_sha='expected')\n"
-            "manifest={'stability_permission': {'user_authorized': True},"
+            "manifest={'stability_permission': {'user_authorized': True},'timeline_permission': {'user_authorized': True},"
             "'approval': {'approved_for_hardware': False}}\n"
             "with tempfile.TemporaryDirectory() as tmp:\n"
             "    try: ns['hardware'](args,manifest,pathlib.Path(tmp))\n"
@@ -82,7 +127,9 @@ class ContractTests(unittest.TestCase):
             "    else: raise AssertionError('identity gate did not stop')\n"
             "    assert (pathlib.Path(tmp)/'pre_runtime_state.local.json').exists()\n"
         )
-        subprocess.run([sys.executable, "-S", "-c", code], check=True, capture_output=True)
+        for stage in ("stability", "timeline"):
+            subprocess.run([sys.executable, "-S", "-c", code.replace("stage='stability'", f"stage='{stage}'")],
+                           check=True, capture_output=True)
 
     def test_timing_gain_and_exact_drift_boundary(self):
         trials = [[{"event_us": v, "wall_us": v} for _ in range(5)] for v in (100, 90, 100)]

@@ -60,6 +60,16 @@ def require_approval(manifest):
 
 
 def require_execution_permission(manifest, args):
+    if getattr(args, "stage", None) == "timeline":
+        permission = manifest.get("timeline_permission", {})
+        if (permission.get("user_authorized") is not True
+                or getattr(args, "mode", None) != "DIAGNOSTIC_ONLY"
+                or args.arm != "B0" or args.m != 1 or args.seed != 0 or args.bias
+                or args.scope != "chain" or getattr(args, "windows", 1) != 1
+                or getattr(args, "physical_card", None) is None
+                or not getattr(args, "device_identity_sha", None)):
+            raise RuntimeError("BLOCKED: outside separately authorized B0 timeline scope")
+        return
     if getattr(args, "stage", None) == "stability":
         permission = manifest.get("stability_permission", {})
         if (permission.get("user_authorized") is not True
@@ -145,7 +155,7 @@ def hardware(args, manifest, out):
         print(json.dumps(entry), flush=True)
 
     checkpoint("permission", mode=args.mode, formal_approval=manifest["approval"]["approved_for_hardware"])
-    if args.stage == "stability":
+    if args.stage in ("stability", "timeline"):
         from stability_state import snapshot as state_snapshot, validate as validate_state
         preflight = state_snapshot(args.physical_card)
         (out / "pre_runtime_state.local.json").write_text(json.dumps(preflight, indent=2))
@@ -260,7 +270,7 @@ def hardware(args, manifest, out):
         capture_context = torch.npu.graph(graph, capture_error_mode="thread_local", auto_dispatch_capture=True)
         with capture_context:
             values = fn()
-        if args.stage == "stability":
+        if args.stage in ("stability", "timeline"):
             stream_observation.update(capture_stream=int(capture_context.capture_stream.npu_stream),
                                       replay_caller_stream=int(torch.npu.current_stream().npu_stream))
         graph.replay()
@@ -269,6 +279,7 @@ def hardware(args, manifest, out):
 
     stream_observation = {}
     stability_windows = []
+    timeline_windows = []
     with torch.inference_mode():
         # Reject incompatible physical output before the stride-blind consumer.
         producer_probe = F.linear(x, w, bias)
@@ -372,13 +383,21 @@ def hardware(args, manifest, out):
                 stability_windows.append({"window": window, "trials": window_trials,
                                           "post_window_oracle": oracle, "observation": observation})
                 checkpoint("stability_window_oracle_pass", window=window, observation=observation)
-        if args.stage == "timing":
+        def measure_timing(label=None):
+            nonlocal timings, timing_observation
+            timings = []
+            if label:
+                state = state_snapshot(args.physical_card)
+                (out / f"timeline_{label}_before.local.json").write_text(json.dumps(state, indent=2))
+                validate_state(state, args.device_identity_sha)
             weight_ptr = w.data_ptr()
             allocated_before_timing = torch.npu.memory_allocated()
             for _ in range(10):
                 graph.replay()
             torch.npu.synchronize()
             for _ in range(5):
+                if label and int(torch.npu.current_stream().npu_stream) != stream_observation["replay_caller_stream"]:
+                    raise RuntimeError("replay caller stream changed")
                 a, b = torch.npu.Event(enable_timing=True), torch.npu.Event(enable_timing=True)
                 wall = time.perf_counter_ns()
                 a.record()
@@ -388,7 +407,7 @@ def hardware(args, manifest, out):
                 torch.npu.synchronize()
                 timings.append({"event_us": a.elapsed_time(b) * 1000 / 100,
                                 "wall_us": (time.perf_counter_ns() - wall) / 1000 / 100})
-                checkpoint("timing_trial_completed", trial=len(timings), **timings[-1])
+                checkpoint("timing_trial_completed", phase=label, trial=len(timings), **timings[-1])
             timing_observation = {
                 "warmup_replays": 10, "trials": 5, "replays_per_trial": 100,
                 "weight_pointer_unchanged": w.data_ptr() == weight_ptr,
@@ -406,7 +425,17 @@ def hardware(args, manifest, out):
                 for actual, expected in zip(values, snapshot):
                     compare(actual, expected, atol=0, rtol=0)
                 checkpoint("post_timing_oracle_and_exact_pass", correctness=correctness["post_timing"])
-        if args.stage == "profile":
+            if label:
+                timeline_windows.append({"phase": label, "trials": timings,
+                                         "observation": timing_observation,
+                                         "oracle": correctness["post_timing"]})
+                state = state_snapshot(args.physical_card)
+                (out / f"timeline_{label}_after.local.json").write_text(json.dumps(state, indent=2))
+                validate_state(state, args.device_identity_sha)
+
+        if args.stage in ("timing", "timeline"):
+            measure_timing("before" if args.stage == "timeline" else None)
+        if args.stage in ("profile", "timeline"):
             from torch_npu.profiler import _ExperimentalConfig, ProfilerLevel, AiCMetrics
             weight_ptr = w.data_ptr()
             allocated_before_profile = torch.npu.memory_allocated()
@@ -440,6 +469,11 @@ def hardware(args, manifest, out):
                 for actual, expected in zip(values, snapshot):
                     compare(actual, expected, atol=0, rtol=0)
                 checkpoint("post_profile_oracle_and_exact_pass", correctness=correctness["post_profile"])
+            if args.stage == "timeline":
+                trace_bytes = sum(p.stat().st_size for p in (out / "profiler").rglob("*") if p.is_file())
+                if trace_bytes > 1024**3:
+                    raise RuntimeError("1GiB local trace budget exceeded")
+                measure_timing("after")
         torch.save({"shared": shared, "arm": args.arm, "outputs": snapshot}, out / "outputs.pt")
         return {"status": "DEVICE_CHECKS_PASS_NOT_DISPATCH_ADMISSION", "shared": shared,
                 "mode": args.mode, "formal_approval": manifest["approval"]["approved_for_hardware"],
@@ -453,6 +487,7 @@ def hardware(args, manifest, out):
                             for t in (x, w, *eager)],
                 "correctness": correctness, "trials": timings,
                 "stability_windows": stability_windows, "stream_observation": stream_observation,
+                "timeline_windows": timeline_windows,
                 "timing_observation": timing_observation,
                 "profile_observation": profile_observation,
                 "median_us": statistics.median(t["event_us"] for t in timings) if timings else None,
@@ -462,7 +497,7 @@ def hardware(args, manifest, out):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--stage", choices=("plan", "correctness", "timing", "profile", "stability"), default="plan")
+    p.add_argument("--stage", choices=("plan", "correctness", "timing", "profile", "stability", "timeline"), default="plan")
     p.add_argument("--windows", type=int, choices=(1, 3), default=1)
     p.add_argument("--physical-card", type=int)
     p.add_argument("--device-identity-sha")
