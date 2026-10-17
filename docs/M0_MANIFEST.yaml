@@ -2,7 +2,7 @@
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: M0_B_TIMELINE_CONSUMER_DURATION_ASSOCIATION_CAUSE_UNKNOWN_ABA_BLOCKED
+status: SMALL_M_PAUSED_FINAL_SCREEN_INVALID_MEASUREMENT_BLOCKED_NEXT_MLP_MATERIALIZATION
 source:
   personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
@@ -213,6 +213,38 @@ diagnostic_permission:
   timeout_seconds_per_process: 120
   max_allocated_hbm_bytes: 2147483648
   formal_admission_granted: false
+  formal_approved: false
+screen_permission:
+  user_authorized: true
+  authority: explicit_final_quick_screen_instruction_based_on_bda1ce4
+  mode: DIAGNOSTIC_ONLY
+  stage: screen
+  allowed_m: [8]
+  conditional_m1: only_after_both_M8_processes_VALID_and_Event_chain_gain_ge_5pct
+  processes_per_m: 2
+  seed: 0
+  bias: false
+  scope: full_chain_three_independent_graphs
+  capture_order: [B0_ND, shadow_ND, B1_NZ]
+  three_weights_co_resident: true
+  cycles: 5
+  slots_each_cycle: [B0, shadow, shadow, B0, B0, B1, B1, B0, B0, shadow, shadow, B0]
+  meaning: shadow_ABBA_then_NZ_ABBA_then_shadow_ABBA_palindromic_cycle
+  per_slot: {warmup_replays: 10, measured_replays: 100}
+  event_api: three_record_sync_elapsed_pairs_then_reuse_events
+  primary_gain_metric: Event_paired_reduction_median_over_all5_cycles
+  gain_formula: (mean_bracketing_B0-mean_middle_B1)/mean_bracketing_B0*100
+  controls_Event_and_Wall:
+    shadow: every_shadow_ABBA_paired_difference_absolute_ge_2pct_invalidates
+    B0_bracket: every_ABBA_before_after_drift_absolute_ge_2pct_invalidates
+    B0_temporal: first_vs_last_cycle_B0_medians_absolute_drift_ge_2pct_invalidates
+  retry_or_window_selection: prohibited
+  next_gate: both_independent_processes_valid_and_each_Event_gain_ge_5pct
+  invalid_action: measurement_blocked_pause_Small_M_redirect_MLP_no_mechanism_falsification
+  valid_but_no_gain_action: close_NZ_primary_route_check_independent_quantified_fusion_space_then_stop_if_not_established
+  timeout_seconds_per_process: 120
+  max_allocated_hbm_bytes: 2147483648
+  profiler_TP4_new_kernel_production_edits: prohibited
   formal_approved: false
 timeline_permission:
   user_authorized: true
@@ -505,6 +537,42 @@ timeline_execution:
   original_Event_Wall_measured_AST: VERIFIED_UNCHANGED_FROM_39d5b9f
   retry_B1_ABA_TP4_new_kernel_environment_change: NOT_RUN
   ABA_readiness: STILL_BLOCKED
+  formal_approved: false
+final_screen_execution:
+  status: BOTH_PROCESSES_INVALID_CONTROL_NO_GO_NEXT_PHASE_NOT_MECHANISM_FALSIFICATION
+  base_commit: bda1ce4600d037833da5e1ae462af9c5496c42dd
+  report: docs/M0_B_FINAL_SCREEN_20261017.md
+  sanitized_results: results/m0b_final_screen_20261017
+  local_receipts: m0_receipts/m0b_final_screen_20261017
+  local_receipt_index_sha256: acc0c4a00a4b65749638a4b4ff60189494f88578b0804d7b7afb1b13e03e6736
+  local_indexed_files: 27
+  local_receipts_bytes_at_checkpoint: 638139
+  probe_sha256: 161df08938bfe8acd9e8c8790521847164c38538b393e4d8c45959c657e479d2
+  screen_helper_sha256: 2620e7dce8f6c5b8fadd27a0d6eeafdc9193a8da95c4b932781057f2c94441d2
+  m: 8
+  seed: 0
+  ordered_processes: [m8_process1, m8_process2]
+  exit_codes: [0, 0]
+  graphs_per_process: 3
+  full_oracles: PASS_ALL_THREE_ARMS_BEFORE_AFTER_BOTH_PROCESSES
+  total_unprofiled_rows: 120
+  shared_source_runtime_inputs_and_physical_identity: MATCH_BOTH
+  three_weight_co_residency: OBSERVED_INDEPENDENT_ALLOCATIONS
+  allocated_torch_bytes_each: 83258880
+  peak_allocated_torch_bytes_each: 110184960
+  process1_invalid_reason: shadow_Event_absolute_difference_2p293_to_2p992_percent_and_Wall_bracket
+  process2_invalid_reason: Wall_bracket_drift_2p195827_percent
+  raw_Event_paired_reduction_percent_INVALID: [1.3392393805073093, 7.825544023336752]
+  accepted_gain: NONE
+  m1_gate: NOT_MET_NOT_RUN
+  integration_or_fusion_development: NOT_RUN
+  independently_quantified_fusion_space_ge_5pct: NOT_ESTABLISHED_NOT_PROVEN_IMPOSSIBLE
+  mechanism_falsified: false
+  next_phase: NO_GO_MEASUREMENT_BLOCKED_PAUSE_SMALL_M
+  next_topic: Ascend_MLP_Materialization
+  new_topic_hardware: NOT_RUN
+  retries_profiler_TP4_production_changes: NOT_RUN
+  cpu_tests_passed: 23
   formal_approved: false
 approval:
   scope: FORMAL_experiment_admission_NOT_owner_authorized_local_diagnostics

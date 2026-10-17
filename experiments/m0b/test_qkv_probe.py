@@ -16,6 +16,32 @@ from stability_summary import variation
 
 
 class ContractTests(unittest.TestCase):
+    def test_screen_schedule_and_unselectable_gates(self):
+        from paired_screen import ORDER, assess
+        self.assertEqual(ORDER, ORDER[::-1])
+        def rows():
+            return [{"cycle": c, "slot": i, "arm": arm,
+                     "event_us": 90 if arm == "B1" else 100,
+                     "wall_us": 90 if arm == "B1" else 100}
+                    for c in range(5) for i, arm in enumerate(ORDER)]
+        r=rows()
+        self.assertEqual(assess(r)["accepted_chain_gain_percent"], 10)
+        r[1]["event_us"]=104
+        self.assertEqual(assess(r)["status"], "INVALID_CONTROL")
+        self.assertIsNone(assess(r)["accepted_chain_gain_percent"])
+        r=rows(); r[3]["wall_us"]=102
+        self.assertEqual(assess(r)["status"], "INVALID_CONTROL")
+        with self.assertRaises(ValueError): assess(rows()[:-1])
+
+    def test_screen_permission_m8_only_before_gate(self):
+        import yaml
+        manifest=yaml.safe_load((probe.ROOT/"docs/M0_MANIFEST.yaml").read_text())
+        args=SimpleNamespace(stage="screen",mode="DIAGNOSTIC_ONLY",arm="B0",m=8,seed=0,
+                             bias=False,scope="chain",physical_card=0,device_identity_sha="test")
+        probe.require_execution_permission(manifest,args)
+        for key,value in (("m",1),("seed",1),("mode","FORMAL"),("bias",True),("scope","gemm")):
+            with self.assertRaises(RuntimeError):
+                probe.require_execution_permission(manifest,SimpleNamespace(**{**vars(args),key:value}))
     def test_timeline_permission_is_separate_and_b0_only(self):
         import yaml
         manifest = yaml.safe_load((probe.ROOT / "docs/M0_MANIFEST.yaml").read_text())

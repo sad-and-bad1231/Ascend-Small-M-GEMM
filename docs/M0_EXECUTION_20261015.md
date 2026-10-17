@@ -1,6 +1,14 @@
 # M0 execution checkpoint — 2026-10-15
 
-Status: **M0-B TIMELINE: CONSUMER DURATION ASSOCIATION / CAUSE UNKNOWN / A/B/A BLOCKED**.
+Status: **FINAL QUICK SCREEN INVALID / SMALL-M PAUSED / NEXT: MLP MATERIALIZATION**.
+M=8 seed0 two-process paired screen completed: B0 ND, shadow ND and NZ all
+correct,120 Event/Wall rows retained. Process1 shadow Event difference>=2%;
+process2 Wall bracket drift2.196%. No accepted gain, M=1 gate not met.
+No integration/fusion development or further stability experiments. This is
+measurement blocking, not NZ/fusion falsification.23 CPU tests pass; formalfalse.
+See [final GO/NO-GO decision](M0_B_FINAL_SCREEN_20261017.md).
+
+Earlier timeline checkpoint:
 2026-10-17 current-card B0-only M=1 seed0 panel completed: three fresh processes,
 each unprofiled ->5 profiled replays ->unprofiled. All oracles pass;21 CPU tests.
 Consumer medians18.32/24.76/14.80us, GEMM23.22/23.90/24.12us, handoff0.02-0.04us.

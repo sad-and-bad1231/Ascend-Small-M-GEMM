@@ -1,5 +1,10 @@
 # 研究状态与论文地图（2026-10-14）
 
+2026-10-17 owner 决策更新：[最终快速筛选](M0_B_FINAL_SCREEN_20261017.md) 的两个 M=8
+进程均控制 INVALID。暂停当前 Small-M/NZ 主路线，不再追加 Stability 或融合开发；
+这不是机制证伪。未建立独立可量化 >=5% 融合空间，下一课题转向 Ascend MLP
+Materialization（本轮未启动其硬件实验）。以下历史研究问题与证据保持原样。
+
 ## 1. Problem
 
 目标：在 Ascend 910B2 的 Small-M decode（历史 Qwen3-32B TP=4，单 rank QKV `X[M,5120] @ W[5120,2560]`、BF16、`M=1/2/4/8`）中，验证 GEMM producer 与 **现有 fused consumer** `split_qkv_rmsnorm_rope` 之间是否存在可消除的执行开销（materialization、synchronization、scheduling）。原始关注点是整体 `GEMM → Consumer`，不是重新实现已经融合的 split/norm/rope。

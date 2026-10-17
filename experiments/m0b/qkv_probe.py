@@ -60,6 +60,15 @@ def require_approval(manifest):
 
 
 def require_execution_permission(manifest, args):
+    if getattr(args, "stage", None) == "screen":
+        permission = manifest.get("screen_permission", {})
+        if (permission.get("user_authorized") is not True or args.mode != "DIAGNOSTIC_ONLY"
+                or args.arm != "B0" or args.m not in permission.get("allowed_m", [])
+                or args.seed != 0 or args.bias or args.scope != "chain"
+                or getattr(args, "physical_card", None) is None
+                or not getattr(args, "device_identity_sha", None)):
+            raise RuntimeError("BLOCKED: outside final paired screen permission")
+        return
     if getattr(args, "stage", None) == "timeline":
         permission = manifest.get("timeline_permission", {})
         if (permission.get("user_authorized") is not True
@@ -155,7 +164,7 @@ def hardware(args, manifest, out):
         print(json.dumps(entry), flush=True)
 
     checkpoint("permission", mode=args.mode, formal_approval=manifest["approval"]["approved_for_hardware"])
-    if args.stage in ("stability", "timeline"):
+    if args.stage in ("stability", "timeline", "screen"):
         from stability_state import snapshot as state_snapshot, validate as validate_state
         preflight = state_snapshot(args.physical_card)
         (out / "pre_runtime_state.local.json").write_text(json.dumps(preflight, indent=2))
@@ -207,6 +216,8 @@ def hardware(args, manifest, out):
                                                     positions_cpu, cache_cpu)]}
     if bias_cpu is not None:
         shared["inputs"].append(digest_tensor(bias_cpu))
+    if args.stage == "screen":
+        shared["screen_helper_sha"] = hashlib.sha256((ROOT / "experiments/m0b/paired_screen.py").read_bytes()).hexdigest()
     baseline = None
     if args.baseline:
         baseline = torch.load(args.baseline, map_location="cpu", weights_only=True)
@@ -280,6 +291,10 @@ def hardware(args, manifest, out):
     stream_observation = {}
     stability_windows = []
     timeline_windows = []
+    if args.stage == "screen":
+        from paired_screen import run_screen
+        return run_screen(args, out, shared, baseline, x, w, w_cpu, positions, positions_cpu,
+                          x_cpu, consume, check, capture, checkpoint)
     with torch.inference_mode():
         # Reject incompatible physical output before the stride-blind consumer.
         producer_probe = F.linear(x, w, bias)
@@ -497,7 +512,7 @@ def hardware(args, manifest, out):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--stage", choices=("plan", "correctness", "timing", "profile", "stability", "timeline"), default="plan")
+    p.add_argument("--stage", choices=("plan", "correctness", "timing", "profile", "stability", "timeline", "screen"), default="plan")
     p.add_argument("--windows", type=int, choices=(1, 3), default=1)
     p.add_argument("--physical-card", type=int)
     p.add_argument("--device-identity-sha")
