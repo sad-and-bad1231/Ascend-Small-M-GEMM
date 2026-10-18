@@ -1,5 +1,9 @@
 # M0 — Reproduction & Attribution Protocol（Draft，待 advisor 审核）
 
+2026-10-18: 正式准入字段以 manifest 的 `formal_m0_admission` 为当前审核草案；
+其余单卡 permission / 流程保留为历史，不能复用为新的硬件授权。
+不再追加 seed0 NZ 筛选。B2 仍未实现；M0 未验收，不启动 M1。
+
 目标：**用真实 910B2 严格复核旧 QKV-local NZ 机制，识别 GEMM→fused consumer 的真实损失边界**，在合理的重复预算下形成 M0 GO/NO_GO。M0 不开发新融合原语；不能因一次负结果或未确认的归因直接换题。
 
 ## 0. Frozen historical identity / gates

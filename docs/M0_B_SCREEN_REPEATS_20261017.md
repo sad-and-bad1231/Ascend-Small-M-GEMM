@@ -1,5 +1,9 @@
 # Bounded repeats of the final M=8 screen
 
+Decision status: **SUPERSEDED** for further NZ/M=1 screening or topic changes.
+The six-process evidence remains intact; it is B1 diagnostic evidence, not B2
+admission. Current work is formal M0 preparation under the upstream contract.
+
 Owner requested additional repetitions after `228d971`. Preregistered two more
 rounds, two fresh processes each, fixed order round2_process1, round2_process2,
 round3_process1, round3_process2. Original round1 remains two INVALID results.

@@ -1,5 +1,9 @@
 # Final Small-M quick screen
 
+Decision status: **SUPERSEDED** by the owner's formal-contract correction.
+The personal NO-GO / MLP transition is not intellistream admission policy.
+All measurements and invalidity rulings below remain unchanged.
+
 Base `bda1ce4`; DIAGNOSTIC_ONLY, formal_approved=false. This is a practical
 screen, not the formal M1/M2 contract or a new stability investigation.
 

@@ -1,8 +1,16 @@
-# M0-A receipts + M0-B proposed contract. NOT_RUN is not PASS or approval.
+# Historical M0-A/B receipts retained. formal_m0_admission is the current proposal.
+# Historical permission blocks below do not authorize new runs. NOT_RUN is not PASS.
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: M8_REPEAT_ROUND3_PASSES_QUICK_GATE_MIXED_REPRODUCIBILITY_M1_NOT_RUN
+status: FORMAL_M0_ADMISSION_PREPARATION_INCOMPLETE_NOT_APPROVED
+execution_control:
+  active_scope: CPU_AND_DOCUMENTATION_ONLY
+  historical_permissions: ARCHIVED_NOT_AUTHORIZATION_FOR_NEW_RUNS
+  further_seed0_NZ_screening: false
+  personal_NO_GO_and_MLP_transition: SUPERSEDED_BY_OWNER
+  other_topics: NOT_AUTHORIZED
+  formal_approved: false
 source:
   personal_main_sha_at_m0b_preparation: c2fdf300fa41476a0a04c87045477349cb89d91e
   organization_repo: https://github.com/intellistream/ascend-small-m-gemm
@@ -629,3 +637,137 @@ approval:
   scope: FORMAL_experiment_admission_NOT_owner_authorized_local_diagnostics
   advisor_review_link: TO_FILL
   approved_for_hardware: false
+formal_m0_admission:
+  updated: "2026-10-18"
+  state: PROPOSED_REVIEW_REQUIRED_NOT_FROZEN_FOR_HARDWARE
+  formal_approved: false
+  authority:
+    repository: intellistream/ascend-small-m-gemm
+    commit: cb095ea9dc335507ffdf7aedfb5d761fe6b5d88c
+    contract_blob: ceb4361f9bd750ac12a50dbcf77767f1b1e455ad
+    handoff_blob: cead2d44b86f36febc68cbeda63b78f770ca5568
+    issue: https://github.com/intellistream/ascend-small-m-gemm/issues/20
+    issue_comments_at_saved_read: 0
+    review_draft: docs/M0_ISSUE20_REVIEW_DRAFT_20261018.md
+    posted: false
+  evidence:
+    m0a: PARTIAL_CUSTODY_AND_CPU_TESTS_PASS_NOT_TP4_REPRODUCTION
+    m0b: SYNTHETIC_SINGLE_RANK_CORRECTNESS_AND_DISPATCH_OBSERVED
+    six_process_screen: {INVALID: 3, VALID: 3}
+    valid_Event_chain_gain_percent: [2.5988954052864255, 12.425202960875485, 12.205836913758931]
+    interpretation: B1_ONLY_MIXED_REPRODUCIBILITY_NOT_B2_OR_SERVICE_GAIN
+    temporary_full_weight_allocations_per_process: 3
+    historical_csv_not_verified: {files: 16, bytes: 597659552}
+    historical_executed_dirty_patch: UNKNOWN_NOT_RETROSPECTIVELY_RECOVERABLE_FROM_PR_HEAD
+    historical_container_digest: UNKNOWN
+    historical_checkpoint_revision_and_digest: UNKNOWN
+    historical_full_token_outputs: NOT_RECORDED_CANNOT_RETROACTIVELY_RECONSTRUCT
+  reproduction_routes:
+    preferred: PINNED_PR14_SOURCE_AND_CONTAINER_IF_RECOVERABLE
+    pr14_source: 11aca1de03129d6f4f56d846864af20ab35eaee8
+    fork_objects_present: true
+    pr14_submodules_materialized: false
+    pinned_runtime_ABI_verified: false
+    historical_container_recovered: false
+    alternative: CLEAN_PROSPECTIVE_SAME_CURRENT_RUNTIME_ALL_ARMS
+    alternative_advisor_acceptance: REQUIRED_NOT_GRANTED
+    prohibit_cross_version_arms: true
+    old_patch_current_plugin: DOES_NOT_APPLY_ISOLATED_COMPATIBILITY_REVIEW_REQUIRED
+    container_digest_for_new_run: TO_FREEZE
+    current_runtime_reference: source.installed_vllm_sha_AND_source.installed_ascend_sha
+  model:
+    id: Qwen/Qwen3-32B
+    actual_local_path: LOCAL_RECEIPT_ONLY_USE_SMALL_M_MODEL_PATH
+    architecture: Qwen3ForCausalLM
+    dtype: BF16
+    hidden_size: 5120
+    layers: 64
+    total_q_heads: 64
+    total_kv_heads: 8
+    head_dim: 128
+    tp: 4
+    per_rank_qkv_n: 2560
+    shard_header_and_index_check: PASS_CPU_ONLY
+    shards: 17
+    tensors: 707
+    tensor_payload_bytes: 65524246528
+    config_sha256: 97e295b63283935788fac5e4f8860862a56d4089538cafc93f0431f2ebe483bb
+    index_sha256: bed42c6c55274bc08a1f616bceb3bcb84b3f02cb6584c573bd18c6519291ecd0
+    tokenizer_sha256: aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4
+    exact_remote_revision: UNKNOWN
+    weight_content_hash: NOT_COMPUTED
+    same_as_historical_checkpoint: UNKNOWN
+    load_and_output_oracle: NOT_RUN
+  arms:
+    B0: official_ND_QKV_plus_existing_identical_consumer
+    B1: strongest_existing_QKV_only_NZ_no_copy_plus_same_consumer_historical_control
+    B2: native_fused_QKV_consumer_NOT_IMPLEMENTED_M1_ONLY_AFTER_M0
+    B3: eligible_tuned_compiler_or_fused_baseline_NOT_YET_IDENTIFIED_REVIEW_BLOCKER
+    global_weight_nz_mode_2: NOT_B1
+    missing_or_nonequivalent_arms: CLOSE_PAPER_ADMISSION_FOR_REGION
+  proposed_shape_split:
+    status: REVIEW_REQUIRED_NO_HELD_OUT_TIMING_PERFORMED
+    m: [1, 2, 4, 8]
+    training_kn: [[4096, 2560], [5120, 2560]]
+    held_out_kn: [[6144, 2560], [5120, 3072]]
+    head_geometry_by_n: {2560: [16, 2, 128], 3072: [20, 2, 128]}
+    boundary_k: [5119, 5121]
+    invalid_n_reject_before_consumer: [2559, 2561]
+    official_fallback: [M16, bias, unsupported_dtype_or_layout]
+    historically_exposed: M1_M8_K5120_N2560_NOT_VIRGIN_HELD_OUT
+    dtype_layout: BF16_identical_logical_tensors_ND_or_declared_NZ_graph_mode
+    predicted_region: ALIGNED_NO_BIAS_SMALL_M_HYPOTHESIS_NOT_ESTABLISHED
+    alternate_kn_baseline_eligibility: TO_VERIFY_DO_NOT_EXTEND_HISTORICAL_B1_POLICY_SILENTLY
+    selection: PRE_CAPTURE_METADATA_ONLY_NO_HELD_OUT_TUNING
+  correctness_proposal:
+    required_pass_percent: 100
+    checks: [shape, dtype, stride, finite, full_QKV_and_Q_K_V_FP32_reference, graph_replay_equivalence, fallback_equivalence]
+    consumer_atol_rtol: [0.05, 0.005]
+    gemm_atol_rtol: [0.05, 0.01]
+    relative_l2_max: 0.01
+    cosine_min: 0.9999
+    cosine_zero_vector_rule: BOTH_ZERO_PASS_ONE_ZERO_FAIL
+    tolerance_status: PROPOSED_REQUIRES_REVIEW_NOT_UPSTREAM_UNIVERSAL_CONSTANTS
+    service: EXACT_ORDERED_PROMPT_IDS_AND_COMPLETE_OUTPUT_IDS_AND_TEXT_ALL_ARMS
+    service_records: 32
+    tokens_per_record: 64
+    completion_or_length_only: NOT_AN_ORACLE
+    raw_output_hashes: PER_REQUEST_AND_WHOLE_FILE_SHA256_LOCAL_ONLY
+    old_collector_full_token_support: MISSING_ISOLATED_ADAPTATION_REQUIRED
+  metrics_and_gates:
+    component: [p5, median, p95, all_allocation_medians, FLOPs_per_second, conversions, bytes, resident_memory, peak_memory, workspace, compile_cost, dispatch, selector_fallback]
+    independent_allocations_per_cell: 10
+    replay_proposal: {warmup: 10, trials: 5, replays_per_trial: 100}
+    measurement: UNPROFILED_NPU_EVENT_AND_WALL_PROFILER_SEPARATE
+    B2_p95_reduction_vs_strongest_eligible_percent_min: 5
+    each_allocation_median: NON_REGRESSING
+    service_primary: steady_window_median_request_TPOT_UNPROFILED
+    service_reduction_vs_strongest_deployable_percent_min: 2
+    service_guardrails_proposed: TTFT_p95_and_request_p95_and_memory_no_regression_full_token_equality
+    additional_full_resident_weight_copy: FORBIDDEN
+    historical_counterexample_controls: {rollback_drift_percent_strict_max: 2, consumer_increase_percent_max: 10, allreduce_median_increase_percent_max: 5, windows_min: 2}
+    warning: HISTORICAL_MISSED_SERVICE_GATE_IS_COUNTEREXAMPLE_NOT_REQUIRED_POSITIVE_M0_RESULT
+  proposed_formal_device_budget:
+    allocation_required: FOUR_EXCLUSIVE_COMPATIBLE_910B2_64GiB
+    currently_visible_cards: 1
+    TP4_ready: false
+    owner_authorized_TP4_launch_this_task: false
+    per_arm_timeout_seconds: 1200
+    existing_runner_timeout_seconds: 3600
+    timeout_change: ISOLATED_RUNNER_REVIEW_REQUIRED_BEFORE_EXECUTION
+    initial_counterexample_panel: ONE_FIXED_B0_B1_B0_TRIPLET_MAX_60_MINUTES
+    optional_service_confirmation: FIVE_FIXED_TRIPLETS_MAX_5_HOURS_REQUIRES_SEPARATE_ADMISSION
+    profiler: SEPARATE_SHORT_CAPTURE_MAX_600_SECONDS_PER_ARM_NOT_SERVICE_TIMING
+    gpu_memory_utilization: 0.9
+    per_card_reserve_GiB: 6.4
+    local_trace_budget_GiB: 10
+    status: PROPOSED_NOT_AUTHORIZED_NOT_APPLICABLE_TO_PAST_2GiB_SINGLE_CARD_SMOKES
+  stop:
+    - NO_FORMAL_LAUNCH_WITHOUT_ADVISOR_MANIFEST_REVIEW_AND_FOUR_CARD_ALLOCATION
+    - STOP_ON_SOURCE_OR_DEVICE_OR_MODEL_DRIFT_OR_RUNTIME_ABI_MISMATCH
+    - STOP_ON_ANY_ORACLE_GRAPH_FAILURE_CENSORED_REQUEST_OR_BUDGET_EXCESS
+    - INVALID_ON_ROLLBACK_DRIFT_GE_2_PERCENT_KEEP_ALL_DATA_NO_FAVORABLE_REPLACEMENT
+    - NO_M1_IF_M0_COUNTEREXAMPLE_NOT_REPRODUCED_OR_ACCEPTED_PROSPECTIVE_ROUTE_UNRESOLVED
+    - STOP_MECHANISM_IF_CONSUMER_COST_NOT_ABSORBED_CONVERSION_ERASES_GAIN_B1_B3_MATCH_B2_OR_ONLY_DIRTY_UNBOUND_SOURCE
+    - NO_HELD_OUT_RETUNING_NO_NEW_TOPIC_NO_B2_IMPLEMENTATION_IN_THIS_TASK
+  disposition: M0_INCOMPLETE_REVIEW_AND_RESOURCE_BLOCKED_NOT_FORMAL_NO_GO

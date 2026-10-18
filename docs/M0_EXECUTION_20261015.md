@@ -1,5 +1,10 @@
 # M0 execution checkpoint — 2026-10-15
 
+Current override (2026-10-18): **FORMAL M0 ADMISSION PREPARATION ONLY**.
+Personal pause/MLP decisions and proposed additional M=1 screening are superseded.
+Keep all historical measurements; no new seed0 screening, TP4 run or B2 development.
+See [current readiness and gaps](M0_ADMISSION_REVIEW_20261018.md).
+
 Status: **M8 REPEAT PANEL PASSES QUICK GATE / OVERALL REPRODUCIBILITY MIXED**.
 Owner requested two more fixed rounds after228d971: four fresh M8 seed0 processes,
 unchanged code/controls, all oracles pass. Added results: INVALID(raw-2.400%),
