@@ -1,5 +1,10 @@
 # M0 — Reproduction & Attribution Protocol（Draft，待 advisor 审核）
 
+2026-10-23: Owner 追加授权的有界 teacher-forced TP4 数值对照已完成并停止硬件。
+相同设备输入/positions/元数据下，B0 Prefill Graph=NONE 的最终 hidden 已不同；
+具体首个算子根因 UNKNOWN，B1/Profiler 未越过 B0 控制门槛。
+见 [数值诊断](M0_TP4_NUMERIC_20261023.md)，不将诊断覆盖成正式 correctness PASS。
+
 2026-10-22 owner 授权真实本地 TP4 clean prospective reproduction，非导师正式
 验收。实际结果与失败见 [TP4 报告](M0_TP4_RESULTS_20261022.md)。纯 B0/B0 完整
 输出不一致，当前 campaign 已终止硬件，未扩大重复、Profiler 或 B2。

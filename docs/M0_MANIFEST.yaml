@@ -4,7 +4,7 @@ project: ascend-small-m-gemm
 local_tp4_numeric_20261022:
   authorization: OWNER_EXPLICIT_DIAGNOSTIC_ONLY_NUMERICAL_NOT_TPOT_OR_FORMAL_ACCEPTANCE
   formal_approved: false
-  hardware_stopped: false
+  hardware_stopped: true
   base: df37692213d1100980fb75679b540d5450139e82
   scope: TWO_B0_PROCESSES_THEN_CONDITIONAL_MATCHED_B0_B1_OR_ONE_CONTROL_PER_HYPOTHESIS
   input: ORIGINAL_REQUESTS_24_TO_31_FIXED_PROMPT_IDS_AND_THREE_TEACHER_FORCED_TOKENS
@@ -19,11 +19,19 @@ local_tp4_numeric_20261022:
   max_processes: 6
   stop: ROOT_LOCALIZED_OR_B0_STILL_UNCONTROLLED_AFTER_ONE_DISCRIMINATING_CONTRAST_NO_SWEEP
   forbidden: [B2, TPOT_scan, upstream_publication, production_edit, package_install]
+  outcome: B0_DEVICE_INPUTS_AND_METADATA_MATCH_BUT_RAW_NUMERIC_REPEATABILITY_NOT_ESTABLISHED
+  attempts: {failed_import_hook: 1, completed_B0: 2, B1: 0, profiler: 0}
+  observed_first_boundary: PREFILL_GRAPH_NONE_FINAL_HIDDEN_BEFORE_LM_HEAD_AND_LOGITS_GATHER
+  root_cause: UNKNOWN_EARLIER_LAYER_ACTIVATIONS_NOT_CAPTURED
+  allocation_scope: NEW_CURRENT_PAIR_ONLY_NOT_POOLED_WITH_PRIOR_DEVICE_RESULTS
+  resume_identity_guard_gap: IDLE_COUNT_CHECKED_MAPPING_CHANGE_NOT_FAIL_CLOSED
+  immutable_chip_serial_continuity: UNKNOWN_NOT_CAPTURED
+  report: docs/M0_TP4_NUMERIC_20261023.md
 date: "2026-10-15"
 owner: sad-and-bad1231
 status: M0_INCONCLUSIVE_TP4_FULL_OUTPUT_REPRODUCIBILITY_BLOCKED
 execution_control:
-  active_scope: HARDWARE_STOPPED_AFTER_TP4_ORACLE_FAILURE_CPU_ANALYSIS_AND_PUBLICATION_ONLY
+  active_scope: HARDWARE_STOPPED_AFTER_BOUNDED_NUMERIC_CONTROL_CPU_ANALYSIS_AND_PUBLICATION_ONLY
   historical_permissions: ARCHIVED_NOT_AUTHORIZATION_FOR_NEW_RUNS
   further_seed0_NZ_screening: false
   personal_NO_GO_and_MLP_transition: SUPERSEDED_BY_OWNER

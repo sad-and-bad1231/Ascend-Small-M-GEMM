@@ -22,9 +22,9 @@ def compare_tensor(a, b):
 
 def compare_logits(a, b):
     result = compare_tensor(a, b)
-    av, ai = a.float().topk(2, dim=-1)
-    bv, bi = b.float().topk(2, dim=-1)
-    result.update(top1_agreement=int((ai[:, 0] == bi[:, 0]).sum()), rows=a.shape[0],
+    av = a.float().topk(2, dim=-1).values
+    bv = b.float().topk(2, dim=-1).values
+    result.update(top1_agreement=int((a.argmax(-1) == b.argmax(-1)).sum()), rows=a.shape[0],
                   top1_top2_margin_a=(av[:, 0] - av[:, 1]).tolist(),
                   top1_top2_margin_b=(bv[:, 0] - bv[:, 1]).tolist())
     return result

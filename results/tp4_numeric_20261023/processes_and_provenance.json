@@ -1,0 +1,159 @@
+{
+  "formal_approved": false,
+  "performance_measurement": false,
+  "same_executed_fingerprints_completed_pair": true,
+  "raw_receipt_index_sha256": "7a06617c1b68e34e480b59f905e0711ffea99c56e0e28841284819e38d9eaf06",
+  "attempts": [
+    {
+      "label": "B0a",
+      "arm": "B0",
+      "exit_code": 1,
+      "completed": false,
+      "hbm_processes_released": true,
+      "process_wall_seconds_not_latency": 180.25949899107218,
+      "source_sha256": {
+        "experiments/m0tp4/run_arm.py": "82b422dd008263a0d4a4257864cb8857fbcbb5aa32835c85c32f5d688af882a7",
+        "experiments/m0tp4/qkv_policy.py": "352528e45633e2c86d728a66c1cd6089b7e93be1c9a5b99d693f386f93b2fc47",
+        "experiments/m0tp4/launch.py": "8180596d1592feb32d5017ddd0d0819bbdf8205e76d85e30e93e4881f21e6c4d",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/worker/model_runner_v1.py": "cd2fcc1eff7cb1cf19511666ee4f50285e5e213fd5c6e7d02a08340963ee55e1",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/worker/worker.py": "04d21e05e7cbfac49521766ab4b6191f4d1c994af7815419394020de68796f5e",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/profiler/torch_npu_profiler.py": "ebe82c421a34f887a75f0e3ac52aa150151e1bbe7c26522ef9adb0c4a044979b",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/ops/triton/linearnorm/split_qkv_rmsnorm_rope.py": "ca226aac8c5559904646765e3f358dcdd394c8d8af58f5102338676844312ae1",
+        "m0_receipts/tp4_numeric_20261022/runtime_identity.local.json": "bcf2e9d56d91a98486206ecc9048dbe63b13c3f08ac57c59e587b59c4353ae5c",
+        "m0_receipts/tp4_numeric_20261022/trace_fixed_120.jsonl": "a8fb145e04eccb1c9c0d1d8e87f83eddbf4eb33368c046a3542c98620be06416",
+        "m0_receipts/tp4_numeric_20261022/checkpoint_weights.sha256": "6f95075d2219ac634a2b34f78e6cc2d7d8c478b9875aac195b0c9bc2cc005b8f",
+        "experiments/m0tp4/run_numeric.py": "673641d580ea625b05d721a2ac29020f127f2678ce38c98ff2a40becd6fb6b4a",
+        "experiments/m0tp4/numeric_observer.py": "857efa058a41c5ce21775c95b34e317543cf572ed87bc03758d0d8e76a16d8ae",
+        "m0_receipts/tp4_numeric_20261022/frozen_inputs.local.json": "c36fda3c6cfe5ca33e2781c0f8c37ab83f9ac13ced7ad6083b54618d90fa09ab"
+      },
+      "log_sha256": "c9fb87c7344423c6dbf8b15538b9b17fab8fd401e0a7602493dd29d4abcbc0da",
+      "launch_receipt_sha256": "88479fb180bb960ce45a947ad73e6358b1292ed36c555e4370b74ebe6fca3d74",
+      "inventory": null
+    },
+    {
+      "label": "B0a_fix1",
+      "arm": "B0",
+      "exit_code": 0,
+      "completed": true,
+      "hbm_processes_released": true,
+      "process_wall_seconds_not_latency": 189.54181778011844,
+      "source_sha256": {
+        "experiments/m0tp4/run_arm.py": "82b422dd008263a0d4a4257864cb8857fbcbb5aa32835c85c32f5d688af882a7",
+        "experiments/m0tp4/qkv_policy.py": "352528e45633e2c86d728a66c1cd6089b7e93be1c9a5b99d693f386f93b2fc47",
+        "experiments/m0tp4/launch.py": "8180596d1592feb32d5017ddd0d0819bbdf8205e76d85e30e93e4881f21e6c4d",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/worker/model_runner_v1.py": "230b18cbf5cec8baeb939120dcbfc24e75280fbc3382046ceb75b553cf2f5f62",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/worker/worker.py": "04d21e05e7cbfac49521766ab4b6191f4d1c994af7815419394020de68796f5e",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/profiler/torch_npu_profiler.py": "ebe82c421a34f887a75f0e3ac52aa150151e1bbe7c26522ef9adb0c4a044979b",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/ops/triton/linearnorm/split_qkv_rmsnorm_rope.py": "ca226aac8c5559904646765e3f358dcdd394c8d8af58f5102338676844312ae1",
+        "m0_receipts/tp4_numeric_20261022/runtime_identity.local.json": "bcf2e9d56d91a98486206ecc9048dbe63b13c3f08ac57c59e587b59c4353ae5c",
+        "m0_receipts/tp4_numeric_20261022/trace_fixed_120.jsonl": "a8fb145e04eccb1c9c0d1d8e87f83eddbf4eb33368c046a3542c98620be06416",
+        "m0_receipts/tp4_numeric_20261022/checkpoint_weights.sha256": "6f95075d2219ac634a2b34f78e6cc2d7d8c478b9875aac195b0c9bc2cc005b8f",
+        "experiments/m0tp4/run_numeric.py": "673641d580ea625b05d721a2ac29020f127f2678ce38c98ff2a40becd6fb6b4a",
+        "experiments/m0tp4/numeric_observer.py": "857efa058a41c5ce21775c95b34e317543cf572ed87bc03758d0d8e76a16d8ae",
+        "m0_receipts/tp4_numeric_20261022/frozen_inputs.local.json": "c36fda3c6cfe5ca33e2781c0f8c37ab83f9ac13ced7ad6083b54618d90fa09ab"
+      },
+      "log_sha256": "b1768d9856e1c34fb4368cd6f64508150bcebd41abd0be1ca0d54f2f525b1bf1",
+      "launch_receipt_sha256": "2c741a043c42bf7f27f79ec7b8c94c3bd527415501af5d33329636d5aa6a8be9",
+      "inventory": {
+        "memory": [
+          {
+            "rank": 0,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          },
+          {
+            "rank": 1,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          },
+          {
+            "rank": 2,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          },
+          {
+            "rank": 3,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          }
+        ],
+        "requests": 8,
+        "tokens": 32,
+        "formal_approved": false,
+        "performance_measurement": false
+      },
+      "private_output_sha256": "3548609c0b3d191689a8ff18c83120de30389f803b01e65f2bd3b24513992756"
+    },
+    {
+      "label": "B0b",
+      "arm": "B0",
+      "exit_code": 0,
+      "completed": true,
+      "hbm_processes_released": true,
+      "process_wall_seconds_not_latency": 135.39279488194734,
+      "source_sha256": {
+        "experiments/m0tp4/run_arm.py": "82b422dd008263a0d4a4257864cb8857fbcbb5aa32835c85c32f5d688af882a7",
+        "experiments/m0tp4/qkv_policy.py": "352528e45633e2c86d728a66c1cd6089b7e93be1c9a5b99d693f386f93b2fc47",
+        "experiments/m0tp4/launch.py": "8180596d1592feb32d5017ddd0d0819bbdf8205e76d85e30e93e4881f21e6c4d",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/worker/model_runner_v1.py": "230b18cbf5cec8baeb939120dcbfc24e75280fbc3382046ceb75b553cf2f5f62",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/worker/worker.py": "04d21e05e7cbfac49521766ab4b6191f4d1c994af7815419394020de68796f5e",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/profiler/torch_npu_profiler.py": "ebe82c421a34f887a75f0e3ac52aa150151e1bbe7c26522ef9adb0c4a044979b",
+        "m0_receipts/tp4_numeric_20261022/runtime/plugin/vllm_ascend/ops/triton/linearnorm/split_qkv_rmsnorm_rope.py": "ca226aac8c5559904646765e3f358dcdd394c8d8af58f5102338676844312ae1",
+        "m0_receipts/tp4_numeric_20261022/runtime_identity.local.json": "bcf2e9d56d91a98486206ecc9048dbe63b13c3f08ac57c59e587b59c4353ae5c",
+        "m0_receipts/tp4_numeric_20261022/trace_fixed_120.jsonl": "a8fb145e04eccb1c9c0d1d8e87f83eddbf4eb33368c046a3542c98620be06416",
+        "m0_receipts/tp4_numeric_20261022/checkpoint_weights.sha256": "6f95075d2219ac634a2b34f78e6cc2d7d8c478b9875aac195b0c9bc2cc005b8f",
+        "experiments/m0tp4/run_numeric.py": "673641d580ea625b05d721a2ac29020f127f2678ce38c98ff2a40becd6fb6b4a",
+        "experiments/m0tp4/numeric_observer.py": "857efa058a41c5ce21775c95b34e317543cf572ed87bc03758d0d8e76a16d8ae",
+        "m0_receipts/tp4_numeric_20261022/frozen_inputs.local.json": "c36fda3c6cfe5ca33e2781c0f8c37ab83f9ac13ced7ad6083b54618d90fa09ab"
+      },
+      "log_sha256": "990c2a908ea120381acab22ce604c0971c0753bb07afd9087c26b4c808914a85",
+      "launch_receipt_sha256": "fbc622eef220454461a33a9c59721f7ec2ab6ea999536426f049817a41e8d6d8",
+      "inventory": {
+        "memory": [
+          {
+            "rank": 0,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          },
+          {
+            "rank": 1,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          },
+          {
+            "rank": 2,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          },
+          {
+            "rank": 3,
+            "steps": 4,
+            "peak_allocated_bytes": 58417353728
+          }
+        ],
+        "requests": 8,
+        "tokens": 32,
+        "formal_approved": false,
+        "performance_measurement": false
+      },
+      "private_output_sha256": "3548609c0b3d191689a8ff18c83120de30389f803b01e65f2bd3b24513992756"
+    }
+  ],
+  "raw_root": "m0_receipts/tp4_numeric_20261022",
+  "B1": "NOT_RUN_B0_CONTROL_NOT_QUALIFIED",
+  "profiler": "NOT_RUN",
+  "cpu_tests": {
+    "tp4_unit_cases": 8,
+    "pr14_attribution_cases": 13,
+    "pr14_custody_cases": 2,
+    "pr14_capture_self_test": "PASS",
+    "historical_full_raw_custody": "NOT_RUN"
+  },
+  "completed_pair_before_mapping_equal": true,
+  "original_failed_attempt_same_mapping": false,
+  "same_mapping_as_prior_campaign": false,
+  "allocation_comparison_scope": "CURRENT_COMPLETED_B0_PAIR_ONLY_NO_POOLED_HISTORICAL_DEVICE_RESULTS",
+  "completed_pair_before_after_mapping_equal": true,
+  "immutable_chip_serial_continuity": "UNKNOWN_NOT_CAPTURED",
+  "copied_runtime_identity_receipt_scope": "PRIOR_SOFTWARE_PROVENANCE_NOT_CURRENT_DEVICE_IDENTITY"
+}

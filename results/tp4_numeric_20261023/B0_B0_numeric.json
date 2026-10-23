@@ -1,0 +1,3642 @@
+{
+  "formal_approved": false,
+  "performance_measurement": false,
+  "teacher_forced_tokens_are_not_correctness_evidence": true,
+  "same_frozen_input_hash": true,
+  "same_config": true,
+  "input_contract_a": [
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    },
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    },
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    },
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    }
+  ],
+  "input_contract_b": [
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    },
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    },
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    },
+    {
+      "prompt_ids_in_frozen_order": true,
+      "actual_decode_inputs_match_forced_prefix": true
+    }
+  ],
+  "device_inputs_equal": true,
+  "raw_logits_equal": false,
+  "raw_top1_equal": true,
+  "records": [
+    {
+      "rank": 0,
+      "step": 0,
+      "metadata_a": {
+        "step": 0,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 0,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36759,
+        "finite": true,
+        "max_abs": 2.0,
+        "mean_abs": 0.021391937509179115
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 270991,
+        "finite": true,
+        "max_abs": 0.34375,
+        "mean_abs": 0.03833956643939018
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1088654,
+        "finite": true,
+        "max_abs": 0.34375,
+        "mean_abs": 0.03730384632945061,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.75,
+          0.375,
+          1.125,
+          0.5,
+          0.5,
+          0.125,
+          1.375,
+          0.875
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          0.375,
+          1.0,
+          0.5,
+          0.5,
+          0.25,
+          1.25,
+          0.75
+        ]
+      }
+    },
+    {
+      "rank": 0,
+      "step": 1,
+      "metadata_a": {
+        "step": 1,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 1,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37530,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.029395392164587975
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 293113,
+        "finite": true,
+        "max_abs": 0.6875,
+        "mean_abs": 0.14687128365039825
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1161277,
+        "finite": true,
+        "max_abs": 0.6875,
+        "mean_abs": 0.15034957230091095,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.9375,
+          0.1875,
+          0.625,
+          0.4375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.25,
+          0.625,
+          0.375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ]
+      }
+    },
+    {
+      "rank": 0,
+      "step": 2,
+      "metadata_a": {
+        "step": 2,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 2,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37499,
+        "finite": true,
+        "max_abs": 4.0,
+        "mean_abs": 0.026080911979079247
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 265038,
+        "finite": true,
+        "max_abs": 0.5234375,
+        "mean_abs": 0.05993964895606041
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1084290,
+        "finite": true,
+        "max_abs": 0.609375,
+        "mean_abs": 0.06653252243995667,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.5,
+          3.375,
+          0.625,
+          3.875,
+          1.625,
+          1.25,
+          0.0,
+          3.0
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          3.25,
+          0.5,
+          3.75,
+          1.625,
+          1.125,
+          0.0,
+          2.875
+        ]
+      }
+    },
+    {
+      "rank": 0,
+      "step": 3,
+      "metadata_a": {
+        "step": 3,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 3,
+        "rank": 0,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36568,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.02378259040415287
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 243796,
+        "finite": true,
+        "max_abs": 0.484375,
+        "mean_abs": 0.0741950273513794
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1050221,
+        "finite": true,
+        "max_abs": 0.5078125,
+        "mean_abs": 0.08029776066541672,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          1.0,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          0.5,
+          0.5
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.625,
+          0.5,
+          0.375
+        ]
+      }
+    },
+    {
+      "rank": 1,
+      "step": 0,
+      "metadata_a": {
+        "step": 0,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 0,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36759,
+        "finite": true,
+        "max_abs": 2.0,
+        "mean_abs": 0.021391937509179115
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 274793,
+        "finite": true,
+        "max_abs": 0.25,
+        "mean_abs": 0.037157755345106125
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1088654,
+        "finite": true,
+        "max_abs": 0.34375,
+        "mean_abs": 0.03730384632945061,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.75,
+          0.375,
+          1.125,
+          0.5,
+          0.5,
+          0.125,
+          1.375,
+          0.875
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          0.375,
+          1.0,
+          0.5,
+          0.5,
+          0.25,
+          1.25,
+          0.75
+        ]
+      }
+    },
+    {
+      "rank": 1,
+      "step": 1,
+      "metadata_a": {
+        "step": 1,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 1,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37530,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.029395392164587975
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 290983,
+        "finite": true,
+        "max_abs": 0.625,
+        "mean_abs": 0.14796778559684753
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1161277,
+        "finite": true,
+        "max_abs": 0.6875,
+        "mean_abs": 0.15034957230091095,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.9375,
+          0.1875,
+          0.625,
+          0.4375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.25,
+          0.625,
+          0.375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ]
+      }
+    },
+    {
+      "rank": 1,
+      "step": 2,
+      "metadata_a": {
+        "step": 2,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 2,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37499,
+        "finite": true,
+        "max_abs": 4.0,
+        "mean_abs": 0.026080911979079247
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 271216,
+        "finite": true,
+        "max_abs": 0.609375,
+        "mean_abs": 0.06354516744613647
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1084290,
+        "finite": true,
+        "max_abs": 0.609375,
+        "mean_abs": 0.06653252243995667,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.5,
+          3.375,
+          0.625,
+          3.875,
+          1.625,
+          1.25,
+          0.0,
+          3.0
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          3.25,
+          0.5,
+          3.75,
+          1.625,
+          1.125,
+          0.0,
+          2.875
+        ]
+      }
+    },
+    {
+      "rank": 1,
+      "step": 3,
+      "metadata_a": {
+        "step": 3,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 3,
+        "rank": 1,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36568,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.02378259040415287
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 260261,
+        "finite": true,
+        "max_abs": 0.484375,
+        "mean_abs": 0.07712144404649734
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1050221,
+        "finite": true,
+        "max_abs": 0.5078125,
+        "mean_abs": 0.08029776066541672,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          1.0,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          0.5,
+          0.5
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.625,
+          0.5,
+          0.375
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "step": 0,
+      "metadata_a": {
+        "step": 0,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 0,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36759,
+        "finite": true,
+        "max_abs": 2.0,
+        "mean_abs": 0.021391937509179115
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 276018,
+        "finite": true,
+        "max_abs": 0.2421875,
+        "mean_abs": 0.03843453899025917
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1088654,
+        "finite": true,
+        "max_abs": 0.34375,
+        "mean_abs": 0.03730384632945061,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.75,
+          0.375,
+          1.125,
+          0.5,
+          0.5,
+          0.125,
+          1.375,
+          0.875
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          0.375,
+          1.0,
+          0.5,
+          0.5,
+          0.25,
+          1.25,
+          0.75
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "step": 1,
+      "metadata_a": {
+        "step": 1,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 1,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37530,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.029395392164587975
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 288064,
+        "finite": true,
+        "max_abs": 0.6875,
+        "mean_abs": 0.15135306119918823
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1161277,
+        "finite": true,
+        "max_abs": 0.6875,
+        "mean_abs": 0.15034957230091095,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.9375,
+          0.1875,
+          0.625,
+          0.4375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.25,
+          0.625,
+          0.375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "step": 2,
+      "metadata_a": {
+        "step": 2,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 2,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37499,
+        "finite": true,
+        "max_abs": 4.0,
+        "mean_abs": 0.026080911979079247
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 273194,
+        "finite": true,
+        "max_abs": 0.546875,
+        "mean_abs": 0.07019190490245819
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1084290,
+        "finite": true,
+        "max_abs": 0.609375,
+        "mean_abs": 0.06653252243995667,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.5,
+          3.375,
+          0.625,
+          3.875,
+          1.625,
+          1.25,
+          0.0,
+          3.0
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          3.25,
+          0.5,
+          3.75,
+          1.625,
+          1.125,
+          0.0,
+          2.875
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "step": 3,
+      "metadata_a": {
+        "step": 3,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 3,
+        "rank": 2,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36568,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.02378259040415287
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 269922,
+        "finite": true,
+        "max_abs": 0.5078125,
+        "mean_abs": 0.08555642515420914
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1050221,
+        "finite": true,
+        "max_abs": 0.5078125,
+        "mean_abs": 0.08029776066541672,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          1.0,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          0.5,
+          0.5
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.625,
+          0.5,
+          0.375
+        ]
+      }
+    },
+    {
+      "rank": 3,
+      "step": 0,
+      "metadata_a": {
+        "step": 0,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 0,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "M_padded": 442,
+        "graph_mode": "NONE",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          442
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36759,
+        "finite": true,
+        "max_abs": 2.0,
+        "mean_abs": 0.021391937509179115
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 266852,
+        "finite": true,
+        "max_abs": 0.25,
+        "mean_abs": 0.03528352826833725
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1088654,
+        "finite": true,
+        "max_abs": 0.34375,
+        "mean_abs": 0.03730384632945061,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.75,
+          0.375,
+          1.125,
+          0.5,
+          0.5,
+          0.125,
+          1.375,
+          0.875
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          0.375,
+          1.0,
+          0.5,
+          0.5,
+          0.25,
+          1.25,
+          0.75
+        ]
+      }
+    },
+    {
+      "rank": 3,
+      "step": 1,
+      "metadata_a": {
+        "step": 1,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 1,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          52,
+          55,
+          56,
+          59,
+          55,
+          57,
+          54,
+          54
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37530,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.029395392164587975
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 289117,
+        "finite": true,
+        "max_abs": 0.625,
+        "mean_abs": 0.15520620346069336
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1161277,
+        "finite": true,
+        "max_abs": 0.6875,
+        "mean_abs": 0.15034957230091095,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.9375,
+          0.1875,
+          0.625,
+          0.4375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.25,
+          0.625,
+          0.375,
+          0.5,
+          0.0,
+          0.0,
+          0.125
+        ]
+      }
+    },
+    {
+      "rank": 3,
+      "step": 2,
+      "metadata_a": {
+        "step": 2,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 2,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          53,
+          56,
+          57,
+          60,
+          56,
+          58,
+          55,
+          55
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 37499,
+        "finite": true,
+        "max_abs": 4.0,
+        "mean_abs": 0.026080911979079247
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 274842,
+        "finite": true,
+        "max_abs": 0.53125,
+        "mean_abs": 0.07245338708162308
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1084290,
+        "finite": true,
+        "max_abs": 0.609375,
+        "mean_abs": 0.06653252243995667,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          0.5,
+          3.375,
+          0.625,
+          3.875,
+          1.625,
+          1.25,
+          0.0,
+          3.0
+        ],
+        "top1_top2_margin_b": [
+          0.625,
+          3.25,
+          0.5,
+          3.75,
+          1.625,
+          1.125,
+          0.0,
+          2.875
+        ]
+      }
+    },
+    {
+      "rank": 3,
+      "step": 3,
+      "metadata_a": {
+        "step": 3,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_b": {
+        "step": 3,
+        "rank": 3,
+        "request_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "scheduled_tokens": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "M_padded": 8,
+        "graph_mode": "FULL",
+        "async_scheduling": true,
+        "num_computed_tokens_cpu": [
+          54,
+          57,
+          58,
+          61,
+          57,
+          59,
+          56,
+          56
+        ],
+        "TP_world_size": 4,
+        "backend": "hccl",
+        "logits_all_gather": true
+      },
+      "metadata_equal": true,
+      "input_ids": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int32",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "positions": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8
+        ],
+        "dtype": "torch.int64",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 36568,
+        "finite": true,
+        "max_abs": 6.0,
+        "mean_abs": 0.02378259040415287
+      },
+      "local_logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          37984
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 276242,
+        "finite": true,
+        "max_abs": 0.5,
+        "mean_abs": 0.08431815356016159
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": false,
+        "different_elements": 1050221,
+        "finite": true,
+        "max_abs": 0.5078125,
+        "mean_abs": 0.08029776066541672,
+        "top1_agreement": 8,
+        "rows": 8,
+        "top1_top2_margin_a": [
+          1.0,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          0.5,
+          0.5
+        ],
+        "top1_top2_margin_b": [
+          0.875,
+          0.375,
+          0.25,
+          0.125,
+          0.25,
+          0.625,
+          0.5,
+          0.375
+        ]
+      }
+    }
+  ],
+  "within_process_cross_rank": [
+    {
+      "side": "a",
+      "rank": 1,
+      "step": 0,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 1,
+      "step": 1,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 1,
+      "step": 2,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 1,
+      "step": 3,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 2,
+      "step": 0,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 2,
+      "step": 1,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 2,
+      "step": 2,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 2,
+      "step": 3,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 3,
+      "step": 0,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 3,
+      "step": 1,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 3,
+      "step": 2,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "a",
+      "rank": 3,
+      "step": 3,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 1,
+      "step": 0,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 1,
+      "step": 1,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 1,
+      "step": 2,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 1,
+      "step": 3,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 2,
+      "step": 0,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 2,
+      "step": 1,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 2,
+      "step": 2,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 2,
+      "step": 3,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 3,
+      "step": 0,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 3,
+      "step": 1,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 3,
+      "step": 2,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    },
+    {
+      "side": "b",
+      "rank": 3,
+      "step": 3,
+      "hidden": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          5120
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "logits": {
+        "available": true,
+        "same_shape_dtype": true,
+        "shape": [
+          8,
+          151936
+        ],
+        "dtype": "torch.bfloat16",
+        "equal": true,
+        "different_elements": 0,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      }
+    }
+  ]
+}
