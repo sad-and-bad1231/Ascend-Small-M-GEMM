@@ -14,7 +14,7 @@ diff --git a/vllm_ascend/worker/model_runner_v1.py b/vllm_ascend/worker/model_ru
 diff --git a/vllm_ascend/profiler/torch_npu_profiler.py b/vllm_ascend/profiler/torch_npu_profiler.py
 --- a/vllm_ascend/profiler/torch_npu_profiler.py
 +++ b/vllm_ascend/profiler/torch_npu_profiler.py
-@@ -55,9 +55,9 @@
+@@ -55,7 +55,7 @@
              aic_metrics=torch_npu.profiler.AiCMetrics.PipeUtilization,
              l2_cache=False,
 -            op_attr=False,
