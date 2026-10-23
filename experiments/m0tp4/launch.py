@@ -37,6 +37,7 @@ def launch(args):
     files = [root / "experiments/m0tp4" / name for name in
              ("run_arm.py", "qkv_policy.py", "launch.py")]
     files += [raw / "runtime/plugin/vllm_ascend/worker/model_runner_v1.py",
+              raw / "runtime/plugin/vllm_ascend/worker/worker.py",
               raw / "runtime/plugin/vllm_ascend/profiler/torch_npu_profiler.py",
               raw / "runtime/plugin/vllm_ascend/ops/triton/linearnorm/split_qkv_rmsnorm_rope.py",
               raw / "runtime_identity.local.json",

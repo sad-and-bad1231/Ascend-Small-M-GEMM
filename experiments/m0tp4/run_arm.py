@@ -24,7 +24,6 @@ def run(args):
     import vllm
     import vllm_ascend
     from vllm import LLM, SamplingParams
-    from qkv_policy import memory_snapshot
 
     assert torch.npu.device_count() == 4
     out = args.out.resolve()
@@ -113,7 +112,7 @@ def run(args):
                   "differing_indices": differences, "exact_match": reference == all_records}
         (out / "oracle.json").write_text(json.dumps(oracle, indent=2))
         assert oracle["exact_match"], f"full output oracle failed: {differences}"
-    memory = llm.collective_rpc(memory_snapshot)
+    memory = llm.collective_rpc("m0_memory_snapshot")
     (out / "memory.local.json").write_text(json.dumps(memory, indent=2))
     assert all(m["peak_allocated_bytes"] <= 58 * 2**30 for m in memory), "HBM budget exceeded"
     inventory = {"arm": args.arm, "profile": args.profile, "load_and_graph_init_s": load_s,
