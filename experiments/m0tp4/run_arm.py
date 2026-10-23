@@ -40,7 +40,7 @@ def run(args):
             "profiler": "torch", "torch_profiler_dir": str(out / "trace"),
             "ignore_frontend": True, "torch_profiler_with_stack": False,
             "delay_iterations": 4, "max_iterations": 5}
-    identity = {"arm": args.arm, "profile": args.profile, "formal_approved": False,
+    identity = {"arm": args.arm, "profile": args.profile, "queue_barrier": args.queue_barrier, "formal_approved": False,
                 "reproduction": "CLEAN_PROSPECTIVE_CURRENT_RUNTIME",
                 "runner_sha256": sha(__file__), "policy_sha256": sha(HERE / "qkv_policy.py"),
                 "historical_runner_sha256": sha(Path(args.pr14) / "scripts/qkv_same_run_capture.py"),
@@ -57,10 +57,18 @@ def run(args):
     for window, name, offset, count in ((1, "w1_capture", 0, 8), (2, "w2_steady", 8, 24)):
         batch = prompts[offset:offset + count]
         profiled = args.profile and window == 2
+        if args.queue_barrier:
+            llm.sleep(level=0)
         if profiled:
             llm.start_profile(profile_prefix=f"{args.arm}_{name}")
         start = time.perf_counter()
-        outputs = llm.generate(batch, sampling, use_tqdm=False)
+        if args.queue_barrier:
+            request_ids = llm.enqueue(batch, sampling, use_tqdm=False)
+            assert len(request_ids) == count
+            llm.wake_up(tags=["scheduling"])
+            outputs = llm.wait_for_completion(use_tqdm=False)
+        else:
+            outputs = llm.generate(batch, sampling, use_tqdm=False)
         wall_s = time.perf_counter() - start
         if profiled:
             llm.stop_profile()
@@ -115,7 +123,7 @@ def run(args):
     memory = llm.collective_rpc("m0_memory_snapshot")
     (out / "memory.local.json").write_text(json.dumps(memory, indent=2))
     assert all(m["peak_allocated_bytes"] <= 58 * 2**30 for m in memory), "HBM budget exceeded"
-    inventory = {"arm": args.arm, "profile": args.profile, "load_and_graph_init_s": load_s,
+    inventory = {"arm": args.arm, "profile": args.profile, "queue_barrier": args.queue_barrier, "load_and_graph_init_s": load_s,
                  "windows": summaries, "memory": memory, "records": len(all_records),
                  "raw_output_sha256": {f"w{i}": sha(out / f"w{i}_outputs.local.jsonl") for i in (1, 2)}}
     (out / "inventory.local.json").write_text(json.dumps(inventory, indent=2))
@@ -133,4 +141,5 @@ if __name__ == "__main__":
     parser.add_argument("--pr14", required=True)
     parser.add_argument("--reference", type=Path)
     parser.add_argument("--profile", action="store_true")
+    parser.add_argument("--queue-barrier", action="store_true")
     run(parser.parse_args())

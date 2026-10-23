@@ -34,6 +34,8 @@ def launch(args):
         command += ["--reference", str(raw / args.reference)]
     if args.profile:
         command += ["--profile"]
+    if args.queue_barrier:
+        command += ["--queue-barrier"]
     files = [root / "experiments/m0tp4" / name for name in
              ("run_arm.py", "qkv_policy.py", "launch.py")]
     files += [raw / "runtime/plugin/vllm_ascend/worker/model_runner_v1.py",
@@ -97,6 +99,7 @@ if __name__ == "__main__":
     parser.add_argument("--arm", choices=["B0", "B1"], required=True)
     parser.add_argument("--reference")
     parser.add_argument("--profile", action="store_true")
+    parser.add_argument("--queue-barrier", action="store_true")
     parser.add_argument("--model", default="/data/shared_upload/models/Qwen/Qwen3-32B")
     parser.add_argument("--pr14", default="/root/kmx/repos/research/ascend-small-m-gemm-pr14-m0a")
     launch(parser.parse_args())
