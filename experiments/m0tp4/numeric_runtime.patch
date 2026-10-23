@@ -15,10 +15,18 @@ index e84d817c4..1ee061357 100644
          )
  
 diff --git a/vllm_ascend/worker/model_runner_v1.py b/vllm_ascend/worker/model_runner_v1.py
-index 70ef1d79a..e4934f3b2 100644
+index 70ef1d79a..f054eee14 100644
 --- a/vllm_ascend/worker/model_runner_v1.py
 +++ b/vllm_ascend/worker/model_runner_v1.py
-@@ -2378,6 +2378,10 @@ class NPUModelRunner(GPUModelRunner):
+@@ -19,6 +19,7 @@
+ 
+ import logging
+ import math
++import os
+ import sys
+ import time
+ from collections import defaultdict
+@@ -2378,6 +2379,10 @@ class NPUModelRunner(GPUModelRunner):
                  logits = broadcasted["logits"]
  
              # Apply structured output bitmasks if present
@@ -29,7 +37,7 @@ index 70ef1d79a..e4934f3b2 100644
              self.execute_model_state = ExecuteModelState(
                  scheduler_output,
                  logits,
-@@ -3796,6 +3800,9 @@ class NPUModelRunner(GPUModelRunner):
+@@ -3796,6 +3801,9 @@ class NPUModelRunner(GPUModelRunner):
          from vllm.model_executor.offloader.base import get_offloader
          get_offloader().post_init()
  
