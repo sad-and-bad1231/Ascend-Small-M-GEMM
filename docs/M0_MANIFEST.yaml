@@ -1,6 +1,24 @@
 # Historical M0-A/B receipts retained. formal_m0_admission is the current proposal.
 # Historical permission blocks below do not authorize new runs. NOT_RUN is not PASS.
 project: ascend-small-m-gemm
+local_tp4_numeric_20261022:
+  authorization: OWNER_EXPLICIT_DIAGNOSTIC_ONLY_NUMERICAL_NOT_TPOT_OR_FORMAL_ACCEPTANCE
+  formal_approved: false
+  hardware_stopped: false
+  base: df37692213d1100980fb75679b540d5450139e82
+  scope: TWO_B0_PROCESSES_THEN_CONDITIONAL_MATCHED_B0_B1_OR_ONE_CONTROL_PER_HYPOTHESIS
+  input: ORIGINAL_REQUESTS_24_TO_31_FIXED_PROMPT_IDS_AND_THREE_TEACHER_FORCED_TOKENS
+  max_generated_tokens_per_request: 4
+  requests_per_process: 8
+  B0_gate: EXACT_DEVICE_INPUTS_POSITIONS_AND_RAW_LOGITS_TOP1_CONTROL_NO_ORACLE_RELAXATION
+  observer: POST_FORWARD_HIDDEN_LOCAL_LOGITS_GATHERED_LOGITS_GPU_CLONES_DUMP_AFTER_GENERATION
+  production_vs_diagnostic: SAME_RUNTIME_NEURAL_PATH_BUT_FROZEN_PREFIX_AND_INTRUSIVE_POST_FORWARD_CUSTODY
+  per_process_timeout_seconds: 1200
+  per_card_torch_allocated_GiB_max: 58
+  raw_budget_GiB: 2
+  max_processes: 6
+  stop: ROOT_LOCALIZED_OR_B0_STILL_UNCONTROLLED_AFTER_ONE_DISCRIMINATING_CONTRAST_NO_SWEEP
+  forbidden: [B2, TPOT_scan, upstream_publication, production_edit, package_install]
 date: "2026-10-15"
 owner: sad-and-bad1231
 status: M0_INCONCLUSIVE_TP4_FULL_OUTPUT_REPRODUCIBILITY_BLOCKED

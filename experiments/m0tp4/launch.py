@@ -13,8 +13,8 @@ from pathlib import Path
 import yaml
 
 
-def campaign_gate(manifest):
-    permission = manifest["local_tp4_campaign_20261022"]
+def campaign_gate(manifest, numeric=False):
+    permission = manifest["local_tp4_numeric_20261022" if numeric else "local_tp4_campaign_20261022"]
     if permission.get("hardware_stopped") is True:
         raise RuntimeError("campaign stopped: new owner-reviewed scope required")
     if permission["formal_approved"] is not False:
@@ -23,7 +23,7 @@ def campaign_gate(manifest):
 
 def launch(args):
     root = Path(__file__).resolve().parents[2]
-    campaign_gate(yaml.safe_load((root / "docs/M0_MANIFEST.yaml").read_text()))
+    campaign_gate(yaml.safe_load((root / "docs/M0_MANIFEST.yaml").read_text()), args.numeric)
     raw = args.raw.resolve()
     assert len((raw / "checkpoint_weights.sha256").read_text().splitlines()) == 17
     out = raw / args.label
@@ -38,7 +38,7 @@ def launch(args):
     env["PYTHONPATH"] = os.pathsep.join([
         str(raw / "runtime/plugin"), str(root / "experiments/m0tp4"),
         "/vllm-workspace/vllm", env.get("PYTHONPATH", "")])
-    command = [sys.executable, str(root / "experiments/m0tp4/run_arm.py"),
+    command = [sys.executable, str(root / "experiments/m0tp4" / ("run_numeric.py" if args.numeric else "run_arm.py")),
                "--arm", args.arm, "--out", str(out), "--model", args.model,
                "--prompts", str(raw / "trace_fixed_120.jsonl"), "--pr14", args.pr14]
     if args.reference:
@@ -47,6 +47,10 @@ def launch(args):
         command += ["--profile"]
     if args.queue_barrier:
         command += ["--queue-barrier"]
+    if args.eager:
+        command += ["--eager"]
+    if args.sync_scheduler:
+        command += ["--sync-scheduler"]
     files = [root / "experiments/m0tp4" / name for name in
              ("run_arm.py", "qkv_policy.py", "launch.py")]
     files += [raw / "runtime/plugin/vllm_ascend/worker/model_runner_v1.py",
@@ -55,6 +59,9 @@ def launch(args):
               raw / "runtime/plugin/vllm_ascend/ops/triton/linearnorm/split_qkv_rmsnorm_rope.py",
               raw / "runtime_identity.local.json",
               raw / "trace_fixed_120.jsonl", raw / "checkpoint_weights.sha256"]
+    if args.numeric:
+        files += [root / "experiments/m0tp4/run_numeric.py", root / "experiments/m0tp4/numeric_observer.py",
+                  raw / "frozen_inputs.local.json"]
     source_hashes = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in files}
     record = {"command": command, "formal_approved": False, "timeout_s": 1200,
               "reproduction": "CLEAN_PROSPECTIVE_CURRENT_RUNTIME", "source_sha256": source_hashes}
@@ -111,6 +118,9 @@ if __name__ == "__main__":
     parser.add_argument("--reference")
     parser.add_argument("--profile", action="store_true")
     parser.add_argument("--queue-barrier", action="store_true")
+    parser.add_argument("--numeric", action="store_true")
+    parser.add_argument("--eager", action="store_true")
+    parser.add_argument("--sync-scheduler", action="store_true")
     parser.add_argument("--model", default="/data/shared_upload/models/Qwen/Qwen3-32B")
     parser.add_argument("--pr14", default="/root/kmx/repos/research/ascend-small-m-gemm-pr14-m0a")
     launch(parser.parse_args())
