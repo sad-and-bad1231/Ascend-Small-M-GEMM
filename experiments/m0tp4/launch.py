@@ -10,9 +10,20 @@ import sys
 import time
 from pathlib import Path
 
+import yaml
+
+
+def campaign_gate(manifest):
+    permission = manifest["local_tp4_campaign_20261022"]
+    if permission.get("hardware_stopped") is True:
+        raise RuntimeError("campaign stopped: new owner-reviewed scope required")
+    if permission["formal_approved"] is not False:
+        raise RuntimeError("local launcher is not formal admission")
+
 
 def launch(args):
     root = Path(__file__).resolve().parents[2]
+    campaign_gate(yaml.safe_load((root / "docs/M0_MANIFEST.yaml").read_text()))
     raw = args.raw.resolve()
     assert len((raw / "checkpoint_weights.sha256").read_text().splitlines()) == 17
     out = raw / args.label

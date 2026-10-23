@@ -1,0 +1,219 @@
+{
+  "labels": [
+    "pilot_B0_attempt3",
+    "t1_B1"
+  ],
+  "records": 32,
+  "differing_requests": 18,
+  "exact_match": false,
+  "differences": [
+    {
+      "request_index": 2,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 26,
+      "differing_output_positions": 9
+    },
+    {
+      "request_index": 4,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 17,
+      "differing_output_positions": 44
+    },
+    {
+      "request_index": 6,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 54,
+      "differing_output_positions": 10
+    },
+    {
+      "request_index": 9,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 51,
+      "differing_output_positions": 13
+    },
+    {
+      "request_index": 11,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 4,
+      "differing_output_positions": 60
+    },
+    {
+      "request_index": 12,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 1,
+      "differing_output_positions": 63
+    },
+    {
+      "request_index": 13,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 48,
+      "differing_output_positions": 13
+    },
+    {
+      "request_index": 20,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 11,
+      "differing_output_positions": 53
+    },
+    {
+      "request_index": 21,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 40,
+      "differing_output_positions": 19
+    },
+    {
+      "request_index": 22,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 3,
+      "differing_output_positions": 59
+    },
+    {
+      "request_index": 23,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 8,
+      "differing_output_positions": 56
+    },
+    {
+      "request_index": 24,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 19,
+      "differing_output_positions": 44
+    },
+    {
+      "request_index": 25,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 14,
+      "differing_output_positions": 50
+    },
+    {
+      "request_index": 26,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 32,
+      "differing_output_positions": 32
+    },
+    {
+      "request_index": 27,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 3,
+      "differing_output_positions": 55
+    },
+    {
+      "request_index": 29,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 22,
+      "differing_output_positions": 39
+    },
+    {
+      "request_index": 30,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 1,
+      "differing_output_positions": 58
+    },
+    {
+      "request_index": 31,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 31,
+      "differing_output_positions": 33
+    }
+  ],
+  "raw_output_sha256": {
+    "pilot_B0_attempt3": {
+      "w1": "3cad4494eb35aea5f3e3c68c360c5b819b728831096dad591ad4d9161fcbd0ac",
+      "w2": "59a8f0f613acb15f19871d75aa7b6a58c497a245524788c653058b9482b16c68"
+    },
+    "t1_B1": {
+      "w1": "d42c1ac80e471b43f1b3e827aae608cb60cbcdcd5125c3674bc32b7131e5fd97",
+      "w2": "c29803cca6f81d5d6436a9514b271a1bb1fbcd674710a5920dce6451c0c0b229"
+    }
+  }
+}

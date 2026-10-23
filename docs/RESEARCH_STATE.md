@@ -2,6 +2,11 @@
 
 ## 当前决策修正（2026-10-18）
 
+2026-10-22 最新本地结果：[真实 TP4](M0_TP4_RESULTS_20261022.md) 已加载 Qwen3-32B、
+完成 HCCL/Graph 和真实 B0/B1 生成；完整 token oracle 失败。独立整批入队 B0/B0
+仍16/32输出不同，故 **M0 INCONCLUSIVE / output reproducibility blocked**。
+按停止条件无后续 Profiler、性能重复或 B2，不作机制证伪或正式验收。
+
 Owner 明确：下文个人单卡 NO-GO / 转向 MLP 决策 **SUPERSEDED**，不属于
 intellistream 正式研究合同。继续 Small-M-GEMM，仅准备正式 M0；停止扩大 seed0 NZ
 筛选，不启动其他课题。B1 是历史对照，B2 fused QKV-consumer 才是研究机制。

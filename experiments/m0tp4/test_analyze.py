@@ -3,6 +3,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import analyze
+import launch
 
 
 class AnalysisTests(unittest.TestCase):
@@ -31,6 +32,23 @@ class AnalysisTests(unittest.TestCase):
 
     def test_p95_nearest_rank(self):
         self.assertEqual(analyze.p95(list(range(1, 25))), 23)
+
+    def test_terminal_hardware_stop_is_not_formal_permission(self):
+        for permission in ({"hardware_stopped": True, "formal_approved": False},
+                           {"hardware_stopped": False, "formal_approved": True}):
+            with self.assertRaises(RuntimeError):
+                launch.campaign_gate({"local_tp4_campaign_20261022": permission})
+
+    def test_full_tokens_checked_even_if_hash_unchanged(self):
+        reference = [{"output_token_ids": [1, 2], "prompt_token_ids": [3],
+                      "payload_sha256": "same"} for _ in range(32)]
+        candidate = [{**r, "output_token_ids": list(r["output_token_ids"])} for r in reference]
+        candidate[0]["output_token_ids"][1] = 4
+        with patch.object(analyze, "outputs", side_effect=[reference, candidate]), \
+             patch.object(Path, "read_bytes", return_value=b"fixture"):
+            report = analyze.token_report(Path("unused"), ["a", "b"])
+            self.assertFalse(report["exact_match"])
+            self.assertEqual(report["differences"][0]["first_differing_output_index"], 1)
 
 
 if __name__ == "__main__":

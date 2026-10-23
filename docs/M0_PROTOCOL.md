@@ -1,5 +1,10 @@
 # M0 — Reproduction & Attribution Protocol（Draft，待 advisor 审核）
 
+2026-10-22 owner 授权真实本地 TP4 clean prospective reproduction，非导师正式
+验收。实际结果与失败见 [TP4 报告](M0_TP4_RESULTS_20261022.md)。纯 B0/B0 完整
+输出不一致，当前 campaign 已终止硬件，未扩大重复、Profiler 或 B2。
+后续须先共同审查 oracle 阻塞；下方旧权限/预算不自动授权新运行。
+
 2026-10-18: 正式准入字段以 manifest 的 `formal_m0_admission` 为当前审核草案；
 其余单卡 permission / 流程保留为历史，不能复用为新的硬件授权。
 不再追加 seed0 NZ 筛选。B2 仍未实现；M0 未验收，不启动 M1。

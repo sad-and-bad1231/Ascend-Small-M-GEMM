@@ -3,9 +3,9 @@
 project: ascend-small-m-gemm
 date: "2026-10-15"
 owner: sad-and-bad1231
-status: FORMAL_M0_ADMISSION_PREPARATION_INCOMPLETE_NOT_APPROVED
+status: M0_INCONCLUSIVE_TP4_FULL_OUTPUT_REPRODUCIBILITY_BLOCKED
 execution_control:
-  active_scope: OWNER_AUTHORIZED_LOCAL_TP4_PROSPECTIVE_REPRODUCTION
+  active_scope: HARDWARE_STOPPED_AFTER_TP4_ORACLE_FAILURE_CPU_ANALYSIS_AND_PUBLICATION_ONLY
   historical_permissions: ARCHIVED_NOT_AUTHORIZATION_FOR_NEW_RUNS
   further_seed0_NZ_screening: false
   personal_NO_GO_and_MLP_transition: SUPERSEDED_BY_OWNER
@@ -772,6 +772,8 @@ formal_m0_admission:
     - NO_HELD_OUT_RETUNING_NO_NEW_TOPIC_NO_B2_IMPLEMENTATION_IN_THIS_TASK
   disposition: M0_INCOMPLETE_REVIEW_AND_RESOURCE_BLOCKED_NOT_FORMAL_NO_GO
 local_tp4_campaign_20261022:
+  hardware_stopped: true
+  disposition: M0_INCONCLUSIVE_NOT_MECHANISM_FALSIFIED
   authorization: OWNER_EXPLICIT_TP4_LOCAL_RESEARCH_NOT_ADVISOR_ACCEPTANCE
   formal_approved: false
   reproduction: CLEAN_PROSPECTIVE_CURRENT_RUNTIME_NOT_BYTE_IDENTICAL_HISTORICAL
@@ -807,3 +809,28 @@ local_tp4_campaign_20261022:
     if_B0_tokens_differ: STOP_ALL_FURTHER_HARDWARE_ROOT_CAUSE_UNKNOWN
     if_B0_tokens_match: NEW_SEPARATE_COHORT_B0_B1_B0_AND_FROZEN_REPEATS_NO_MIXING_OLD_GENERATE_TIMING
     formal_approved: false
+  result:
+    TP4_model_and_HCCL_and_graph: OBSERVED_REAL_EXECUTION
+    total_processes_including_harness_failures: 6
+    full_32_request_generation_processes: 5
+    actual_generated_tokens_total: 10240
+    process_exit_0: 2
+    process_exit_1: 4
+    original_generate_B0_B1_different_requests: 18
+    auxiliary_generate_B0_B0_different_requests: 19
+    identical_code_queued_B0_B0_different_requests: 16
+    queued_first_token_timestamp_group_sizes: {w1: [8], w2: [8, 8, 8]}
+    complete_matched_triplets: 0
+    drift_INVALID_fraction: UNDEFINED_ZERO_COMPLETE_TRIPLETS
+    accepted_performance_gains: NONE_CORRECTNESS_GATE_UNMET
+    profiler_real_kernel_IDs_hot_conversions_chain_durations: NOT_RUN_FAIL_STOP_UNKNOWN
+    B2: NOT_RUN_M0_GATE_UNMET
+    B3: NOT_IDENTIFIED
+    root_cause: UNKNOWN_BATCH_ARRIVAL_NOT_SUFFICIENT_EXPLANATION
+    further_hardware: STOPPED_NO_REPLACEMENT_OR_THRESHOLD_RELAXATION
+    report: docs/M0_TP4_RESULTS_20261022.md
+    sanitized_results: results/tp4_20261022
+    local_receipts: m0_receipts/tp4_20261022
+    weight_shard_SHA256_before_after: ALL_17_MATCH
+    production_source_dirty_after: CLEAN_BOTH_GOLDEN_CHECKOUTS
+    new_CPU_analysis_tests: PASS_5_CASES

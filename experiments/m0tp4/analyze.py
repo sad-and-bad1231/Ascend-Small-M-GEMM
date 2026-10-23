@@ -49,6 +49,70 @@ def outputs(raw, label):
             (raw / label / f"w{window}_outputs.local.jsonl").read_text().splitlines()]
 
 
+def token_report(raw, labels):
+    reference, candidate = [outputs(raw, label) for label in labels]
+    assert len(reference) == len(candidate) == 32
+    differences = []
+    for index, (a, b) in enumerate(zip(reference, candidate)):
+        fields = [key for key in a if a[key] != b[key]]
+        pairs = list(zip(a["output_token_ids"], b["output_token_ids"]))
+        if fields:
+            differences.append({"request_index": index, "different_fields": fields,
+                "same_prompt_ids": a["prompt_token_ids"] == b["prompt_token_ids"],
+                "first_differing_output_index": next((i for i, (x, y) in enumerate(pairs) if x != y), None),
+                "differing_output_positions": sum(x != y for x, y in pairs)})
+    return {"labels": labels, "records": 32, "differing_requests": len(differences),
+            "exact_match": reference == candidate, "differences": differences,
+            "raw_output_sha256": {label: {f"w{w}": hashlib.sha256(
+                (raw / label / f"w{w}_outputs.local.jsonl").read_bytes()).hexdigest()
+                for w in (1, 2)} for label in labels}}
+
+
+def campaign_summary(raw):
+    processes = []
+    for path in sorted(raw.glob("*.launch.local.json")):
+        label = path.name.removesuffix(".launch.local.json")
+        launch = json.loads(path.read_text())
+        identity_path = raw / label / "identity.local.json"
+        identity = json.loads(identity_path.read_text()) if identity_path.exists() else {}
+        record = {"label": label, "exit_code": launch["exit_code"],
+                  "complete_receipt": launch["completed"],
+                  "released": launch["hbm_processes_released"], "process_wall_s": launch["wall_s"],
+                  "queue_barrier": identity.get("queue_barrier", False),
+                  "arm": identity.get("arm"), "profile": identity.get("profile"),
+                  "source_sha256": {Path(key).name: value for key, value in launch["source_sha256"].items()},
+                  "windows": {}, "memory_per_rank": None, "policies": []}
+        for window in (1, 2):
+            request_path = raw / label / f"w{window}_requests.jsonl"
+            if not request_path.exists():
+                continue
+            rows = [json.loads(line) for line in request_path.read_text().splitlines()]
+            agg = json.loads((raw / label / f"w{window}_aggregate.json").read_text())
+            import collections
+            record["windows"][f"w{window}"] = {
+                "requests": len(rows), "output_tokens": sum(r["output_tokens"] for r in rows),
+                "median_TPOT_ms": statistics.median(r["tpot_ms"] for r in rows),
+                "median_TTFT_ms": statistics.median(r["ttft_ms"] for r in rows),
+                "p95_latency_ms": p95([r["request_latency_ms"] for r in rows]),
+                "output_tokens_per_s": agg["output_tokens_per_s"],
+                "first_token_timestamp_groups": sorted(collections.Counter(r["first_token_ts_s"] for r in rows).values()),
+                "per_request": [{key: r[key] for key in ("request_idx", "prompt_tokens", "output_tokens",
+                    "ttft_ms", "tpot_ms", "request_latency_ms")} for r in rows]}
+        for policy_path in sorted((raw / label).glob("rank*_policy.local.json")):
+            policy = json.loads(policy_path.read_text())
+            record["policies"].append({key: policy[key] for key in
+                ("rank", "mode", "converted", "conversion_wall_s", "weight_nz_mode", "allocated_bytes_after_load", "peak_allocated_bytes_after_load")})
+            record["policies"][-1]["formats_after"] = sorted({w["after"] for w in policy["qkv_weights"]})
+        memory_path = raw / label / "memory.local.json"
+        if memory_path.exists():
+            record["memory_per_rank"] = json.loads(memory_path.read_text())
+        record["performance_admission"] = "NOT_ADMISSIBLE_NO_EQUIVALENT_COMPLETED_TRIPLET"
+        processes.append(record)
+    return {"formal_approved": False, "status": "M0_INCONCLUSIVE_FULL_OUTPUT_REPRODUCIBILITY_BLOCKED",
+            "completed_matched_triplets": 0, "accepted_optimization_gains": [],
+            "profiler": "NOT_RUN_FAIL_STOP", "processes": processes}
+
+
 def analyze(raw, labels):
     pairs = [read_arm(raw, label) for label in labels]
     assert pairs[0][1] == pairs[1][1] == pairs[2][1], "executed source/input identity drift"
@@ -79,11 +143,17 @@ def analyze(raw, labels):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--raw", type=Path, required=True)
-    parser.add_argument("--labels", nargs=3, required=True)
+    parser.add_argument("--labels", nargs="+")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--oracle-only", action="store_true")
+    parser.add_argument("--campaign-summary", action="store_true")
     args = parser.parse_args()
-    result = analyze(args.raw, args.labels)
+    if args.campaign_summary:
+        result = campaign_summary(args.raw)
+    else:
+        assert len(args.labels) == (2 if args.oracle_only else 3)
+        result = token_report(args.raw, args.labels) if args.oracle_only else analyze(args.raw, args.labels)
     assert not args.out.exists(), "do not overwrite evidence"
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({key: value for key, value in result.items() if key != "arms"}, indent=2))
+    print(json.dumps({key: value for key, value in result.items() if key not in ("arms", "processes", "differences")}, indent=2))

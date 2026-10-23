@@ -1,0 +1,30 @@
+{
+  "status": "M0_INCONCLUSIVE_FULL_OUTPUT_REPRODUCIBILITY_BLOCKED",
+  "formal_approved": false,
+  "actual_process_order": [
+    "pilot_B0_attempt1",
+    "pilot_B0_attempt2",
+    "pilot_B0_attempt3",
+    "t1_B1",
+    "queued_B0_control1",
+    "queued_B0_control2"
+  ],
+  "execution_commits": {
+    "generate_B0_B1": "5f82058",
+    "queued_B0_B0": "055020f"
+  },
+  "full_shard_hashes_before_after": "ALL_17_MATCH",
+  "production_source_after": "CLEAN_BOTH",
+  "final_runtime_identity_check": "PASS",
+  "final_NPU_processes": "NONE_ON_ALL_FOUR",
+  "CPU_analysis_tests_passed": 5,
+  "local_receipt_index_sha256": "00cd93bf9276f4d0d5f508d31c4607c94953fa6bcbe90e852918b36a9215735f",
+  "indexed_local_files": 124,
+  "indexed_local_bytes": 985956,
+  "index_exclusion": "runtime clone covered by launch source/binary hashes; pycache excluded",
+  "source_snapshots": "all executed versions retained locally",
+  "accepted_gains": [],
+  "completed_triplets": 0,
+  "drift_INVALID_fraction": null,
+  "drift_fraction_note": "undefined: no complete triplet, not a pass"
+}

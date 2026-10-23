@@ -1,0 +1,197 @@
+{
+  "labels": [
+    "queued_B0_control1",
+    "queued_B0_control2"
+  ],
+  "records": 32,
+  "differing_requests": 16,
+  "exact_match": false,
+  "differences": [
+    {
+      "request_index": 3,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 24,
+      "differing_output_positions": 39
+    },
+    {
+      "request_index": 4,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 17,
+      "differing_output_positions": 44
+    },
+    {
+      "request_index": 6,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 20,
+      "differing_output_positions": 44
+    },
+    {
+      "request_index": 12,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 11,
+      "differing_output_positions": 48
+    },
+    {
+      "request_index": 14,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 56,
+      "differing_output_positions": 8
+    },
+    {
+      "request_index": 16,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 15,
+      "differing_output_positions": 49
+    },
+    {
+      "request_index": 17,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 15,
+      "differing_output_positions": 49
+    },
+    {
+      "request_index": 20,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 10,
+      "differing_output_positions": 54
+    },
+    {
+      "request_index": 21,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 55,
+      "differing_output_positions": 9
+    },
+    {
+      "request_index": 22,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 53,
+      "differing_output_positions": 11
+    },
+    {
+      "request_index": 24,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 19,
+      "differing_output_positions": 45
+    },
+    {
+      "request_index": 25,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 14,
+      "differing_output_positions": 50
+    },
+    {
+      "request_index": 26,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 32,
+      "differing_output_positions": 32
+    },
+    {
+      "request_index": 27,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 3,
+      "differing_output_positions": 55
+    },
+    {
+      "request_index": 30,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 40,
+      "differing_output_positions": 24
+    },
+    {
+      "request_index": 31,
+      "different_fields": [
+        "output_text",
+        "output_token_ids",
+        "payload_sha256"
+      ],
+      "same_prompt_ids": true,
+      "first_differing_output_index": 31,
+      "differing_output_positions": 31
+    }
+  ],
+  "raw_output_sha256": {
+    "queued_B0_control1": {
+      "w1": "3b8f44c8f9500e471b1b4c0986a7ed5f9558784954ba9bb412ffb0159899b08e",
+      "w2": "69a54c5d49e9b8a508fd94a670a5c8896d88e4beabeabd155faccb3d2c805e14"
+    },
+    "queued_B0_control2": {
+      "w1": "cf8e3c3d2291c311e24b73c213b4d1e911bca2f1045a021c55bee286e3aab97a",
+      "w2": "76d3e4acd0f2166b9ff818928260f42c414babdd1f9648a98fab5cdcbc5c36a5"
+    }
+  }
+}

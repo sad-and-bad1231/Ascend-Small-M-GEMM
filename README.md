@@ -5,7 +5,8 @@
 - 上游课题：[intellistream/ascend-small-m-gemm](https://github.com/intellistream/ascend-small-m-gemm)
 - Owner：[@sad-and-bad1231](https://github.com/sad-and-bad1231)
 - 当前阶段：**M0 / evidence reproduction**。已有单卡诊断证据，尚无新融合原语或正式性能结论。
-- 当前决策：**按 intellistream 正式合同继续 Small-M-GEMM，准备 M0 准入**。个人 NO-GO / 转向 MLP 决策已 superseded；停止扩大 seed0 NZ 筛选，不启动其他课题。
+- 当前决策：**真实 TP4 已执行，M0 INCONCLUSIVE：纯 B0 完整输出仍不可复现**。本轮硬件已按 oracle 停止条件收束，未准入性能收益或 B2；个人 NO-GO / 转向 MLP 决策仍为 superseded。
+- [真实 TP4 结果、全部失败与研究判定](docs/M0_TP4_RESULTS_20261022.md)：两个整批入队 B0 仍16/32输出不同；五组性能重复未启动，不扩大诊断。
 - [正式 M0 准入整理、模型检查及缺口](docs/M0_ADMISSION_REVIEW_20261018.md)
 - [Issue #20 审核草稿（未发送）](docs/M0_ISSUE20_REVIEW_DRAFT_20261018.md) / [TP4 执行准备](docs/M0_TP4_PLAN_20261018.md)
 - 后续重复更新：固定追加两轮后，第三轮两个有效进程收益12.43%/12.21%，通过单轮快速门槛；全三轮仍3/6 INVALID、另一有效结果2.60%，尚非稳定复现或正式 GO，M=1 未测。
