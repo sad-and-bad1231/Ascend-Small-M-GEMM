@@ -12,7 +12,9 @@ import statistics
 from trace_summary import trace_events
 
 
-def timeline(tasks, kernels):
+def timeline(tasks, kernels, expected_weight_format="ND"):
+    if expected_weight_format not in ("ND", "FRACTAL_NZ"):
+        raise ValueError("unsupported expected weight format")
     ordered = sorted(tasks, key=lambda r: Decimal(r["task_start(us)"].strip()))
     origin = Decimal(ordered[0]["task_start(us)"].strip())
     kernel_index = {(Decimal(r["Start Time(us)"].strip()), r["Stream ID"], r["Task ID"]): r
@@ -45,7 +47,7 @@ def timeline(tasks, kernels):
         if len(gemms) != 1 or len(consumers) != 1:
             raise ValueError("ambiguous replay compute association")
         gemm, consumer = gemms[0], consumers[0]
-        if (gemm["input_formats"] != "ND;ND" or gemm["input_dtypes"] != "DT_BF16;DT_BF16"
+        if (gemm["input_formats"] != "ND;" + expected_weight_format or gemm["input_dtypes"] != "DT_BF16;DT_BF16"
                 or consumer["kernel"] != "split_qkv_rmsnorm_rope_kernel"
                 or consumer["start_us_relative"] < gemm["stop_us_relative"]):
             raise ValueError("unexpected compute path/layout/order")

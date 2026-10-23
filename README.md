@@ -6,6 +6,7 @@
 - Owner：[@sad-and-bad1231](https://github.com/sad-and-bad1231)
 - 当前阶段：**M0 / evidence reproduction**。已有单卡诊断证据，尚无新融合原语或正式性能结论。
 - 当前决策：**真实 TP4 已执行，M0 INCONCLUSIVE：纯 B0 完整输出仍不可复现**。本轮硬件已按 oracle 停止条件收束，未准入性能收益或 B2；个人 NO-GO / 转向 MLP 决策仍为 superseded。
+- [M0 决策收束](docs/M0_DECISION_CLOSURE_20261023.md)：组件诊断 oracle 通过不等于服务 token 等价；BF16 非逐位一致不是 kernel 错误。可见 gap 不足0.1%，内部可省成本未量化，等待导师裁定复现路线，不再自动追加诊断。
 - [真实 TP4 结果、全部失败与研究判定](docs/M0_TP4_RESULTS_20261022.md)：两个整批入队 B0 仍16/32输出不同；五组性能重复未启动，不扩大诊断。
 - [有界 TP4 数值对照](docs/M0_TP4_NUMERIC_20261023.md)：固定设备输入后，B0 Prefill 最终 hidden 已不同；根因 UNKNOWN，B1 诊断未准入，硬件已收束。
 - [正式 M0 准入整理、模型检查及缺口](docs/M0_ADMISSION_REVIEW_20261018.md)

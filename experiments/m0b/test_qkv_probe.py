@@ -85,6 +85,11 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(result["medians_us"]["graph_envelope_us"], 40)
         self.assertEqual(len(result["tasks_in_start_order"]), 25)
         self.assertEqual(result["medians_us"]["notify_wait_task_us"], 26)
+        nz_kernels = [{**row, "Input Formats": "ND;FRACTAL_NZ"} for row in kernels]
+        with self.assertRaises(ValueError):
+            timeline(tasks, nz_kernels)
+        self.assertEqual(timeline(tasks, nz_kernels, "FRACTAL_NZ")["medians_us"],
+                         result["medians_us"])
         with self.assertRaises(ValueError):
             timeline(tasks[:-5], kernels)
     def test_stability_variation_all_pairs_and_boundary(self):

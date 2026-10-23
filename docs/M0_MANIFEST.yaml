@@ -1,6 +1,31 @@
 # Historical M0-A/B receipts retained. formal_m0_admission is the current proposal.
 # Historical permission blocks below do not authorize new runs. NOT_RUN is not PASS.
 project: ascend-small-m-gemm
+decision_closure_20261023:
+  base: e8c7bbb74e1643438f94fd609bfb8b690a4d367d
+  authority: UPSTREAM_RESEARCH_CONTRACT_20261014_HANDOFF_AND_SAVED_ISSUE20
+  disposition: M0_INCONCLUSIVE_REVIEW_CLOSURE_NOT_MECHANISM_FALSIFICATION
+  formal_approved: false
+  hardware_stopped: true
+  new_hardware_authorization: NONE_CPU_RECEIPT_REDUCTION_ONLY
+  new_hardware_processes: 0
+  new_device_replays: 0
+  reused_trace_scope: FOUR_EXISTING_M1_M8_B0_B1_PROFILES_FIVE_REPLAYS_EACH_PLUS_EXISTING_B0_TIMELINE
+  bitwise_policy: RAW_BF16_LOGITS_INEQUALITY_IS_NOT_KERNEL_CORRECTNESS_FAILURE
+  component_correctness: RETAINED_FROZEN_DIAGNOSTIC_ORACLE_PASS_NOT_FULL_FORMAL_OR_MODEL_CERTIFICATION
+  model_hidden_and_logits_tolerance: NOT_FROZEN_DO_NOT_REUSE_COMPONENT_TOLERANCE
+  service_oracle: UNCHANGED_EXACT_FULL_ORDERED_TOKEN_IDS_CURRENT_FREE_GENERATION_NOT_QUALIFIED
+  trigger_for_localization: FROZEN_TOLERANCE_VIOLATION_OR_REPRODUCIBLE_EXECUTION_ANOMALY_NOT_RAW_BIT_DIFFERENCE
+  mechanism_cost:
+    visible_handoff_us: [0.02, 0.04]
+    explicit_hot_conversion_tasks: NONE_OBSERVED_IN_COMPONENT_TRACES
+    optimistic_avoidable_intermediate_bytes: {M1: 10240, M8: 81920}
+    independently_measured_fusion_savings: UNKNOWN
+    actual_service_critical_path_fraction: UNKNOWN
+    consumer_math_and_final_outputs: REQUIRED_NOT_ERASABLE
+  further_diagnostics: NOT_AUTOMATIC_NO_LAYER_BISECTION_NO_TPOT_SWEEP_NO_B2
+  advisor_decisions: [ACCEPT_PROSPECTIVE_PROVENANCE, FREEZE_DETERMINISTIC_SERVICE_CONFIG_WITH_FULL_TOKEN_ORACLE_UNCHANGED, DEFINE_M0_ATTRIBUTION_ACCEPTANCE_AND_FORMAL_BASELINES]
+  report: docs/M0_DECISION_CLOSURE_20261023.md
 local_tp4_numeric_20261022:
   authorization: OWNER_EXPLICIT_DIAGNOSTIC_ONLY_NUMERICAL_NOT_TPOT_OR_FORMAL_ACCEPTANCE
   formal_approved: false
@@ -11,6 +36,7 @@ local_tp4_numeric_20261022:
   max_generated_tokens_per_request: 4
   requests_per_process: 8
   B0_gate: EXACT_DEVICE_INPUTS_POSITIONS_AND_RAW_LOGITS_TOP1_CONTROL_NO_ORACLE_RELAXATION
+  raw_bitwise_gate_semantics: ARCHIVED_DIAGNOSTIC_ONLY_NOT_FORMAL_KERNEL_CORRECTNESS_CRITERION
   observer: POST_FORWARD_HIDDEN_LOCAL_LOGITS_GATHERED_LOGITS_GPU_CLONES_DUMP_AFTER_GENERATION
   production_vs_diagnostic: SAME_RUNTIME_NEURAL_PATH_BUT_FROZEN_PREFIX_AND_INTRUSIVE_POST_FORWARD_CUSTODY
   per_process_timeout_seconds: 1200
@@ -31,7 +57,7 @@ date: "2026-10-15"
 owner: sad-and-bad1231
 status: M0_INCONCLUSIVE_TP4_FULL_OUTPUT_REPRODUCIBILITY_BLOCKED
 execution_control:
-  active_scope: HARDWARE_STOPPED_AFTER_BOUNDED_NUMERIC_CONTROL_CPU_ANALYSIS_AND_PUBLICATION_ONLY
+  active_scope: M0_DECISION_CLOSURE_CPU_ONLY_AWAIT_REVIEW_NO_AUTOMATIC_DIAGNOSTIC_EXPANSION
   historical_permissions: ARCHIVED_NOT_AUTHORIZATION_FOR_NEW_RUNS
   further_seed0_NZ_screening: false
   personal_NO_GO_and_MLP_transition: SUPERSEDED_BY_OWNER

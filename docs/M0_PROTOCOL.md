@@ -1,5 +1,10 @@
 # M0 — Reproduction & Attribution Protocol（Draft，待 advisor 审核）
 
+2026-10-23 决策收束以 [M0 Decision Closure](M0_DECISION_CLOSURE_20261023.md) 为准：
+raw BF16 logits 非逐位相等不是 kernel correctness failure；组件标准不能套给模型
+最终 hidden/logits，服务完整 token oracle 不变。本轮只重算已有 trace，硬件零新增；
+M0 INCONCLUSIVE，等待导师裁定合法服务配置与 prospective provenance，不自动展开层级诊断。
+
 2026-10-23: Owner 追加授权的有界 teacher-forced TP4 数值对照已完成并停止硬件。
 相同设备输入/positions/元数据下，B0 Prefill Graph=NONE 的最终 hidden 已不同；
 具体首个算子根因 UNKNOWN，B1/Profiler 未越过 B0 控制门槛。
