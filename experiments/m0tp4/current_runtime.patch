@@ -1,0 +1,26 @@
+diff --git a/vllm_ascend/worker/model_runner_v1.py b/vllm_ascend/worker/model_runner_v1.py
+--- a/vllm_ascend/worker/model_runner_v1.py
++++ b/vllm_ascend/worker/model_runner_v1.py
+@@ -3796,6 +3796,9 @@
+         from vllm.model_executor.offloader.base import get_offloader
+         get_offloader().post_init()
+ 
++        from qkv_policy import apply_policy
++        apply_policy(self)
++
+         mm_config = self.model_config.multimodal_config
+         self.is_multimodal_pruning_enabled = (
+             supports_multimodal_pruning(self.get_model())
+diff --git a/vllm_ascend/profiler/torch_npu_profiler.py b/vllm_ascend/profiler/torch_npu_profiler.py
+--- a/vllm_ascend/profiler/torch_npu_profiler.py
++++ b/vllm_ascend/profiler/torch_npu_profiler.py
+@@ -55,9 +55,9 @@
+             aic_metrics=torch_npu.profiler.AiCMetrics.PipeUtilization,
+             l2_cache=False,
+-            op_attr=False,
++            op_attr=True,
+             data_simplification=True,
+-            record_op_args=False,
++            record_op_args=True,
+             gc_detect_threshold=None,
+         )
